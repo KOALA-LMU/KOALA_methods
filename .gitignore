@@ -216,6 +216,9 @@ TSWLatexianTemp*
 # auto folder when using emacs and auctex
 /auto/*
 
+# R
+*.Rhistory
+
 # expex forward references with \gathertags
 *-tags.tex
 .Rproj.user
