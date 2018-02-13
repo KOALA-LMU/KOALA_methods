@@ -63,6 +63,16 @@
 % and do not specify any style parameters.
 % The preamble of the document should be left unchanged.
 
+% proofreading
+\usepackage[textsize=scriptsize, backgroundcolor=lightgray, draft]{todonotes}
+% ab todo note definition
+\newcounter{todocounter}
+\newcommand{\abtodo}[1]{
+  \stepcounter{todocounter}\todo[color=black!30]{
+    \textbf{AB[\thetodocounter]: }#1
+  }
+}
+
 \begin{document}
 
 %***********************************************************************
@@ -88,6 +98,7 @@
 
 % Brief abstract of the paper:
 \abstract{
+\abtodo{Ich würde vll. plakativer Anfangen: Übliche Berichterstattung bzgl. Wahlumfragen ist meist irreführend, weil ... Deshalb entwickelten wir ....}
 We present a survey-based approach for the estimation of probabilities for specific coalition majorities in multi-party electoral systems. A Bayesian Multinomial-Dirichlet model with Monte Carlo simulation is used for estimation. The method is based on opinion polls conducted by established pollster institutes and is accompanied by a pooling approach to summarize multiple current surveys, accounting for dependencies between institutes.
 %Potential biases of specific pollsters are not taken into account.
 The method estimates sample uncertainty-based probabilities, if the election was held today. An implementation of the method in \texttt{R} is freely available.
@@ -104,16 +115,35 @@ The method estimates sample uncertainty-based probabilities, if the election was
 % Sections and subsections (do not use lower levels):
 
 \section{Introduction and data}
-Election polls as surveys conducted by different pollster institutes try to represent the public opinion based on a finite sample. Current reporting on such surveys is most often broken down to the observed shares, proper reporting of sample uncertainty is rarely done (cf. QUELLE). In our opinion, the focus in survey reporting in multi-party electoral systems should be shifted towards the most relevant question, i.e. how probable majorities for specific coalitions are. We present our KOALA (Coalition Analysis) approach to estimate such probabilities to bring more value to opinion poll-based reporting.
+Election polls as surveys conducted by different pollster institutes
+\abtodo{``pollster instiute'' ist glaube ich ziemlich denglisch. Man sagt
+denke ich survey institutes oder pollsters}
+try to represent the public opinion based on a finite sample. Current reporting
+on such surveys is most often limited to the observed shares, while sample uncertainty is usually ignored (cf. QUELLE).
+\abtodo{Es wäre ganz gut hier konkrete Beispiele zu bringen, sonst hängt das Ganze
+etwas in der Luft}
+In our opinion, the focus in survey reporting in multi-party electoral systems should be shifted towards the most relevant question, i.e., how probable is a majority for a specific coalition.
+We present our KOALA (Coalition Analysis) approach to estimate such probabilities
+to bring more value to opinion poll-based reporting.
 
-As database we use opinion polls conducted by established pollster institutes, quantifying the electoral behaviour \textit{if an election was held today}. Our approach is to be differentiated from prediction-aimed methods (cf. POLLYVOTE or NORPOTH \& GSCHWEND, 2010). We focus on the question of quantifying \textit{current} majority situations, not taking into consideration potential shifts until election day.
+As database, we use opinion polls conducted by established pollster institutes,
+quantifying the electoral behavior \textit{if an election was held today}.
+Our approach is to be differentiated from prediction-aimed methods (cf. POLLYVOTE or NORPOTH \& GSCHWEND, 2010). We focus on the question of quantifying \textit{current} majority situations, not taking into consideration potential shifts until election
+day.
 
 A Bayesian Multinomial-Dirichlet model with Monte Carlo simulations is used for estimation. Also, a pooling approach is presented to summarize the results of multiple current opinion polls to reduce sample uncertainty.
 
-All methods were implemented in \texttt{R} and are available in the open-source package \texttt{coalitions} on GitHub (QUELLE). Also, the website \texttt{koala.stat.uni-muenchen.de} visualizes estimated coalition probabilities and is used to communicate the results to the general public (QUELLE).
+All methods were implemented in \texttt{R} and are available in the open-source
+package \texttt{coalitions} on GitHub (Bender \& Bauer, 2018). Also, an
+interactive \texttt{shiny} app, hosted \texttt{koala.stat.uni-muenchen.de}
+visualizes estimated coalition probabilities and is used to communicate the
+results to the general public (QUELLE).
 
 
 \section{Pooling approach}
+\abtodo{Ich finde der Fokus liegt zu sehr auf dem Pooling. Ich würde in der
+ersten Section nach der Intro zunächst die Hauptmethodik erklären ausgehend von
+einem gegebenen Survey und dann zum Pooling überleiten.}
 In the presence of multiple published opinion polls, pooling is used to summarize the observed results in order to reduce sample uncertainty. To assure a reliable pooling regarding the current public opinion, we only use polls published within the past 14 days and only use the most recent survey published by each pollster institute.
 
 % Looking at a single poll $i$, the observed number of votes $X_j$ for each of $k$ parties follow a multinomial distribution with sample size $n_i$ and underlying, unknown party shares $\theta_j$ in the population:
@@ -125,7 +155,14 @@ $$
 \sum\limits_i X_{i1},\ldots, \sum\limits_i X_{ik} \sim Multinomial(\sum\limits_i n_i,\theta_1,\ldots,\theta_k).
 $$
 
-Further investigations however show that polls published by the main German pollster institutes show a certain amount of correlatedness and the independency assumption does not hold. To account for this, we adjust the resulting multinomial distribution by using an \textit{effective sample size} (cf. QUELLE). Quantification of pairwise correlation is done based on the variance of the difference between two polls. The following equation holds for two independent random sample polls $A$ and $B$:
+Further investigations however show that polls published by the main German
+pollster institutes show a certain amount of correlation and the assumption of
+independence does not hold. To account for this, we adjust the resulting
+multinomial distribution by using an \textit{effective sample size} (cf. QUELLE).
+Quantification of pairwise correlation is done based on the variance of the
+difference between two polls. The following equation holds for two independent
+random sample polls $A$ and $B$:
+
 $$
 \begin{aligned}
 %Var(X_A - X_B) &= Var(X_A) + Var(X_B) - 2 \cdot Cov(X_A, X_B) \\
@@ -143,11 +180,13 @@ Var(\text{pooled}) = Var(X_A + X_B) = Var(X_A) + Var(X_B) + 2 Cov(X_A,X_B)
 $$
 and $Var(\text{sample of size 1})$ the theoretical variance of the pooled share.
 
-Looking at the party-specific correlations between 20 surveys conducted by the two most regular German pollster institutes, Emnid and Forsa, we on average end up with a medium high correlation, using mean party shares and sample sizes per institute for the theoretical variances. Other institute comparisons were not performed as too few surveys were conducted over comparable timeframes. For simplicity, we set the correlation used in our methodology to $0.5$. For calculating $n_{\text{eff}}$ we base the calculation on the result of the biggest party, as the specific party choice only marginally affects $n_{\text{eff}}$.
+Looking at the party-specific correlations between 20 surveys conducted by the two most regular German pollster institutes, Emnid and Forsa, we on average end up with a medium high correlation, using mean party shares and sample sizes per institute for the theoretical variances. Other institute comparisons were not performed as too few surveys were conducted over comparable time frames. For simplicity, we set the correlation used in our methodology to $0.5$. For calculating $n_{\text{eff}}$ we base the calculation on the result of the biggest party, as the specific party choice only marginally affects $n_{\text{eff}}$.
 
 
 
 \section{Calculation of probabilities}
+\abtodo{Würde den Teil etwas ausführlicher machen, ggf. mit konkretem Beispiel
+mit Tabelle der Umfrage und den sich daraus Ergebenden Wskten.}
 For estimating probabilities for specific coalitions, we choose a Multinomial-Dirichlet model with an uninformative prior for the true party shares $\theta_j$ (QUELLE):
 $$
 \begin{aligned}
@@ -157,12 +196,16 @@ $$
 $$
 Basing the Bayesian model on one (pooled) survey the posterior also results in a Dirichlet distribution with parameters $\alpha_j = x_j + \frac{1}{2}$ for each party $j$.
 
-Probabilities for specific events can now be estimated using Monte Carlo simulations of random election outcomes. After calculating to which effective number of seats in parliament the simulated results lead, one can easily calculate probabilities by taking the share of times some specified event occurs. To adjust for observed survey shares generally being only published as rounded numbers, before applying the Bayesian model we add uniformly distributed random numbers $r_\gamma \sim U[-\gamma,\gamma]$ to the shares (e.g. $\gamma = 0.5\%$) and rescale the sum to $100\%$.
+Probabilities for specific events can now be estimated using Monte Carlo simulations of random election outcomes. After calculating to which effective number of seats in parliament the simulated results lead, one can easily calculate probabilities by taking the share of times some specified event occurs. To adjust for observed survey shares generally being only published as rounded numbers, before applying the Bayesian model we add uniformly distributed random noise $r_\gamma \sim U[-\gamma,\gamma]$ to the
+shares (e.g., $\gamma = 0.5\%$) and rescale the sum to $100\%$.
 
 \begin{figure}[!ht]\centering
 \includegraphics[width=\textwidth]{figures/bauer_seatDist.pdf}
 \caption{\label{bauer:dens} Density of $1,000$ simulated shares of parliament seats for the coalition CSU/FDP in the Bavarian state election. The blue area marks simulations with a majority.}
 \end{figure}
+\abtodo{Denke man kann hier coolere Grafik einfügen. z.B. die
+Density-Verläufe von Schwarz-Gelb die in Spectrum verwendet wurde. Siehe
+z.B. https://gist.github.com/adibender/28041453a2a8c3e42c09484a55668d55}
 
 For visualizing the probability together with underlying uncertainty for a specific coalition majority we recommend using a density plot as shown in Figure~\ref{bauer:dens}.
 
@@ -184,6 +227,9 @@ We presented an approach to estimate probabilities for specific election outcome
 
 \references
 \begin{description}
+\item[Bender, A. and Bauer, A.] (2018).
+{\it adibender/coalitions (Version v0.5.7).}
+Zenodo. \texttt{http://doi.org/10.5281/zenodo.1172595}
 \item[Diggle, P.J., Liang, K-Y., and Zeger, S.L.] (1994).
      {\it Analysis of Longitudinal Data}.
      Oxford: Clarendon Press.
