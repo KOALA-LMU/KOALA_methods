@@ -3,55 +3,53 @@ library(coalitions)
 library(coalishin)
 library(dplyr)
 library(tidyr)
+library(ggplot2)
+theme_set(theme_bw())
+
+# Data and code source: https://gist.github.com/adibender/28041453a2a8c3e42c09484a55668d55
+
+# Read data ---------------------------------------------------------------
+shares <- readRDS(url("https://ndownloader.figshare.com/files/9375607"))
 
 
-# Scrape data -------------------------------------------------------------
-# scrape surveys
-data <- get_surveys_by() %>%
-  mutate(pollster = replace(pollster, pollster == "infratestdimap", "infratest")) %>%
-  filter(pollster != "pollytix") %>%
-  arrange(pollster)
-
-# pool surveys
-dates <- as.Date("2018-01-10")
-party_order <- coalishin::lookup_parties %>% filter(id_election == "ltw_by") %>% arrange(position) %>% pull(id_party)
-survey_pooled <- lapply(dates, function(date) pool_surveys(data, last_date = as.Date(date))) %>%
-  bind_rows() %>%
-  slice(order(match(party, party_order))) %>%
-  nest(-pollster, -date, -start, -end, -respondents) %>%
-  rename(survey = data) %>%
-  nest(-pollster) %>%
-  rename(surveys = data)
-
-
-# Estimate probabilities --------------------------------------------------
-survey <- survey_pooled %>% unnest() %>% unnest()
-
-# simulate seat distributions
-nsim <- 1000
-correction <- 0.005
-dirichlet.draws <- coalitions::draw_from_posterior(survey = survey, nsim = nsim, correction = correction)
-seat.distributions <- coalitions::get_seats(dirichlet.draws, survey = survey, 
-                                            distrib.fun = get(lookup_elections$distribution_function[lookup_elections$id == "ltw_by"]),
-                                            n_seats = lookup_elections$parl_seats[lookup_elections$id == "ltw_by"])
-# retrieve coalitions for which the party ordering is relevant (i.e. coalitions in lookup_coalitions that are stated multiple times in different ordering, e.g. "cdu|spd" and "spd|cdu")
-coals <- lookup_coalitions %>% filter(id_election == "ltw_by") %>% pull(id_coalition)
-coals_sorted <- sapply(coals, function(x) paste(sort(strsplit(x, "\\|")[[1]]), collapse = "|"), USE.NAMES = FALSE)
-if (any(table(coals_sorted) > 1)) {
-  name <- names(table(coals_sorted))[table(coals_sorted) > 1]
-  strongest_party_coals <- coals[which(coals_sorted == name)]
-} else {
-  strongest_party_coals <- NULL
+# Helper function for plot over time --------------------------------------
+## define function to reverse date time scale
+# source: https://gist.github.com/adibender/28041453a2a8c3e42c09484a55668d55
+library(scales)
+c_trans <- function(a, b, breaks = b$breaks, format = b$format) {
+  a <- as.trans(a)
+  b <- as.trans(b)
+  
+  name <- paste(a$name, b$name, sep = "-")
+  
+  trans <- function(x) a$trans(b$trans(x))
+  inv <- function(x) b$inverse(a$inverse(x))
+  
+  trans_new(name, trans, inv, breaks, format)
 }
-# calculate coalition probabilities
-parties <- c("csu","fdp")
-res_all <- calc_allCoalProbs(seat.distributions, parties, dirichlet.draws, strongest_party_coals = strongest_party_coals)
-shares <- res_all$shares_perSimulation
-shares <- shares %>% mutate(pollster = "pooled", date = dates) %>% select(pollster, date, everything())
 
 
-# Plot --------------------------------------------------------------------
-pdf("../figures/bauer_seatDist.pdf", width = 20, height = 4)
-plot_seatDist_density(shares, "pooled", coal = "csu|fdp", parl_seats = lookup_elections$parl_seats[lookup_elections$id == "ltw_by"],
-                      mark_CI = FALSE, base_size = 40)
+# Plot over time ----------------------------------------------------------
+library(ggridges)
+
+# revert time axis
+rev_date <- c_trans("reverse", "time")
+
+## plot
+gg_shares <- ggplot(shares,
+       aes(x = percent, y = date, group = date, # basic aesthetics
+           fill = ifelse(..x..>50, "yes", "no"), # "cut-off" gradient
+           frame = date, cumulative = TRUE)) + # aesthetics for animation
+  geom_density_ridges_gradient(
+    scale=10, size = 0.25, rel_min_height = 0.03, calc_ecdf=TRUE) +
+  scale_fill_manual(values = c("grey80","steelblue"), na.value = "grey80", guide = guide_legend(title = "Seat majority")) +
+  geom_vline(xintercept = 50, lty = 1, lwd = 1.2, col = "grey90") +
+  scale_x_continuous(labels = function(x) paste0(x, "%")) +
+  scale_y_continuous(trans  = rev_date) +
+  xlab("Share of votes") + ylab("") +
+  theme_bw(base_size = 18) +
+  theme(legend.position = "bottom")
+
+pdf("../figures/bauer_seatDist_time.pdf", width = 6, height = 8)
+gg_shares
 dev.off()
