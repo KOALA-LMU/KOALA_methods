@@ -1,0 +1,518 @@
+%   Style file for the Proceedings Volume of the
+%   '33rd International Workshop on Statistical Modelling'
+%   Groningen 2018
+%   based on the style file from the
+%   '14th International Workshop on Statistical Modelling',
+%   Graz 1999
+
+\typeout{Sub-style 'IWSM'}
+\ds@twoside
+\headheight=9pt
+\headsep=15pt
+\textheight=45pc
+\textwidth=27pc
+\parindent=0pt
+\def\aindex#1{}
+\def\sindex#1{}
+\def\descriptionlabel#1{\hspace\labelsep #1}
+
+\def\ps@headings{%
+    \let\@mkboth=\markboth%
+    \def\@oddfoot{}%
+    \def\@evenfoot{}%
+    \def\@oddhead{\ixONxi\rm\hbox{}\hfil{\rightmark}\hskip 2em minus 1em\thepage}%
+    \def\@evenhead{\ixONxi\rm \thepage\hskip 2em\leftmark \hfill}%
+    \def\chaptermark##1{
+         \markbothsame{%\ifnum \c@secnumdepth >\m@ne \@chapapp\ \fi
+           \if!\the\titlerunning!%if \titlerunning not defined then
+        ##1
+           \else %if titlerunning defined then
+                \the\titlerunning
+            \global\titlerunning={}
+       \fi}}%
+    \def\sectionmark##1{}%
+}
+
+\pagestyle{headings}
+\pagenumbering{roman}   % toc is in roman
+\def\@chapterauthors{}
+\def\markbothsame#1{\markboth{#1}{#1}}
+\def\markleft#1{{\let\protect\noexpand\expandafter\@markleft\@themark
+     {#1}\mark{\@themark}}}
+\def\@markleft#1#2#3{\gdef\@themark{{#3}{#2}}}
+\def\leftmark{\expandafter\@leftmark\topmark}
+
+\frenchspacing
+\def\@chapapp{}
+\def\viiiONx{\@setsize\viiiONx{10pt}\viipt\@viipt}
+\def\ixONxi{\@setsize\ixONxi{11pt}\ixpt\@ixpt}
+\def\xONxii{\normalsize}
+\def\xiiONxiv{\@setsize\xiiONxiv{14pt}\xiipt\@xiipt}
+\def\xivONxvi{\@setsize\xivONxvi{16pt}\xivpt\@xivpt}
+\def\xivONxiv{\@setsize\xivONxiv{14pt}\xivpt\@xivpt}
+\def\xxONxx{\@setsize\xxONxx{17pt}\xviipt\@xviipt}
+%\def\xxONxx{\@setsize\xxONxx{20pt}\xxpt\@xxpt}
+
+
+\def\chapter{\thispagestyle{empty} %
+   \global\@topnum\z@              % Prevents figures from going at top of page.
+   \@afterindentfalse              % Suppresses indent in first paragraph.  Change
+   \secdef\@chapter\@schapter}     % to \@afterindenttrue to have indent.
+
+\def\@makechapterhead#1{             % Heading for \chapter command
+  {\topskip=44pt \parindent 0pt \raggedright
+   %\xxONxx\rm %SE23110415
+   \Large \bfseries #1\par             % Title. SE23110415
+   \nobreak           % TeX penalty to prevent page break.
+   \vskip-\prevdepth  % Fool TeX into ignoring the depth of
+   \prevdepth=0pt     % the CT when spacing to the CA
+   \vskip 20pt        % between title and chapter authors
+  } }
+
+\def\@makeschapterhead#1{             % Heading for \chapter* command
+  {\topskip=44pt \parindent 0pt \raggedright
+   %\xxONxx\rm
+   \Large \bfseries #1\par     % Title. SE23110415
+   \nobreak                    % TeX penalty to prevent page break.
+   \vskip-\prevdepth           % Fool TeX into ignoring the depth of
+   \prevdepth=0pt              % the CT when spacing to the CA
+   \vskip 12pt                % 2.5pi b/b between title and chapter authors
+  } }
+
+
+%This command has a new definition - see at the bottom of this file.
+%\gdef\chapterauthors#1{%
+%        {\def\\{, }\def\footnote##1{}\def\footnotemark[##1]{}%
+%         \xdef\@chapterauthors{#1}}%
+%        \markright{\@chapterauthors}%
+%    \parindent0pt \raggedright\xivONxiv\rm #1\par
+%                \nobreak
+%           \vskip 12pt\noindent
+%}}
+
+%
+% Restart the footnote counter each chapter.
+%
+%\newcounter{footnote}[chapter]
+%
+% FN    1pc space above footnotes to text.
+%       5 pc 1/2 pt rule fl.l. above footnotes
+%       leave 6pt # after rule followed by ftn
+%
+\skip\footins=18.5pt    % space above line and below line, 1pc+6pt+.5pt
+\footskip=16pt
+\footnotesep=7pt        % pretty arbitrary
+\def\footnotesize{\@setsize\footnotesize{10pt}\ixpt\@ixpt}
+\def\footnoterule{\kern-6.5pt\hrule width 5pc height .5pt\vskip 6pt}
+%
+% Footnote at end of chapter position below last text line (not at bottom
+% of page).
+%
+\def\clearpage{\par\penalty -\@M \write\m@ne{}\vbox{}\penalty -\@Mi}
+\def\@makecol{\ifvoid\footins \setbox\@outputbox\box\@cclv
+   \else\setbox\@outputbox
+     \vbox{\unvbox\@cclv\vskip\skip\footins\footnoterule\unvbox\footins}\fi
+     \xdef\@freelist{\@freelist\@midlist}\gdef\@midlist{}\@combinefloats
+     \setbox\@outputbox\vbox to\@colht{\boxmaxdepth\maxdepth
+        \@texttop
+        \@tempdima=\@colht \multiply\@tempdima by 10 \divide\@tempdima by 9
+        \ifdim \ht\@outputbox<\@tempdima
+                \unvbox\@outputbox \vfill
+        \else
+                \unvbox\@outputbox
+        \fi
+        \@textbottom}\global\maxdepth\@maxdepth}
+
+               %% added by AK on 20111007
+\def\@email{\vskip 9pt%
+%\rightskip=1pc\leftskip=1pc %SE2411
+\parindent=\z@ \ixONxi\rm{E-mail for correspondence: }\ttfamily}
+\def\end@email{\par} %
+
+%
+% Abstract: 9/11 TRx25pi, sink 2.5pi b/b from CA
+%
+\def\@abstract{\vskip 9pt%
+%\rightskip=1pc\leftskip=1pc %SE2411
+\parindent=\z@ \ixONxi\rm {\textbf{Abstract: }}}
+\def\end@abstract{\par} %
+
+\def\@keywords{\vskip 9pt%
+%\rightskip=1pc\leftskip=1pc %SE2411
+\parindent=\z@ \ixONxi\rm {\textbf{Keywords: }}}
+\def\end@keywords{\par} %
+
+
+% Definition of the table of contents
+\def\iwsmtoc{\@restonecolfalse\if@twocolumn\@restonecoltrue\onecolumn
+  \fi\chapter*{Contents\@mkboth{Contents}{Contents}}
+  \@starttoc{iws}\if@restonecol\twocolumn\fi}
+
+% Definition of the Entrys in the table of Contents
+\newcommand{\l@iwsmtitle}[2]
+{
+\par%\vspace*{1mm}
+\parbox[b]{  5mm}{}
+\parbox[b]{100mm}{\hspace*{-5mm}#1\dotfill}\hfill\parbox[b]{3mm}
+\hfill\mbox{#2}
+}
+
+
+\setcounter{tocdepth}{0}
+
+% No 1 Head, 14/16 CM, 36pt b/b above, 24 tp b/b below
+%\def\section{\@startsection
+%    {section}{1}{\z@}{-21pt plus 6pt minus 1pt}{12pt plus 2pt}%
+%        {\normalfont\large\bfseries\boldmath}} %SE23110417 {\xivONxvi\rm\raggedright}}
+% No 2 Head, 12/14 CM italic, 30pt above, 18 pt below
+%\def\subsection{\@startsection
+%    {subsection}{2}{\z@}{-16pt plus 4pt minus 1pt}{6pt plus 1pt}%
+%        {\normalfont\normalsize\bfseries\boldmath}} %SE2311{\xiiONxiv\raggedright}}
+% No 3 Head, 10/12 CM, 24pt above, 18pt below
+%\def\subsubsection{\@startsection
+%    {subsubsection}{3}{\z@}{-12pt plus 3pt minus 1pt}{6pt plus 1pt}%
+%        {\normalfont\normalsize\bfseries\boldmath}}%SE2311{\xONxii\rm\raggedright}}
+
+
+%Definition of sections SE2411
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+                       {-18\p@ \@plus -4\p@ \@minus -4\p@}%
+                       {12\p@ \@plus 4\p@ \@minus 4\p@}%
+                       {\normalfont\large\bfseries\boldmath
+                        \rightskip=\z@ \@plus 8em\pretolerance=10000 }}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+                       {-18\p@ \@plus -4\p@ \@minus -4\p@}%
+                       {8\p@ \@plus 4\p@ \@minus 4\p@}%
+                       {\normalfont\normalsize\bfseries\boldmath
+                        \rightskip=\z@ \@plus 8em\pretolerance=10000 }}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+                       {-18\p@ \@plus -4\p@ \@minus -4\p@}%
+                       {-0.5em \@plus -0.22em \@minus -0.1em}%
+                       {\normalfont\normalsize\bfseries\boldmath}}
+
+
+
+%Definition of paragraphs
+%No 4 Head, 10/12 CM italic, 20pt above, 18pt below
+\def\paragraph{\@startsection
+     {paragraph}{4}{\z@}{-8pt plus 2pt minus .5pt}{6pt plus 1pt}%
+        {\xONxii\it\raggedright}}
+% No 5 Head, 10/12 CM italic, period,  en space to run in text, 18pt above
+\def\subparagraph#1{\@startsection
+     {subparagraph}{5}{\z@}{-6pt plus 2pt minus .5pt}{-.5em}{\xONxii\it}{#1.}}
+% Ack: Acknowledgements same as No 5 head, 36pt above
+\def\acknowledgments{\@startsection
+     {subparagraph}{6}{\z@}{-24pt plus 6pt minus 1pt}{-.5em}%
+        {\normalfont\normalsize\bfseries\boldmath}*{Acknowledgments:\/}} %SE2411
+%%% the following lines:
+%R% % R-1: ``References'', same as No.2 head
+%R% % unless it's single-author.
+%R% \def\mainbibliography#1{{\@multipleauthorsfalse\bibliography{#1}}}
+%R% \def\thebibliography#1{%
+%R% \if@multipleauthors
+%R%   \@startsection
+%R%     {section}{2}{\z@}{-16pt plus 4pt minus 1pt}{6pt plus 1pt}%
+%R%         {\xiiONxiv\rm\raggedright}{References}%
+%R% \else
+%R%   \chapter*{References\@mkboth
+%R%   {References}{References}}%
+%R%   \addcontentsline{toc}{chapter}{\protect\numberline{}References}%
+%R% \fi
+%R% %endif
+%R%   \list
+%R%   {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+%R%     \advance\leftmargin\labelsep
+%R%     \usecounter{enumi}}
+%R%     \def\newblock{\hskip .11em plus .33em minus -.07em}
+%R%     \sloppy
+%R%     \sfcode`\.=1000\relax}
+%%% replaced by
+% R-1: ``References'', same as No.3 head
+\def\references{
+  \subsection*{References
+%%%\@mkboth{References}{References}
+}}
+%%% end replacement
+% Put index in the toc
+\def\theindex{\@restonecoltrue\if@twocolumn\@restonecolfalse\fi
+\columnseprule \z@
+\columnsep 35pt\twocolumn[\@makeschapterhead{Index}]
+    \addcontentsline{toc}{chapter}{\protect\numberline{}Index}%
+    \@mkboth{Index}{Index}\thispagestyle{empty}\parindent\z@
+    \parskip\z@ plus .3pt\relax\let\item\@idxitem}
+\def\theauthorindex{\@restonecoltrue\if@twocolumn\@restonecolfalse\fi
+\columnseprule \z@
+\columnsep 35pt\twocolumn[\@makeschapterhead{Author Index}]
+    \addcontentsline{toc}{chapter}{\protect\numberline{}Author Index}%
+    \@mkboth{Author Index}{Author Index}\thispagestyle{empty}\parindent\z@
+    \parskip\z@ plus .3pt\relax\let\item\@idxitem}
+\def\thesubjectindex{\@restonecoltrue\if@twocolumn\@restonecolfalse\fi
+\columnseprule \z@
+\columnsep 35pt\twocolumn[\@makeschapterhead{Subject Index}]
+    \addcontentsline{toc}{chapter}{\protect\numberlin6e{}Subject Index}%
+    \@mkboth{Subject Index}{Subject Index}\thispagestyle{empty}\parindent\z@
+    \parskip\z@ plus .3pt\relax\let\item\@idxitem}
+\def\thesymbolindex{\@restonecoltrue\if@twocolumn\@restonecolfalse\fi
+\columnseprule \z@
+\columnsep 35pt\twocolumn[\@makeschapterhead{Symbol Index}]
+    \addcontentsline{toc}{chapter}{\protect\numberline{}Symbol Index}%
+    \@mkboth{Symbol Index}{Symbol Index}\thispagestyle{empty}\parindent\z@
+    \parskip\z@ plus .3pt\relax\let\item\@idxitem}
+
+
+% Eq: Center on text width; equation numbers set flush right, align with
+% last line of equation, 6pt # above/below.
+%
+\abovedisplayskip=6pt plus 1.5pt minus 3pt
+\belowdisplayskip=\abovedisplayskip
+\abovedisplayshortskip=\z@ plus 1.5pt
+\belowdisplayshortskip=3pt plus 1.5pt minus 1.5pt
+%
+% FL: Figure legends ``FIGURE 0.0'' 9/11 TR, c/lc, period, word # to text.
+%
+\long\def\@makecaption#1#2{{
+   \vskip 10pt
+   \ixONxi
+   \setbox\@tempboxa\hbox{#1. #2}
+   \ifdim \wd\@tempboxa >\hsize   % IF longer than one line:
+       \unhbox\@tempboxa\hfil\par      %   THEN set as ordinary paragraph.
+     \else                        %   ELSE  center.
+       \hbox to\hsize{\hfil\box\@tempboxa\hfil}
+   \fi}}
+\def\fnum@figure{\ixONxi FIGURE \thefigure}%{\sc FIGURE~}\thefigure}
+%
+% TN+TT: ``TABLE 0.0'' 9/11 TR, c/lc. period, word # to table title:
+% 3 pt # below to 1/2 pt rule x table measuer, 3 pt # below rule to
+% TCH
+%
+\arrayrulewidth=.5pt
+\def\fnum@table{\ixONxi TABLE~\thetable}
+\def\TableSubtitleRule{\noalign{\vskip 3pt}\hline\noalign{\vskip 3pt}}
+\long\def\TableFootnote#1{\gdef\TFN{#1}}
+
+\def\@@startpbox#1{\vtop\bgroup \hsize #1\@arrayparboxrestore
+\parindent=-1em\leftskip=1em}
+\newsavebox{\@stablebox}
+\def\stable#1#2{\@ifnextchar[{\@stable{#1}{#2}}{\@stable{#1}{#2}[h]}}
+\def\@stable#1#2[#3]{\begin{table}[#3]
+        \def\foo{#1}\def\TFN{}%
+        \viiiONx
+        \setbox\@stablebox=\hbox\bgroup
+        \begin{tabular}{#2}%
+        \noalign{\vskip 3pt}
+        \hline
+        \noalign{\vskip 3pt}}
+\@namedef{endstable}{\crcr\noalign{\vskip 6pt}\hline\end{tabular}\egroup
+$$\vbox{\hsize=\wd\@stablebox
+\caption{\foo}
+\box\@stablebox
+\prevdepth=0pt  % last thing was a rule
+\par
+\TFN}$$
+\end{table}}
+%%%% GROT.  This is hacked to move a label definition outside.
+%%%% I think the whole stable idea is broken.
+
+\def\stable#1#2{\@ifnextchar[{\@stable{#1}{#2}}{\@stable{#1}{#2}[h]}}
+\def\@stable#1#2[#3]{\table[#3]
+        \def\foo{#1}\def\TFN{}\def\stablelabel{}%
+        \viiiONx
+        \setbox\@stablebox=\hbox\bgroup\def\label##1{\gdef\stablelabel{\label{##1}}}%
+        \tabular{#2}%
+        \noalign{\vskip 3pt}%
+        \hline
+        \noalign{\vskip 3pt}}
+\@namedef{endstable}{\crcr\noalign{\vskip 6pt}\hline\endtabular\egroup
+$$\vbox{\hsize=\wd\@stablebox
+\caption{\foo}\stablelabel
+\box\@stablebox
+\prevdepth=0pt  % last thing was a rule
+\par
+\TFN}$$
+\endtable}
+
+\def\stablecont#1#2{\@ifnextchar[{\@stablecont{#1}{#2}}{\@stablecont{#1}{#2}[h]}}
+\def\@stablecont#1#2[#3]{\table[#3]
+        \def\foo{#1}\def\TFN{}
+        \viiiONx
+        \setbox\@stablebox=\hbox\bgroup\def\label{\error}
+        \tabular{#2}%
+        \noalign{\vskip 3pt}%
+        \hline
+        \noalign{\vskip 3pt}}
+\@namedef{endstablecont}{\crcr\noalign{\vskip 6pt}\hline\endtabular\egroup
+$$\vbox{\hsize=\wd\@stablebox
+  \begingroup
+    \@parboxrestore
+        \vskip 10pt
+        \ixONxi
+           \setbox\@tempboxa\hbox{\ignorespaces \foo}
+           \ifdim \wd\@tempboxa >\hsize   % IF longer than one line:
+               \unhbox\@tempboxa\hfil\par      %   THEN set as ordinary paragraph.
+             \else                        %   ELSE  center.
+               \hbox to\hsize{\hfil\box\@tempboxa\hfil}
+           \fi\par
+  \endgroup
+\box\@stablebox
+\prevdepth=0pt  % last thing was a rule
+\par
+\TFN}$$
+\endtable}
+
+\newdimen\stabularwidth
+
+\def\stabular{\@ifnextchar[{\@stabular}{\@stabular[h]}}
+\def\@stabular[#1]#2{
+        \setbox\@stablebox=\hbox\bgroup\viiiONx
+        \tabular[#1]{#2}%
+        \noalign{\vskip 3pt}%
+        \hline
+        \noalign{\vskip 3pt}}
+\def\endstabular{\crcr\noalign{\vskip 6pt}\hline\endtabular\egroup
+\stabularwidth=\wd\@stablebox
+\box\@stablebox}
+
+\def\thesection{\arabic{section}}  %% deletes Chap No from Section.
+\def\thefigure{\@arabic\c@figure}  %% deletes Chap No from Section.
+\def\thetable{\@arabic\c@table}  %% deletes Chap No from Section.
+\def\theequation{\@arabic\c@equation}  %% deletes Chap No from Section.
+
+\def\appendix{\par
+ \setcounter{chapter}{0}
+ \setcounter{section}{0}
+ \def\@chapapp{}
+ \def\thechapter{\Alph{chapter}}}
+
+%\input psfig
+%\def\figput#1#2#3{\begin{figure}\hfil%
+%\psfig{figure=#1,height=#2}\hfil\caption{#3}%
+%                    \end{figure}}
+%\def\figpage#1#2#3{\begin{figure}[p]\hfil%
+%\psfig{figure=#1,height=#2}\hfil\caption{#3}%
+%                    \end{figure}}
+
+
+%list of tokens to realize running authors/titles,
+%and toc authors/titles.
+
+
+
+\newtoks\title      % title
+\newtoks\titlerunning   % running title
+\newtoks\toctitle   % title in toc
+\newtoks\author        % author
+\newtoks\authorrunning % author defined running author
+\newtoks\tocauthor     % author in toc
+\newtoks\abstract   % holds the abstract
+\newtoks\institute      % holds the institute
+\newtoks\email      % holds the e-mail                     %% added by AK on 20111007
+\newtoks\keywords   % holds the keywords
+
+\def\cleararticleinfo{%
+\global\title={}%
+\global\titlerunning={}%
+\global\toctitle={}%
+\global\author={}%
+\global\authorrunning={}%
+\global\tocauthor={}%
+\global\abstract={}%
+\global\institute={}%
+\global\email={}%                                          %% added by AK on 20111007
+\global\keywords={}%
+}
+
+
+
+
+
+%Affiliation
+\newcounter{afcount}%Counter for Institutes
+\newenvironment{afenum}%a list environment for the institutes
+{\begin{list}%the lists definition
+{$^{\arabic{afcount}}$}%formatting the counter
+{\usecounter{afcount}\setlength{\topsep}{0mm}\setlength{\itemsep}{0mm}%
+\setlength{\parskip}{0pt}%
+\setlength{\parsep}{0pt}\setlength{\labelsep}{5pt}\setlength{\labelwidth}{1cm}%
+\setlength{\leftmargin}{0.3cm} \ixONxi\rm}%formatting the list
+}%beginenv
+{\end{list}}%endenv
+
+\newcommand{\@institute}[1]%institute command
+{\begingroup%to keep definitions local
+\renewcommand{\and}{\item}%set \and to \item
+\begin{afenum}%
+\item  #1%
+\end{afenum}%insert into afenum enumeration
+\endgroup
+}%endcommand
+
+\newcommand{\myfootnote}[1]{%         %% added by FS for IWSM 29
+\renewcommand{\thefootnote}{}%
+\footnotetext{#1}%
+\renewcommand{\thefootnote}{\arabic{footnote}}%
+}
+
+
+\gdef\chapterauthors#1{%
+\def\\{, }\def\footnote##1{}\def\footnotemark[##1]{}%
+\edef\@chapterauthors{\the\authorrunning}%
+\markright{\@chapterauthors}%
+\begingroup
+\def\inst##1{$^##1$}%SE23111206, now \inst is defined
+\parindent0pt \raggedright\xiiONxiv\rm #1\par\nobreak\vskip 0pt\noindent
+\endgroup
+}
+
+
+
+
+
+\gdef\rchapterauthors#1{%
+        {\def\\{, }\def\footnote##1{}\def\footnotemark[##1]{}%
+
+        \edef\@chapterauthors{\the\authorrunning}%
+    \markright{\@chapterauthors}%
+        \parindent0pt \raggedright\xiiONxiv\rm #1\par\nobreak\vskip 0pt\noindent}
+}
+
+
+\def\inst#1{}
+\def\maketitle{%
+\if!\the\toctitle!
+\global\toctitle=\title
+\fi
+\if!\the\titlerunning!
+\global\titlerunning=\title
+\fi
+\if!\the\tocauthor!
+\global\tocauthor=\author
+\fi
+\if!\the\authorrunning!
+\global\authorrunning={\the\author}
+\fi
+\chapter{\the\title}
+% \myfootnote{This paper was published as a part of the proceedings of the 33rd International Workshop on Statistical Modelling (IWSM), University of Bristol, UK, 16-20 July 2018. The copyright remains with the author(s). Permission to reproduce or extract any parts of this abstract should be requested from the author(s).}    %% added by FS for IWSM 29,changed HW 
+\chapterauthors{\the\author}
+\addcontentsline{iws}{iwsmtitle}{{\sc\the\tocauthor:} {\the\toctitle}}
+\if!\the\institute!{}
+\else
+\@institute{\the\institute}
+\fi
+\if!\the\email!{}
+\else
+\begin{@email}\the\email\end{@email}
+\fi
+\if!\the\abstract!{}
+\else
+\begin{@abstract}\the\abstract\end{@abstract}
+\fi
+\if!\the\keywords!{}
+\else
+\begin{@keywords}\the\keywords\end{@keywords}
+\fi
+\cleararticleinfo
+}
+
+\def\T{{ \mathrm{\scriptscriptstyle T} }} %added by VM IWSM28
+
+\pagenumbering{arabic}
