@@ -1,0 +1,322 @@
+%%%%%%%%%%%%%%%%%%%%%%% file template.tex %%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This is a general template file for the LaTeX package SVJour3
+% for Springer journals.          Springer Heidelberg 2010/09/16
+%
+% Copy it to a new file with a new name and use it as the basis
+% for your article. Delete % signs as needed.
+%
+% This template includes a few options for different layouts and
+% content for various journals. Please consult a previous issue of
+% your journal as needed.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\RequirePackage{fix-cm}
+%
+%\documentclass{svjour3}                     % onecolumn (standard format)
+\documentclass[smallcondensed]{svjour3}     % onecolumn (ditto)
+%\documentclass[smallextended]{svjour3}      % onecolumn (second format)
+%\documentclass[twocolumn]{svjour3}          % twocolumn
+%
+\smartqed  % flush right qed marks, e.g. at end of proof
+%
+\usepackage{graphicx}
+%
+% \usepackage{mathptmx}      % use Times fonts if available on your TeX system
+%
+% insert here the call for the packages your document requires
+%\usepackage{latexsym}
+% etc.
+%
+% please place your own definitions here and don't use \def but
+% \newcommand{}{}
+%
+% Insert the name of "your journal" with
+\journalname{AStA Wirtschafts- und Sozialstatistisches Archiv}
+
+% Own Packages and newcommands
+\usepackage{amsmath, amssymb}
+\usepackage{booktabs}
+\usepackage[usenames, dvipsnames]{color}
+\usepackage[round]{natbib}
+\bibliographystyle{plainnat}
+\newcommand{\T}{\mathrm{\scriptscriptstyle T}}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+
+
+
+\begin{document}
+
+\title{KOALA: Estimating coalition probabilities in multi-party electoral systems%\thanks{Grants or other notes
+%about the article that should go on the front page should be
+%placed here. General acknowledgments should be placed at the end of the article.}
+}
+\subtitle{Do you have a subtitle?\\ If so, write it here}
+\titlerunning{KOALA: Coalition analyses}   % if too long for running head
+
+\author{Alexander Bauer \and Andreas Bender \and Andr\'e Klima \and Helmut K\"{u}chenhoff}
+
+%\authorrunning{Short form of author list} % if too long for running head
+
+\institute{A. Bauer \at
+              Statistical Consulting Unit StaBLab, Department of Statistics, LMU Munich, Germany \\
+              Tel.: +49-89-2180-3197 \\
+              Fax: +49-89-2180-5308 \\
+              \email{alexander.bauer@stat.uni-muenchen.de} \\
+              ORCID: 0000-0003-3495-5131
+%             \emph{Present address:} of F. Author  %  if needed
+           \and
+           A. Bender \at
+              Statistical Consulting Unit StaBLab, Department of Statistics, LMU Munich, Germany \\
+              ORCID: 0000-0001-5628-8611
+           \and
+           A. Klima \at
+              Statistical Consulting Unit StaBLab, Department of Statistics, LMU Munich, Germany
+           \and
+           H. K\"{u}chenhoff \at
+              Statistical Consulting Unit StaBLab, Department of Statistics, LMU Munich, Germany
+}
+
+\date{Received: date / Accepted: date}
+% The correct dates will be entered by the editor
+
+
+\maketitle
+
+\begin{abstract} \red{150 to 250 words} \\
+Common election poll reporting is often misleading as sample uncertainty is either not covered at all or only insufficiently. For a more comprehensive coverage, we propose shifting the focus towards reporting survey-based probabilities for specific election outcomes. We present such an approach for multi-party electoral systems, focusing on probabilities of coalition majorities. A Monte Carlo based Bayesian Multinomial-Dirichlet model is used for estimation. The method utilizes published opinion polls
+%conducted by established polling agencies
+and is accompanied by a pooling approach to summarize multiple current surveys, accounting for dependencies between polling agencies.
+%Potential biases of specific pollsters are not taken into account.
+Sample uncertainty-based probabilities are estimated, assuming the election was held today. An implementation in \texttt{R} is freely available.
+
+\keywords{\red{4 to 6 keywords} Election analysis \and Opinion polls \and Election reporting \and Multinomial-Dirichlet \and Pooling}
+% \PACS{PACS code1 \and PACS code2 \and more}
+% \subclass{MSC code1 \and MSC code2 \and more}
+\end{abstract}
+
+\section{Introduction and data} \label{intro}
+Election polls
+%are conducted by different polling agencies and 
+try to represent the public opinion based on a finite sample. Current reporting on such surveys is most often limited to the observed shares, while sample uncertainty
+%and the multinomial structure of the data
+is usually ignored. Often e.g., a coalition -- i.e. a union of multiple parties, formed to reach a governing majority -- is stated to ``lose'' its majority just because the joint poll share drops under 50\% (cf. \cite{umfrage_2017}).
+In our opinion, the focus in survey reporting in multi-party electoral systems should be shifted towards
+% the most relevant question, i.e. 
+\textit{how probable} an events is. 
+%e.g., a majority for a specific coalition.
+% In multi-party electoral systems, one party usually doesn't obtain enough votes for a majority. In these situations, multiple parties form a so-called coalition to obtain the necessary majority shares.
+We present our KOALA (Coalition Analysis) approach to estimate such probabilities
+to bring more value to opinion poll-based reporting.
+Prior to the German federal elections 2013 and 2017, results based on (an earlier iteration of) our approach already entered general media reporting (cf. \cite{wahlistik_2013}, or \cite{gelitz_2017}).
+
+%As database, we use opinion polls conducted by 
+We use data from
+established polling agencies,
+quantifying the electoral behavior \textit{if an election was held today}.
+Our approach is to be differentiated from prediction-aimed methods (cf. \cite{graefe_2017} or \cite{norpoth_gschwend_2010}) as potential shifts until election day are not taken into consideration.
+%We focus on the question of quantifying current majority situations, not taking into consideration potential shifts until election day.
+
+A Bayesian Multinomial-Dirichlet model with Monte Carlo simulations is used for estimation. Also, a pooling approach is presented to summarize multiple current opinion polls to reduce sample uncertainty.
+
+All methods were implemented in \texttt{R} and are available in the open-source
+package \texttt{coalitions} on GitHub \citep{bender_bauer_2018}. An
+interactive \texttt{shiny}-based \citep{chang_2017} website \texttt{koala.stat.uni-\allowbreak muenchen.\allowbreak de}
+visualizes the results and is used for communication to the general public.
+%visualizes estimated coalition probabilities and is used to communicate the results to the general public.
+The process of fetching new polls, updating the website and sending out Twitter messages based on the newest results is automated.
+
+
+
+\section{Calculation of probabilities} \label{sec:method}
+In the last opinion poll conducted before the German federal election 2013 \citep{forsa_2013}, special interest was on whether CDU/CSU-FDP (also ``Union-FDP'') would obtain enough votes to form the governing coalition:
+
+\begin{table}[!ht]\centering
+\caption{Observed voter shares in the Forsa opinion poll published September 20th, 2013 with $n=1995$ respondents
+\label{bauer:tab_fdp}
+}
+\medskip
+\begin{tabular}{cccccccc}
+\toprule[0.09 em]
+Union & SPD & Greens & FDP & The Left & Pirates & AfD & Others \\
+\midrule
+40\% & 26\% & 10\% & 5\% & 9\% & 2\% & 4\% & 4\% \\
+\bottomrule[0.09 em]
+\end{tabular}
+\end{table}
+
+The German election system mandates a 5\% votes share for parties to enter the parliament.
+Votes for parties below this threshold are redistributed (proportionally) to parties
+above it.
+Here, Union-FDP with its 45\% raw voter share would get exactly 50\% of parliament seats after redistribution. Thus, ingoring uncertainty one would conclude that a majority is slightly missed. However, it is clear that this only holds with a certain probabilitiy and particularly depends on whether FDP and/or AfD pass the 5\% hurdle.
+
+
+To estimate coalition probabilities, we choose a Multinomial-Dirichlet model with uninformative prior for the true party shares
+$\theta_j$ \citep{gelman_2013}:
+\begin{equation}
+(\theta_1,\ldots,\theta_k)^\T \sim Dirichlet(\alpha_1,\ldots,\alpha_k), \ \ \text{with} \ \ \alpha_1 = \ldots = \alpha_k = \frac{1}{2}
+\end{equation}
+% \begin{equation}
+% \begin{aligned}
+% \boldmath{\theta} &= (\theta_1,\ldots,\theta_k)^\T \sim Dirichlet(\alpha_1,\ldots,\alpha_k), \\
+% \text{with} &\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \alpha_1 = \ldots = \alpha_k = \frac{1}{2}
+% \end{aligned}
+% \end{equation}
+Given one (pooled) survey, the posterior also is a Dirichlet distribution
+with $\alpha_j = x_j + \frac{1}{2}$ for each party $j$ and its observed
+vote counts $x_j$.
+
+Using Monte Carlo simulations of election outcomes, one can obtain
+specific event probabilities by taking their relative frequency of
+occurence. As vote shares are usually rounded before publication,
+we adjust the available data by adding random noise to $x_j$ before
+calculating the Bayesian posterior.
+%we add uniformly distributed random noise $r_\gamma \sim U[-\gamma,\gamma]$ to the shares (e.g., $\gamma = 0.5\%$) and rescale the sum to $100\%$.
+
+To visualize the development of such probabilities together with the underlying uncertainty for a specific coalition we recommend using ridgeline plots \citep{wilke_2017} for the simulated seat distributions (Fig.~\ref{fig:seatDist_time}). Looking at the probabilities based on the last opinion poll before the German election 2013, the posterior distribution is bimodal, based on the distinction whether FDP and/or AfD pass the 5\% hurdle. The resulting probability for a Union-FDP majority is 27.2\%, based on $10,000$ simulations.
+
+
+\begin{figure}[!ht]\centering
+\includegraphics[width=0.35\textwidth]{figures/bauer_seatDist_time.pdf}
+\caption{Development of simulated parliament seat share densities for the coalition Union-FDP before the German federal election in September 2013 based on Forsa opinion polls. The parts of the densities encoding for seat majorities are colored blue.
+\label{fig:seatDist_time}
+}
+\end{figure}
+
+
+
+\section{Pooling approach} \label{sec:pooling}
+% In the presence of multiple published opinion polls, pooling is used to summarize the observed results in order to reduce sample uncertainty. To assure a reliable pooling regarding the current public opinion, we only use polls published within the past 14 days and only use the most recent survey published by each polling agency.
+Pooling is used to summarize multiple polls to reduce sample uncertainty.
+To reliably estimate the current public opinion, we use polls published within the past 14 days, only using the most recent survey per polling agency.
+% To assure a reliable pooling regarding the current public opinion, we only use polls published within the past 14 days and only use the most recent survey published by each polling agency.
+As vote counts $X_{ij}$ of party $j$ in poll $i$ are multinomially distributed, so are the summed number of votes $\sum_i X_{ij}$ when pooling multiple independent polls.
+% Looking at a single poll $i$, the observed number of votes $X_j$ for each of $k$ parties follow a multinomial distribution with sample size $n_i$ and underlying, unknown party shares $\theta_j$ in the population:
+% $$
+% X_1,\ldots, X_k \sim Multinomial(n_i,\theta_1,\ldots,\theta_k).
+% $$
+% Based on the multinomial distribution of the vote counts $X_{ij}$ of party $j$ in poll $i$, pooling over multiple polls as independent random samples leads to another multinomial distribution for the summed number of votes $\sum_i X_{ij}$.
+% Based on the multinomial distribution of the vote counts $X_{ij}$ of party $j$ in poll $i$ with underlying true party share $\theta_j$, pooling over multiple polls representing independent random samples would lead to a multinomial distribution for the summed number of votes $\sum_i X_{ij}$:
+% $$
+% \sum\limits_i X_{i1},\ldots, \sum\limits_i X_{ik} \sim Multinomial(\sum\limits_i n_i,\theta_1,\ldots,\theta_k).
+% $$
+Further analyses, however, show that polls from different
+polling agencies are correlated.
+%and the independency assumption does not hold.
+Therefore, we adjust the
+%resulting multinomial
+distribution by using an \textit{effective sample size} \citep{hanley_2003}.
+Party-specific correlations were estimated based on
+20 surveys of polling agencies Emnid and Forsa, using
+$$
+Cov(X_{Aj}, X_{Bj}) = \frac{1}{2} \cdot \left(Var(X_{Aj}) + Var(X_{Bj}) - Var(X_{Aj} - X_{Bj}) \right),
+$$
+with $Var(X_{Aj})$, $Var(X_{Bj})$ the theoretical variances of binomial distributions and $Var(X_{Aj} - X_{Bj})$ estimated from the party share differences.
+For simplicity, we set the correlation to a fixed value of $0.5$.
+% For simplicity, we do not recalculate the correlation for each simulation, but rather set the correlation to $0.5$, based on the initial calculation discussed above.
+The effective sample size $n_{\text{eff}}$ is then defined as the ratio between
+the estimated variance for the pooled sample and the theoretical variance for a
+sample of size one:
+$$
+n_{\text{eff}} = \frac{Var(\text{pooled})}{Var(\text{sample of size one})}.
+$$
+For convenience, this calculation is based on the party with most votes,
+as the specific party choice only marginally affects the results.
+
+% Quantification of pairwise correlation is done based on the variance of the
+% difference between two polls. The following equation holds for two independent
+% random sample polls $A$ and $B$:
+%
+% $$
+% \begin{aligned}
+% %Var(X_A - X_B) &= Var(X_A) + Var(X_B) - 2 \cdot Cov(X_A, X_B) \\
+% Cov(X_{Aj}, X_{Bj}) &= \frac{1}{2} \cdot \left(Var(X_{Aj}) + Var(X_{Bj}) - Var(X_{Aj} - X_{Bj}) \right).
+% \end{aligned}
+% $$
+%
+% We take $Var(X_{Aj})$ and $Var(X_{Bj})$ as the theoretical variances of the binomially distributed, observed voter numbers and estimate $Var(X_{Aj} - X_{Bj})$ based on the observed differences between the party shares. Having done so, one can estimate the covariance $Cov(X_{Aj}, X_{Bj})$ and accordingly also the correlation. As the binomial distribution is directly proportional to the sample size, the effective sample size $n_{\text{eff}}$ can be defined as the ratio between the estimated variance for the pooled sample and the theoretical variance of a sample of size one:
+% $$
+% n_{\text{eff}} = \frac{Var(\text{pooled})}{Var(\text{sample of size 1})},
+% $$
+% with, in the case of two surveys,
+% $$
+% Var(\text{pooled}) = Var(X_A + X_B) = Var(X_A) + Var(X_B) + 2 Cov(X_A,X_B)
+% $$
+% and $Var(\text{sample of size 1})$ the theoretical variance of the pooled share.
+%
+% Looking at the party-specific correlations between 20 surveys conducted by the two most regular German polling agencies, Emnid and Forsa, we on average end up with a medium high correlation, using mean party shares and sample sizes per institute for the theoretical variances. Other institute comparisons were not performed as too few surveys were conducted over comparable time frames. For simplicity, we set the correlation used in our methodology to $0.5$. For calculating $n_{\text{eff}}$ we base the calculation on the result of the biggest party, as the specific party choice only marginally affects $n_{\text{eff}}$.
+
+
+\section{Conclusion} \label{sec:conclusion}
+We presented an approach to estimate probabilities for specific election outcomes based on publicly available opinion polls. Pooling allows for the inclusion of information from multiple surveys. Visualizing the results on a publicly available website for chosen elections, our long-term goal is to make proper uncertainty assessment
+in general opinion poll-based reporting the rule, rather than an exception.
+
+
+
+% % For one-column wide figures use
+% \begin{figure}
+% % Use the relevant command to insert your figure file.
+% % For example, with the graphicx package use
+%   \includegraphics{figures/bauer_seatDist_time.pdf}
+% % figure caption is below the figure
+% \caption{Please write your figure caption here}
+% \label{fig:1}       % Give a unique label
+% \end{figure}
+% %
+% % For two-column wide figures use
+% \begin{figure*}
+% % Use the relevant command to insert your figure file.
+% % For example, with the graphicx package use
+%   \includegraphics[width=0.75\textwidth]{figures/bauer_seatDist_time.pdf}
+% % figure caption is below the figure
+% \caption{Please write your figure caption here}
+% \label{fig:2}       % Give a unique label
+% \end{figure*}
+%
+% % For tables use
+% \begin{table}
+% % table caption is above the table
+% \caption{Please write your table caption here}
+% \label{tab:1}       % Give a unique label
+% % For LaTeX tables use
+% \begin{tabular}{lll}
+% \hline\noalign{\smallskip}
+% first & second & third  \\
+% \noalign{\smallskip}\hline\noalign{\smallskip}
+% number & number & number \\
+% number & number & number \\
+% \noalign{\smallskip}\hline
+% \end{tabular}
+% \end{table}
+
+
+%\begin{acknowledgements}
+%If you'd like to thank anyone, place your comments here
+%and remove the percent signs.
+%\end{acknowledgements}
+
+% BibTeX users please use one of
+% \bibliographystyle{spbasic}      % basic style, author-year citations
+%\bibliographystyle{spmpsci}      % mathematics and physical sciences
+%\bibliographystyle{spphys}       % APS-like style for physics
+\bibliography{bauer_2018}   % name your BibTeX data base
+
+% Non-BibTeX users please use
+% \begin{thebibliography}{}
+%
+% and use \bibitem to create references. Consult the Instructions
+% for authors for reference list style.
+%
+% \bibitem{RefJ}
+% % Format for Journal Reference
+% Author, Article title, Journal, Volume, page numbers (year)
+% % Format for books
+% \bibitem{RefB}
+% Author, Book title, page numbers. Publisher, place (year)
+% % etc
+% \end{thebibliography}
+
+\end{document}
+% end of file template.tex
+
