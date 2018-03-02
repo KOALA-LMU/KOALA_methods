@@ -39,15 +39,18 @@
 \usepackage{amsmath, amssymb}
 \usepackage{booktabs}
 \usepackage[usenames, dvipsnames]{color}
-\usepackage[round]{natbib}
-\bibliographystyle{plainnat}
+% \usepackage[backend=bibtex,
+%             style=nature,
+%             citestyle=authoryear]{biblatex}
+% \addbibresource{bauer_2018.bib}
+\usepackage{natbib}
+\bibliographystyle{smj}
 \newcommand{\T}{\mathrm{\scriptscriptstyle T}}
 \newcommand{\red}[1]{\textcolor{red}{#1}}
 
 
 
 \begin{document}
-
 \title{KOALA: Estimating coalition probabilities in multi-party electoral systems%\thanks{Grants or other notes
 %about the article that should go on the front page should be
 %placed here. General acknowledgments should be placed at the end of the article.}
@@ -98,24 +101,24 @@ Sample uncertainty-based probabilities are estimated, assuming the election was 
 
 \section{Introduction and data} \label{intro}
 Election polls
-%are conducted by different polling agencies and 
+%are conducted by different polling agencies and
 try to represent the public opinion based on a finite sample. Current reporting on such surveys is most often limited to the observed shares, while sample uncertainty
 %and the multinomial structure of the data
-is usually ignored. Often e.g., a coalition -- i.e. a union of multiple parties, formed to reach a governing majority -- is stated to ``lose'' its majority just because the joint poll share drops under 50\% (cf. \cite{umfrage_2017}).
+is usually ignored. Often e.g., a coalition -- i.e. a union of multiple parties, formed to reach a governing majority -- is stated to ``lose'' its majority just because the joint poll share drops under 50\% \citep[cf.][]{umfrage_2017}.
 In our opinion, the focus in survey reporting in multi-party electoral systems should be shifted towards
-% the most relevant question, i.e. 
-\textit{how probable} an events is. 
+% the most relevant question, i.e.
+\textit{how probable} an events is.
 %e.g., a majority for a specific coalition.
 % In multi-party electoral systems, one party usually doesn't obtain enough votes for a majority. In these situations, multiple parties form a so-called coalition to obtain the necessary majority shares.
 We present our KOALA (Coalition Analysis) approach to estimate such probabilities
 to bring more value to opinion poll-based reporting.
-Prior to the German federal elections 2013 and 2017, results based on (an earlier iteration of) our approach already entered general media reporting (cf. \cite{wahlistik_2013}, or \cite{gelitz_2017}).
+Prior to the German federal elections 2013 and 2017, results based on (an earlier iteration of) our approach already entered general media reporting \citep[cf.][]{wahlistik_2013, gelitz_2017}.
 
-%As database, we use opinion polls conducted by 
+%As database, we use opinion polls conducted by
 We use data from
 established polling agencies,
 quantifying the electoral behavior \textit{if an election was held today}.
-Our approach is to be differentiated from prediction-aimed methods (cf. \cite{graefe_2017} or \cite{norpoth_gschwend_2010}) as potential shifts until election day are not taken into consideration.
+Our approach is to be differentiated from prediction-aimed methods \citep[cf.][]{graefe_2017, norpoth_gschwend_2010} as potential shifts until election day are not taken into consideration.
 %We focus on the question of quantifying current majority situations, not taking into consideration potential shifts until election day.
 
 A Bayesian Multinomial-Dirichlet model with Monte Carlo simulations is used for estimation. Also, a pooling approach is presented to summarize multiple current opinion polls to reduce sample uncertainty.
