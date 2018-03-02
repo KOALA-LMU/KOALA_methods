@@ -37,6 +37,7 @@
 
 % Own Packages and newcommands
 \usepackage{amsmath, amssymb}
+\setlength{\parindent}{0pt} % remove indentation before every paragraph
 \usepackage{booktabs}
 \usepackage[usenames, dvipsnames]{color}
 % \usepackage[backend=bibtex,
@@ -102,32 +103,65 @@ Sample uncertainty-based probabilities are estimated, assuming the election was 
 \section{Introduction and data} \label{intro}
 Election polls
 %are conducted by different polling agencies and
-try to represent the public opinion based on a finite sample. Current reporting on such surveys is most often limited to the observed shares, while sample uncertainty
-%and the multinomial structure of the data
-is usually ignored. Often e.g., a coalition -- i.e. a union of multiple parties, formed to reach a governing majority -- is stated to ``lose'' its majority just because the joint poll share drops under 50\% \citep[cf.][]{umfrage_2017}.
-In our opinion, the focus in survey reporting in multi-party electoral systems should be shifted towards
-% the most relevant question, i.e.
-\textit{how probable} an events is.
-%e.g., a majority for a specific coalition.
-% In multi-party electoral systems, one party usually doesn't obtain enough votes for a majority. In these situations, multiple parties form a so-called coalition to obtain the necessary majority shares.
+try to represent the public opinion based on a finite sample.
+Usually, polling agencies publish the shares of the electorate
+who would vote for the reported political parties {\it if the election was held today},
+the number of overall respondents and -- more or less prominent -- information
+about the uncertainty of the results.
+Current reporting of general media on such surveys in the end is most
+often limited to the observed shares, while sample uncertainty
+is usually ignored or only covered insufficiently.
+
+Prominent examples for inaccurate reporting can be found
+in multi-party electoral systems.
+In such, one party usually doesn't obtain enough votes for a majority.
+In these situations, multiple parties form a so-called coalition
+to jointly obtain the necessary majority share of seats in parliament.
+Often then, a coalition is stated to ``lose'' its majority
+just because the joint poll share drops under 50\% from one opinion poll to
+the next \citep[cf.][]{umfrage_2017}.
+Such interpretations are clearly misleading as opinion polls are based on a finite sample
+of voters and only allow conclusions about the whole electorate
+with a specific certainty. Reporting results in this manner thus
+reinforces general misunderstandings of the public about which message
+to draw from published opinion polls. Additionally, the perception of
+the observed voter shares to be definite values that hold for the
+electorate can also lead to an -- to some extent -- unjustified criticism
+of general opinion polls if the final election result differs
+from the latest polls published before election day. One prominent example is
+\red{XXX hier wenn moeglich a Beispiel fuer so a unberechtigte Kritik an Umfragen nach da Wahl XXX} (QUELLE).
+
+Beyond ensuring proper reporting of sample uncertainties, in our opinion, the
+whole focus in survey reporting should be shifted from describing the raw
+observed party shares. Instead, reporting should focus on the most relevant
+question, i.e. {\it how probable} specific events or election outcomes are.
+Events of interest can range from probabilities for parties passing
+a specific voter share via one party obtaining more seats in parliament
+than another through to probabilities for majorities of potential multi-party coalitions.
+As such probabilities combine both -- the observed raw voter share
+and sample uncertainty -- in one number, they are in theory easier to
+communicate to the general public. \red{Evtl (hier oder in da Discussion) auf de geplante Graefe-Studie verweisen, der de Vermittelbarkeit vo soichane W'keiten untersuacha mecht.}
+
 We present our KOALA (Coalition Analysis) approach to estimate such probabilities
-to bring more value to opinion poll-based reporting.
-Prior to the German federal elections 2013 and 2017, results based on (an earlier iteration of) our approach already entered general media reporting \citep[cf.][]{wahlistik_2013, gelitz_2017}.
+to bring more value to opinion poll-based reporting, specifically focusing on
+multi-party electoral systems and the estimation of probabilities for coalition
+majorities. To estimate the probabilities, a Bayesian Multinomial-Dirichlet model
+with Monte Carlo simulations is used. Also, a pooling approach is presented to summarize
+multiple current opinion polls to reduce sample uncertainty.
+Prior to the German federal elections 2013 and 2017, results based on (an earlier iteration of)
+our approach already entered general media reporting \citep[cf.][]{wahlistik_2013, gelitz_2017}.
 
-%As database, we use opinion polls conducted by
-We use data from
-established polling agencies,
+As database, we use opinion polls conducted by established polling agencies,
 quantifying the electoral behavior \textit{if an election was held today}.
-Our approach is to be differentiated from prediction-aimed methods \citep[cf.][]{graefe_2017, norpoth_gschwend_2010} as potential shifts until election day are not taken into consideration.
-%We focus on the question of quantifying current majority situations, not taking into consideration potential shifts until election day.
+We focus on the question of quantifying current majority situations, not
+taking into consideration potential shifts until election day.
+Approaches for predicting future election outcomes based on past
+information can e.g. be found in \citet{graefe_2017} or \citet{norpoth_gschwend_2010}.
 
-A Bayesian Multinomial-Dirichlet model with Monte Carlo simulations is used for estimation. Also, a pooling approach is presented to summarize multiple current opinion polls to reduce sample uncertainty.
-
-All methods were implemented in \texttt{R} and are available in the open-source
+All methods were implemented in \texttt{R} \citep{r_2017} and are available in the open-source
 package \texttt{coalitions} on GitHub \citep{bender_bauer_2018}. An
 interactive \texttt{shiny}-based \citep{chang_2017} website \texttt{koala.stat.uni-\allowbreak muenchen.\allowbreak de}
-visualizes the results and is used for communication to the general public.
-%visualizes estimated coalition probabilities and is used to communicate the results to the general public.
+visualizes estimated coalition probabilities and is used to communicate the results to the general public.
 The process of fetching new polls, updating the website and sending out Twitter messages based on the newest results is automated.
 
 
