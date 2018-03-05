@@ -203,6 +203,9 @@ Union & SPD & Greens & FDP & The Left & Pirates & AfD & Others \\
 
 As can be seen in Table \ref{bauer:tab_fdp_redist}, Union-FDP with its 45\% raw voter share would get exactly 50\% of parliament seats after redistribution. Thus, ingoring uncertainty one would conclude that a majority of the coalition is slightly missed. However, it is clear that this only holds with a certain probability and particularly depends on whether FDP, Pirates and AfD each pass the 5\% hurdle.
 
+\red{No bissl rumlabern a la voter numbers are Multinomially distributed, party shares as shares that sum up to 1 are Dirichlet distributed.}
+
+\red{Evtl a no: Using the prior one could steuern welche Parteien in de Surveys unter- oder uberschaetzt wern}
 
 To estimate coalition probabilities, we choose a Bayesian Multinomial-Dirichlet model
 with Jeffreys prior as uninformative prior for the true party shares
@@ -222,7 +225,10 @@ vote counts $x_j$.
 
 Using Monte Carlo simulations of election outcomes, one can obtain
 specific event probabilities by taking their relative frequency of
-occurence. E.g., Figure \ref{fig:seatDist} shows the simulated
+occurence. E.g., if a specific event occurs in $2,600$ of $10,000$
+simulations this equals an estimated probability of $26\%$.
+
+Figure \ref{fig:seatDist} shows the simulated
 parliament seat shares for the coalition Union-FDP, based on the observed
 voter shares in Table \ref{bauer:tab_fdp}. The estimated density is clearly bimodal
 as the observed FDP share before redistribution is exactly $50\%$ and
@@ -264,7 +270,7 @@ x_{j,adj} = \ &x_j + r_{\gamma,j}, \\
 \text{with} \ \ \ \ \ &r_{\gamma,j} \sim U[-\gamma,\gamma].
 \end{aligned}
 \end{equation}
-E.g., for data rounded to $0.5\%$ we use a correction term of $\gamma = 0.5\%$. Afterwards, the adjusted shares are rescaled to ensure a sum of $100\%$.
+E.g., for data rounded to $0.5\%$ we use a correction term of $\gamma = 0.5\%$. Afterwards, the adjusted shares are rescaled to ensure a sum of $100\%$ and the Bayesian approach is performed based on the adjusted shares.
 
 
 \section{Pooling approach} \label{sec:pooling}
@@ -281,7 +287,7 @@ Looking at a single poll $i$, the observed number of votes $X_{ij}$ for each of 
 Pooling over multiple such polls as independent random samples leads to another multinomial distribution for the summed number of votes $\sum_i X_{ij}$:
 % Based on the multinomial distribution of the vote counts $X_{ij}$ of party $j$ in poll $i$ with underlying true party share $\theta_j$, pooling over multiple polls representing independent random samples would lead to a multinomial distribution for the summed number of votes $\sum_i X_{ij}$:
 \begin{equation}
-\sum\limits_i X_{i1},\ldots, \sum\limits_i X_{ik} \sim Multinomial(\sum\limits_i n_i,\theta_1,\ldots,\theta_k).
+\sum\limits_i X_{i1},\ldots, \sum\limits_i X_{ik} \sim Multinomial \left( \sum\limits_i n_i,\theta_1,\ldots,\theta_k \right).
 \end{equation}
 
 Further analyses, however, show that polls from different
@@ -316,9 +322,11 @@ and $Var(\text{sample of size 1})$ the theoretical variance of the pooled share.
 Looking at the party-specific correlations between 20 surveys conducted by the two most regular German polling agencies, Emnid and Forsa, we on average end up with a medium high correlation, using mean party shares and sample sizes per institute for the theoretical variances. Other institute comparisons were not performed as too few published surveys were conducted cover comparable time frames. For simplicity, we do not recalculate the correlation for each simulation, but rather set the correlation used in our methodology to $0.5$.
 For convenience, the calculation of $n_{\text{eff}}$ is based on the party with most votes, as the specific party choice only marginally affects the results.
 
-\paragraph{Pooling in practice}
-- time window of 14 days
-- extended (downweighted) time window in the case of only few published polls
+\paragraph{\red{Pooling in practice}} \ \\
+- time window of 14 days \\
+- extended (downweighted) time window in the case of only few published polls \\
+- evtl no a Rechenbeispui fias Pooling gem, d.h. 'beim Poolen vo 2 Umfragen mit $n_1 = x$ und $n_2 = y$ kriagt ma a $n_{eff} = z$ raus
+
 
 
 \section{Discussion} \label{sec:discussion}
