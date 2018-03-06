@@ -203,12 +203,9 @@ Union & SPD & Greens & FDP & The Left & Pirates & AfD & Others \\
 
 As can be seen in Table \ref{bauer:tab_fdp_redist}, Union-FDP with its 45\% raw voter share would get exactly 50\% of parliament seats after redistribution. Thus, ingoring uncertainty one would conclude that a majority of the coalition is slightly missed. However, it is clear that this only holds with a certain probability and particularly depends on whether FDP, Pirates and AfD each pass the 5\% hurdle.
 
-\red{No bissl rumlabern a la voter numbers are Multinomially distributed, party shares as shares that sum up to 1 are Dirichlet distributed.}
-
-\red{Evtl a no: Using the prior one could steuern welche Parteien in de Surveys unter- oder uberschaetzt wern}
-
-To estimate coalition probabilities, we choose a Bayesian Multinomial-Dirichlet model
-with Jeffreys prior as uninformative prior for the true party shares
+The model to estimate event probabilities is based on the Multinomial distribution of the observed
+number of voters per party. Therefore, we use a Bayesian Multinomial-Dirichlet model
+with Jeffreys prior as an uninformative prior for the true party shares
 $\theta_j$ \citep{gelman_2013}:
 % \begin{equation}
 % (\theta_1,\ldots,\theta_k)^\T \sim Dirichlet(\alpha_1,\ldots,\alpha_k), \ \ \text{with} \ \ \alpha_1 = \ldots = \alpha_k = \frac{1}{2}
@@ -219,7 +216,7 @@ $\theta_j$ \citep{gelman_2013}:
 \text{with} &\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \alpha_1 = \ldots = \alpha_k = \frac{1}{2}
 \end{aligned}
 \end{equation}
-Given one (pooled) survey, the posterior also is a Dirichlet distribution
+Given one (pooled) survey, the posterior in this case also is a Dirichlet distribution
 with $\alpha_j = x_j + \frac{1}{2}$ for each party $j$ and its observed
 vote counts $x_j$.
 
@@ -227,6 +224,14 @@ Using Monte Carlo simulations of election outcomes, one can obtain
 specific event probabilities by taking their relative frequency of
 occurence. E.g., if a specific event occurs in $2,600$ of $10,000$
 simulations this equals an estimated probability of $26\%$.
+
+If an underrepresentation or overrepresentation of parties
+in the polls of specific polling agencies is known, this information
+can be included in the model by using an informative prior distribution,
+where underrepresented parties would get higher $\alpha_j$ values and
+overrrepresented parties would get lower $\alpha_j$ values, respectively.
+However, such biases of polling agencies are hard to quantify
+and we therefore use an ininformative prior.
 
 Figure \ref{fig:seatDist} shows the simulated
 parliament seat shares for the coalition Union-FDP, based on the observed
@@ -236,7 +241,7 @@ so FDP only enters the parliament in half of the simulations. The corresponding
 probability for a seat majority of Union-FDP is $26.33\%$.
 
 \begin{figure}[!ht]\centering
-\includegraphics[width=0.35\textwidth]{figures/bauer_seatDist_lastPreelectionPoll2013.pdf}
+\includegraphics[width=0.35\textwidth]{figures/bauer_2013_cdufdp_lastPreelectionPoll.pdf}
 \caption{Density of $10,000$ simulated parliament seat shares for the coalition Union-FDP before the German federal election in September 2013 based on the Forsa opinion poll in Table \ref{tab_fdp}. The part of the density encoding for seat majorities is colored blue.
 \label{fig:seatDist}
 }
@@ -253,11 +258,14 @@ To visualize the {\it development} of such probabilities
 for a specific coalition we recommend extending the visualization of Figure \ref{fig:seatDist} by using ridgeline plots \citep{wilke_2017} for the simulated seat distributions (Fig.~\ref{fig:seatDist_time}).
 
 \begin{figure}[!ht]\centering
-\includegraphics[width=0.4\textwidth]{figures/bauer_seatDist_time.pdf}
-\caption{Development of $10,000$ simulated parliament seat share densities for the coalition Union-FDP before the German federal election in September 2013 based on Forsa opinion polls. The parts of the densities encoding for seat majorities are colored blue.
+\includegraphics[width=0.4\textwidth]{figures/bauer_2013_fdp_rawShare.pdf}
+\includegraphics[width=0.4\textwidth]{figures/bauer_2013_cdufdp_time.pdf}
+\caption{\red{De linke Grafik no beschreim} Development of $10,000$ simulated parliament seat share densities for the coalition Union-FDP before the German federal election in September 2013 based on Forsa opinion polls. The parts of the densities encoding for seat majorities are colored blue.
 \label{fig:seatDist_time}
 }
 \end{figure}
+
+\red{An FDP-Verlauf a mit soichane Verlaufs-Dichteplots darstein, damit ma de W'keit sigt, dass de FDP ins Parlament kimt}
 
 Before applying the Bayesian approach and as vote shares are usually rounded
 before publication, we adjust the available data by adding uniformly distributed
@@ -329,8 +337,16 @@ For convenience, the calculation of $n_{\text{eff}}$ is based on the party with 
 
 
 
-\section{Discussion} \label{sec:discussion}
-\red{Falls ma sowos macha meng}
+\section{Application to the German federal elections 2013 and 2017} \label{sec:application}
+\red{Ideen:}
+\begin{itemize}
+  \item Unsere Ergebnisse fia de letztn zwoa Wahlen darstaein und diskutiern
+  \item Jeweils an Plot vo de kumulierten, umverteilten W'keiten vo Schwarz-Gelb ois Linienplot ueber de Zeit. Und drunter/danem an Verlauf vo unsre W'keiten ueber de Zeit, mit unsrer opasstn Skala. Des Ganze ko ma dann a mit verschiedene Stichprobenumfaenge macha, um de Unterschiede zum zoang.
+  \item Auf de Darstellung 'Wia aendern si de W'keiten, wenn de FDP naeher/weiter weg vo 5\% is?' dad si da Andre erstmoi ned konzentriern, sondern wirklich einfach de Ergebnisse vo de Wahlen 2013 und 2017 berichtn
+  \item Idee Andre: A unser Interaktive Sach evtl berichtn, wia ma Unsicherheiten an den Endnutzer vermitteln kon
+  \item Des wos ma auf Twitter dargstaeit ham (insb de baar extra-Tweets kurz vor da Wahl) evtl a hernemma fiad publication
+\end{itemize}
+
 
 \section{Conclusion} \label{sec:conclusion}
 We presented an approach to estimate probabilities for specific election outcomes based on publicly available opinion polls. Pooling allows for the inclusion of information from multiple surveys. Visualizing the results on a publicly available website for chosen elections, our long-term goal is to make proper uncertainty assessment
