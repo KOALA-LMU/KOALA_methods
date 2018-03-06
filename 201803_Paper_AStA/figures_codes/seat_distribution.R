@@ -143,7 +143,7 @@ gg_shares <- ggplot(shares,
   theme(legend.position = "bottom")
 
 pdf("../figures/bauer_2013_fdp_rawShare.pdf", width = 7.5, height = 6)
-gg_shares + ggtitle("No ned mit 10000 sims")
+gg_shares
 dev.off()
 
 
