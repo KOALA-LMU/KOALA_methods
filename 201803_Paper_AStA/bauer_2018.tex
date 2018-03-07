@@ -39,6 +39,8 @@
 \usepackage{amsmath, amssymb}
 \setlength{\parindent}{0pt} % remove indentation before every paragraph
 \usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{float} % to force figure placement
 \usepackage[usenames, dvipsnames]{color}
 % \usepackage[backend=bibtex,
 %             style=nature,
@@ -233,6 +235,21 @@ overrrepresented parties would get lower $\alpha_j$ values, respectively.
 However, such biases of polling agencies are hard to quantify
 and we therefore use an ininformative prior.
 
+Before applying the Bayesian approach and as vote shares are usually rounded
+before publication, we adjust the available data by adding uniformly distributed
+random noise to the
+observed voter shares $x_j$ to avoid a potential bias caused by the use of
+rounded numbers:
+\begin{equation}
+\begin{aligned}
+x_{j,adj} = \ &x_j + r_{\gamma,j}, \\
+\text{with} \ \ \ \ \ &r_{\gamma,j} \sim U[-\gamma,\gamma].
+\end{aligned}
+\end{equation}
+E.g., for data rounded to $0.5\%$ we use a correction term of $\gamma = 0.5\%$. Afterwards, the adjusted shares are rescaled to ensure a sum of $100\%$ and the Bayesian approach is performed based on the adjusted shares.
+
+
+\paragraph{Visualization} \ \\
 Figure \ref{fig:seatDist} shows the simulated
 parliament seat shares for the coalition Union-FDP, based on the observed
 voter shares in Table \ref{bauer:tab_fdp}. The estimated density is clearly bimodal
@@ -240,8 +257,8 @@ as the observed FDP share before redistribution is exactly $50\%$ and
 so FDP only enters the parliament in half of the simulations. The corresponding
 probability for a seat majority of Union-FDP is $26.33\%$.
 
-\begin{figure}[!ht]\centering
-\includegraphics[width=0.35\textwidth]{figures/bauer_2013_cdufdp_lastPreelectionPoll.pdf}
+\begin{figure}[H]\centering
+\includegraphics[width=0.35\textwidth]{figures/2013_forsa_cdufdp_lastPreelectionPoll.pdf}
 \caption{Density of $10,000$ simulated parliament seat shares for the coalition Union-FDP before the German federal election in September 2013 based on the Forsa opinion poll in Table \ref{tab_fdp}. The part of the density encoding for seat majorities is colored blue.
 \label{fig:seatDist}
 }
@@ -257,28 +274,22 @@ To visualize the {\it development} of such probabilities
 %together with the underlying uncertainty
 for a specific coalition we recommend extending the visualization of Figure \ref{fig:seatDist} by using ridgeline plots \citep{wilke_2017} for the simulated seat distributions (Fig.~\ref{fig:seatDist_time}).
 
-\begin{figure}[!ht]\centering
-\includegraphics[width=0.4\textwidth]{figures/bauer_2013_fdp_rawShare.pdf}
-\includegraphics[width=0.4\textwidth]{figures/bauer_2013_cdufdp_time.pdf}
-\caption{\red{De linke Grafik no beschreim} Development of $10,000$ simulated parliament seat share densities for the coalition Union-FDP before the German federal election in September 2013 based on Forsa opinion polls. The parts of the densities encoding for seat majorities are colored blue.
+\begin{figure}[H]\centering
+\begin{tabular}{ll}
+\includegraphics[height=.15\textwidth]{figures/2013_forsa_cdufdp_rawSharesRedist.pdf}
+&
+\multirow{2}{*}[13ex]{\includegraphics[height=30ex]{figures/2013_forsa_cdufdp_ridgeline.pdf}}
+\\
+\includegraphics[height=.15\textwidth]{figures/2013_forsa_cdufdp_prob.pdf}
+\end{tabular}
+\caption{\red{De linken Grafikn no beschreim} Development of $10\,000$ simulated parliament seat share densities for the coalition Union-FDP before the German federal election in September 2013 based on Forsa opinion polls. The parts of the densities encoding for seat majorities are colored blue.
 \label{fig:seatDist_time}
 }
 \end{figure}
 
-\red{An FDP-Verlauf a mit soichane Verlaufs-Dichteplots darstein, damit ma de W'keit sigt, dass de FDP ins Parlament kimt}
+\red{No de Darstellung in Figure. \ref{fig:seatDist_time} eifuehrn und de angepasste prob-Skala erklaern.}
 
-Before applying the Bayesian approach and as vote shares are usually rounded
-before publication, we adjust the available data by adding uniformly distributed
-random noise to the
-observed voter shares $x_j$ to avoid a potential bias caused by the use of
-rounded numbers:
-\begin{equation}
-\begin{aligned}
-x_{j,adj} = \ &x_j + r_{\gamma,j}, \\
-\text{with} \ \ \ \ \ &r_{\gamma,j} \sim U[-\gamma,\gamma].
-\end{aligned}
-\end{equation}
-E.g., for data rounded to $0.5\%$ we use a correction term of $\gamma = 0.5\%$. Afterwards, the adjusted shares are rescaled to ensure a sum of $100\%$ and the Bayesian approach is performed based on the adjusted shares.
+
 
 
 \section{Pooling approach} \label{sec:pooling}
@@ -330,23 +341,130 @@ and $Var(\text{sample of size 1})$ the theoretical variance of the pooled share.
 Looking at the party-specific correlations between 20 surveys conducted by the two most regular German polling agencies, Emnid and Forsa, we on average end up with a medium high correlation, using mean party shares and sample sizes per institute for the theoretical variances. Other institute comparisons were not performed as too few published surveys were conducted cover comparable time frames. For simplicity, we do not recalculate the correlation for each simulation, but rather set the correlation used in our methodology to $0.5$.
 For convenience, the calculation of $n_{\text{eff}}$ is based on the party with most votes, as the specific party choice only marginally affects the results.
 
-\paragraph{\red{Pooling in practice}} \ \\
-- time window of 14 days \\
-- extended (downweighted) time window in the case of only few published polls \\
-- evtl no a Rechenbeispui fias Pooling gem, d.h. 'beim Poolen vo 2 Umfragen mit $n_1 = x$ und $n_2 = y$ kriagt ma a $n_{eff} = z$ raus
+In the case of two published polls with $1500$ and $2000$ respondents, respectively, and a pooled share of $40\%$
+for the strongest party, the method leads
+to an effective sample size of $n_{eff} = 2341$. Thus, the method reduces sample uncertainty
+compared to using only single polls, but the method is also clearly conservative, compared to
+assuming independence between the polls and using a summed sample size of $1500 + 2000 = 3500$.
+
+As noted, in practice we use a timeframe of 14 days, i.e. all surveys published at maximum 14 days ago are included
+in the calculation of the pooled sample. In the case of opinion polls for a specific election getting published
+only very rarely one can also extend this timeframe, e.g. using the heuristic of including all surveys published up to 14 days
+ago with weight 1 (using their whole sample size), and all surveys within 14 to 28 days before today with halved weight
+(using the halved sample size).
 
 
 
-\section{Application to the German federal elections 2013 and 2017} \label{sec:application}
-\red{Ideen:}
-\begin{itemize}
-  \item Unsere Ergebnisse fia de letztn zwoa Wahlen darstaein und diskutiern
-  \item Jeweils an Plot vo de kumulierten, umverteilten W'keiten vo Schwarz-Gelb ois Linienplot ueber de Zeit. Und drunter/danem an Verlauf vo unsre W'keiten ueber de Zeit, mit unsrer opasstn Skala. Des Ganze ko ma dann a mit verschiedene Stichprobenumfaenge macha, um de Unterschiede zum zoang.
-  \item Auf de Darstellung 'Wia aendern si de W'keiten, wenn de FDP naeher/weiter weg vo 5\% is?' dad si da Andre erstmoi ned konzentriern, sondern wirklich einfach de Ergebnisse vo de Wahlen 2013 und 2017 berichtn
-  \item Idee Andre: A unser Interaktive Sach evtl berichtn, wia ma Unsicherheiten an den Endnutzer vermitteln kon
-  \item Des wos ma auf Twitter dargstaeit ham (insb de baar extra-Tweets kurz vor da Wahl) evtl a hernemma fiad publication
-\end{itemize}
+\section{Application} \label{sec:application}
+We applied (an earlier iteration of) our method to the German federal elections
+2013 and 2017, also in general media (see XXX). To underline the differences
+between standard media reporting on opinion polls and our approach, we in the
+following compare opinion polls before these two elections, either based on
+evaluating the raw observed shares after redistribution and using Bayesian
+probabilities.
 
+As noted above we use a timeframe of 14 days for calculating the pooled survey results.
+
+\subsection{German federal election 2013} \label{subsec:2013}
+
+\paragraph{Union-FDP coalition majority} \ \\
+
+\begin{figure}[H]\centering
+\begin{tabular}{ll}
+\includegraphics[height=.15\textwidth]{figures/2013_pooled_cdufdp_rawSharesRedist.pdf}
+&
+\multirow{2}{*}[13ex]{\includegraphics[height=30ex]{figures/2013_pooled_cdufdp_ridgeline.pdf}}
+\\
+\includegraphics[height=.15\textwidth]{figures/2013_pooled_cdufdp_prob.pdf}
+\end{tabular}
+\caption{\red{caption. CDU-FDP coalition}
+\label{fig:2013_cdufdp}
+}
+\end{figure}
+
+
+\paragraph{FDP passing the 5\% hurdle} \ \\
+
+\begin{figure}[H]\centering
+\begin{tabular}{ll}
+\includegraphics[height=.15\textwidth]{figures/2013_pooled_fdp_rawShares.pdf}
+&
+\multirow{2}{*}[13ex]{\includegraphics[height=30ex]{figures/2013_pooled_fdp_ridgeline.pdf}}
+\\
+\includegraphics[height=.15\textwidth]{figures/2013_pooled_fdp_passingProb.pdf}
+\end{tabular}
+\caption{\red{caption. FDP passing hurdle}
+\label{fig:2013_fdp}
+}
+\end{figure}
+
+
+
+\paragraph{SPD-Left-Greens coalition majority} \ \\
+
+\begin{figure}[H]\centering
+\begin{tabular}{ll}
+\includegraphics[height=.15\textwidth]{figures/2013_pooled_spdleftgreens_rawSharesRedist.pdf}
+&
+\multirow{2}{*}[13ex]{\includegraphics[height=30ex]{figures/2013_pooled_spdleftgreens_ridgeline.pdf}}
+\\
+\includegraphics[height=.15\textwidth]{figures/2013_pooled_spdleftgreens_prob.pdf}
+\end{tabular}
+\caption{\red{caption. SPD-Left-Greens coalition}
+\label{fig:2013_spdleftgreens}
+}
+\end{figure}
+
+
+\subsection{German federal election 2017} \label{subsec:2017}
+
+FDP was not as clear at the 5\% hurdle, compared to the 2013 federal election. Therefore,
+we do not look at such event probabilities.
+
+\paragraph{Union-FDP coalition majority} \ \\
+
+\begin{figure}[H]\centering
+\begin{tabular}{ll}
+\includegraphics[height=.15\textwidth]{figures/2017_pooled_cdufdp_rawSharesRedist.pdf}
+&
+\multirow{2}{*}[13ex]{\includegraphics[height=30ex]{figures/2017_pooled_cdufdp_ridgeline.pdf}}
+\\
+\includegraphics[height=.15\textwidth]{figures/2017_pooled_cdufdp_prob.pdf}
+\end{tabular}
+\caption{\red{caption. CDU-FDP coalition}
+\label{fig:2017_cdufdp}
+}
+\end{figure}
+
+
+\paragraph{SPD-Left-Greens coalition majority} \ \\
+
+\begin{figure}[H]\centering
+\begin{tabular}{ll}
+\includegraphics[height=.15\textwidth]{figures/2017_pooled_spdleftgreens_rawSharesRedist.pdf}
+&
+\multirow{2}{*}[13ex]{\includegraphics[height=30ex]{figures/2017_pooled_spdleftgreens_ridgeline.pdf}}
+\\
+\includegraphics[height=.15\textwidth]{figures/2017_pooled_spdleftgreens_prob.pdf}
+\end{tabular}
+\caption{\red{caption. SPD-Left-Greens coalition}
+\label{fig:2017_spdleftgreens}
+}
+\end{figure}
+
+
+\paragraph{AfD becoming third strongest party} \ \\
+
+\begin{figure}[H]\centering
+\begin{tabular}{l}
+\includegraphics[height=.15\textwidth]{figures/2017_pooled_afd_rawShares.pdf}
+\\
+\includegraphics[height=.15\textwidth]{figures/2017_pooled_afd_thirdPartyProb.pdf}
+\end{tabular}
+\caption{\red{caption. AfD third biggest party}
+\label{fig:2017_afd}
+}
+\end{figure}
 
 \section{Conclusion} \label{sec:conclusion}
 We presented an approach to estimate probabilities for specific election outcomes based on publicly available opinion polls. Pooling allows for the inclusion of information from multiple surveys. Visualizing the results on a publicly available website for chosen elections, our long-term goal is to make proper uncertainty assessment
@@ -358,7 +476,7 @@ in general opinion poll-based reporting the rule, rather than an exception.
 % \begin{figure}
 % % Use the relevant command to insert your figure file.
 % % For example, with the graphicx package use
-%   \includegraphics{figures/bauer_seatDist_time.pdf}
+%   \includegraphics{figures/seatDist_ridgeline.pdf}
 % % figure caption is below the figure
 % \caption{Please write your figure caption here}
 % \label{fig:1}       % Give a unique label
@@ -368,7 +486,7 @@ in general opinion poll-based reporting the rule, rather than an exception.
 % \begin{figure*}
 % % Use the relevant command to insert your figure file.
 % % For example, with the graphicx package use
-%   \includegraphics[width=0.75\textwidth]{figures/bauer_seatDist_time.pdf}
+%   \includegraphics[width=0.75\textwidth]{figures/seatDist_ridgeline.pdf}
 % % figure caption is below the figure
 % \caption{Please write your figure caption here}
 % \label{fig:2}       % Give a unique label
