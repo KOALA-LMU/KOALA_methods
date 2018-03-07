@@ -158,7 +158,8 @@ plot_dat$probs_skewed <- 100 * coalishin:::transform_cps(plot_dat$cdufdp_majorit
 gg <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
   geom_line(lwd = 1.3, col = "gray30") +
   scale_y_continuous(limits = c(0,100), breaks = skewed_ticks,
-                     labels = axis_labels, name = "seat majority probability") +
+                     labels = axis_labels, name = "seat majority probability",
+                     minor_breaks = NULL) +
   scale_x_datetime(breaks = as.POSIXct(c("2012-10-01","2013-01-01","2013-04-01","2013-07-01","2013-09-22")),
                    labels = c("Oct 2012","Jan 2013","Apr 2013","Jul 2013","Election day")) +
   theme_bw(base_size = 20) +
@@ -192,11 +193,11 @@ dev.off()
 
 
 # FDP passing hurdle-------------------------------------------------------
-### 1) Redistributed raw shares
+### 1) Raw voter shares
 gg <- ggplot(plot_dat, aes(x = date, y = fdp_share_raw)) +
   geom_hline(yintercept = 5, lty = 2, lwd = 1.2, col = "gray") +
   geom_line(lwd = 1.3) +
-  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(0,10), name = "redistributed voter share") +
+  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(0,10), name = "Raw voter share") +
   scale_x_datetime(breaks = as.POSIXct(c("2012-10-01","2013-01-01","2013-04-01","2013-07-01","2013-09-22")),
                    labels = c("Oct 2012","Jan 2013","Apr 2013","Jul 2013","Election day")) +
   theme_bw(base_size = 20) +
@@ -210,7 +211,8 @@ plot_dat$probs_skewed <- 100 * coalishin:::transform_cps(plot_dat$fdp_passing_pr
 gg <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
   geom_line(lwd = 1.3) +
   scale_y_continuous(limits = c(0,100), breaks = skewed_ticks,
-                     labels = axis_labels, name = "seat majority probability") +
+                     labels = axis_labels, name = "seat majority probability",
+                     minor_breaks = NULL) +
   scale_x_datetime(breaks = as.POSIXct(c("2012-10-01","2013-01-01","2013-04-01","2013-07-01","2013-09-24")),
                    labels = c("Oct 2012","Jan 2013","Apr 2013","Jul 2013","Election day")) +
   theme_bw(base_size = 20) +
@@ -260,7 +262,8 @@ plot_dat$probs_skewed <- 100 * coalishin:::transform_cps(plot_dat$spdleftgreens_
 gg <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
   geom_line(lwd = 1.3, col = "gray30") +
   scale_y_continuous(limits = c(0,100), breaks = skewed_ticks,
-                     labels = axis_labels, name = "seat majority probability") +
+                     labels = axis_labels, name = "seat majority probability",
+                     minor_breaks = NULL) +
   scale_x_datetime(breaks = as.POSIXct(c("2012-10-01","2013-01-01","2013-04-01","2013-07-01","2013-09-24")),
                    labels = c("Oct 2012","Jan 2013","Apr 2013","Jul 2013","Election day")) +
   theme_bw(base_size = 20) +

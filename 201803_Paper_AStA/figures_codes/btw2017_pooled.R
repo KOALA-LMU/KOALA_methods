@@ -139,7 +139,7 @@ dev.off()
 plot_dat$probs_skewed <- 100 * coalishin:::transform_cps(plot_dat$cdufdp_majority_prob / 100)
 gg <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
   geom_line(lwd = 1.3, col = "gray30") +
-  scale_y_continuous(limits = c(0,100), breaks = skewed_ticks,
+  scale_y_continuous(limits = c(0,100), breaks = skewed_ticks, minor_breaks = NULL,
                      labels = axis_labels, name = "seat majority probability") +
   scale_x_datetime(breaks = as.POSIXct(c("2016-10-01","2017-01-01","2017-04-01","2017-07-01","2017-09-24")),
                    labels = c("Oct 2016","Jan 2017","Apr 2017","Jul 2017","Election day")) +
@@ -174,11 +174,11 @@ dev.off()
 
 
 # FDP passing hurdle-------------------------------------------------------
-# ### 1) Redistributed raw shares
+# ### 1) Raw voter shares
 # gg <- ggplot(plot_dat, aes(x = date, y = fdp_share_raw)) +
 #   geom_hline(yintercept = 5, lty = 2, lwd = 1.2, col = "gray") +
 #   geom_line(lwd = 1.3) +
-#   scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(0,10), name = "redistributed voter share") +
+#   scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(0,10), name = "Raw voter share") +
 #   scale_x_datetime(breaks = as.POSIXct(c("2016-10-01","2017-01-01","2017-04-01","2017-07-01","2017-09-24")),
 #                    labels = c("Oct 2016","Jan 2017","Apr 2017","Jul 2017","Election day")) +
 #   theme_bw(base_size = 20) +
@@ -191,7 +191,7 @@ dev.off()
 # plot_dat$probs_skewed <- 100 * coalishin:::transform_cps(plot_dat$fdp_passing_prob / 100)
 # gg <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
 #   geom_line(lwd = 1.3) +
-#   scale_y_continuous(limits = c(0,100), breaks = skewed_ticks,
+#   scale_y_continuous(limits = c(0,100), breaks = skewed_ticks, minor_breaks = NULL,
 #                      labels = axis_labels, name = "seat majority probability") +
 #   scale_x_datetime(breaks = as.POSIXct(c("2016-10-01","2017-01-01","2017-04-01","2017-07-01","2017-09-24")),
 #                    labels = c("Oct 2016","Jan 2017","Apr 2017","Jul 2017","Election day")) +
@@ -241,7 +241,7 @@ dev.off()
 plot_dat$probs_skewed <- 100 * coalishin:::transform_cps(plot_dat$spdleftgreens_majority_prob / 100)
 gg <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
   geom_line(lwd = 1.3, col = "gray30") +
-  scale_y_continuous(limits = c(0,100), breaks = skewed_ticks,
+  scale_y_continuous(limits = c(0,100), breaks = skewed_ticks, minor_breaks = NULL,
                      labels = axis_labels, name = "seat majority probability") +
   scale_x_datetime(breaks = as.POSIXct(c("2016-10-01","2017-01-01","2017-04-01","2017-07-01","2017-09-24")),
                    labels = c("Oct 2016","Jan 2017","Apr 2017","Jul 2017","Election day")) +
@@ -273,16 +273,16 @@ dev.off()
 
 
 # AfD third biggest party -------------------------------------------------
-### 1) Redistributed raw shares
+### 1) Raw voter shares
 plot_dat_afd <- plot_dat %>% select(date, fdp_share_raw, afd_share_raw, left_share_raw, greens_share_raw) %>% 
   rename(fdp = fdp_share_raw, afd = afd_share_raw, left = left_share_raw, greens = greens_share_raw) %>%
   gather("party", "share", 2:5)
 cols <- c("afd" = "skyblue2", "fdp" = "gold2", "left" = "deeppink3", "greens" = "#46962b")
 gg <- ggplot(plot_dat_afd, aes(x = date, y = share, col = party)) +
   geom_hline(yintercept = 5, lty = 2, lwd = 1.2, col = "gray") +
-  geom_line(lwd = 1.3, col = "gray30") +
-  scale_color_manual(values = cols) + 
-  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(0,15), name = "redistributed voter share") +
+  geom_line(lwd = 1.3) +
+  scale_color_manual(values = cols) +
+  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(0,15), name = "Raw voter share") +
   scale_x_datetime(breaks = as.POSIXct(c("2016-10-01","2017-01-01","2017-04-01","2017-07-01","2017-09-24")),
                    labels = c("Oct 2016","Jan 2017","Apr 2017","Jul 2017","Election day")) +
   theme_bw(base_size = 20) +
@@ -296,7 +296,7 @@ dev.off()
 plot_dat$probs_skewed <- 100 * coalishin:::transform_cps(plot_dat$afd_thirdParty_prob / 100)
 gg <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
   geom_line(lwd = 1.3, col = "gray30") +
-  scale_y_continuous(limits = c(0,100), breaks = skewed_ticks,
+  scale_y_continuous(limits = c(0,100), breaks = skewed_ticks, minor_breaks = NULL,
                      labels = axis_labels, name = "seat majority probability") +
   scale_x_datetime(breaks = as.POSIXct(c("2016-10-01","2017-01-01","2017-04-01","2017-07-01","2017-09-24")),
                    labels = c("Oct 2016","Jan 2017","Apr 2017","Jul 2017","Election day")) +

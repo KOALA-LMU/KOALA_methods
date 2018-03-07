@@ -224,7 +224,7 @@ vote counts $x_j$.
 
 Using Monte Carlo simulations of election outcomes, one can obtain
 specific event probabilities by taking their relative frequency of
-occurence. E.g., if a specific event occurs in $2,600$ of $10,000$
+occurence. E.g., if a specific event occurs in $2,600$ of $10\,000$
 simulations this equals an estimated probability of $26\%$.
 
 If an underrepresentation or overrepresentation of parties
@@ -259,7 +259,7 @@ probability for a seat majority of Union-FDP is $26.33\%$.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.35\textwidth]{figures/2013_forsa_cdufdp_lastPreelectionPoll.pdf}
-\caption{Density of $10,000$ simulated parliament seat shares for the coalition Union-FDP before the German federal election in September 2013 based on the Forsa opinion poll in Table \ref{tab_fdp}. The part of the density encoding for seat majorities is colored blue.
+\caption{Density of $10\,000$ simulated parliament seat shares for the coalition Union-FDP before the German federal election in September 2013 based on the Forsa opinion poll in Table \ref{tab_fdp}. The part of the density encoding for seat majorities is colored blue.
 \label{fig:seatDist}
 }
 \end{figure}
@@ -270,10 +270,6 @@ uncertainties underlying opinion polls to the general public. As the estimation
 of event probabilities with our approach, such plots can be created for all
 kinds of specific election outcomes.
 
-To visualize the {\it development} of such probabilities
-%together with the underlying uncertainty
-for a specific coalition we recommend extending the visualization of Figure \ref{fig:seatDist} by using ridgeline plots \citep{wilke_2017} for the simulated seat distributions (Fig.~\ref{fig:seatDist_time}).
-
 \begin{figure}[H]\centering
 \begin{tabular}{ll}
 \includegraphics[height=.15\textwidth]{figures/2013_forsa_cdufdp_rawSharesRedist.pdf}
@@ -282,13 +278,29 @@ for a specific coalition we recommend extending the visualization of Figure \ref
 \\
 \includegraphics[height=.15\textwidth]{figures/2013_forsa_cdufdp_prob.pdf}
 \end{tabular}
-\caption{\red{De linken Grafikn no beschreim} Development of $10\,000$ simulated parliament seat share densities for the coalition Union-FDP before the German federal election in September 2013 based on Forsa opinion polls. The parts of the densities encoding for seat majorities are colored blue.
+\caption{Development of the governing possibility of the coalition Union-FDP before the German federal election in September 2013 based on Forsa opinion polls.
+Left top: Observed voter shares after redistribution. Left bottom: Probabilities to reach a majority of seats in parliament, based on $10\,000$ simulations. Right: Densities of simulated parliament seat shares based on $10\,000$ simulations. The parts of the densities encoding for seat majorities are colored blue.
 \label{fig:seatDist_time}
 }
 \end{figure}
 
-\red{No de Darstellung in Figure. \ref{fig:seatDist_time} eifuehrn und de angepasste prob-Skala erklaern.}
+To visualize the {\it development} of such probabilities
+%together with the underlying uncertainty
+for a specific coalition we recommend extending the visualization of Figure \ref{fig:seatDist} by using ridgeline plots \citep{wilke_2017} for the simulated seat distributions. In Figure~\ref{fig:seatDist_time} this plot type and the development of majority probabilities is compared to
+the raw, redistributed shares, which are usually reported in media.
 
+Comparing the redistributed voter shares and the seat majority probabilities
+in Figure~\ref{fig:seatDist_time} it is clear that the probabilities consist
+of a lot more information than the voter shares. Especially, even small changes
+in the redistributed voter shares can make an immense difference regarding the
+chance of the coalition to form a government.
+
+To focus on the most relevant changes in the majority probabilities, we propose
+the use of a skewed axis as shown in Figure~\ref{fig:seatDist_time}. This axis
+stretches the range of values around $50\%$ as a change in absolute probabilities
+from $40\%$ to $60\%$ is more relevant than a change from $70\%$ to $90\%$ as
+a success for achieving a seat majority is becoming more probable than a failure
+to do so, or in both cases a success is already very probable, respectively.
 
 
 
@@ -365,6 +377,9 @@ probabilities.
 
 As noted above we use a timeframe of 14 days for calculating the pooled survey results.
 
+For both elections, 2013 and 2017, we discuss the reults based on pooled surveys
+and based on the major German polling agencies, i.e. \red{Allensbach ...}
+
 \subsection{German federal election 2013} \label{subsec:2013}
 
 \paragraph{Union-FDP coalition majority} \ \\
@@ -377,7 +392,8 @@ As noted above we use a timeframe of 14 days for calculating the pooled survey r
 \\
 \includegraphics[height=.15\textwidth]{figures/2013_pooled_cdufdp_prob.pdf}
 \end{tabular}
-\caption{\red{caption. CDU-FDP coalition}
+\caption{Development of the governing possibility of the coalition Union-FDP before the German federal election in September 2013 based on pooled opinion polls.
+Left top: Observed voter shares after redistribution. Left bottom: Probabilities to reach a majority of seats in parliament, based on $10\,000$ simulations. Right: Densities of simulated parliament seat shares based on $10\,000$ simulations. The parts of the densities encoding for seat majorities are colored blue.
 \label{fig:2013_cdufdp}
 }
 \end{figure}
@@ -393,7 +409,8 @@ As noted above we use a timeframe of 14 days for calculating the pooled survey r
 \\
 \includegraphics[height=.15\textwidth]{figures/2013_pooled_fdp_passingProb.pdf}
 \end{tabular}
-\caption{\red{caption. FDP passing hurdle}
+\caption{Development of the chance of FDP to pass the $5\%$ hurdle before the German federal election in September 2013 based on pooled opinion polls.
+Left top: Observed voter shares before redistribution. Left bottom: Probabilities to pass the $5\%$ hurdle, based on $10\,000$ simulations. Right: Densities of simulated raw voter shares based on $10\,000$ simulations. The parts of the densities encoding for successfully possing the hurdle are colored blue.
 \label{fig:2013_fdp}
 }
 \end{figure}
@@ -410,7 +427,8 @@ As noted above we use a timeframe of 14 days for calculating the pooled survey r
 \\
 \includegraphics[height=.15\textwidth]{figures/2013_pooled_spdleftgreens_prob.pdf}
 \end{tabular}
-\caption{\red{caption. SPD-Left-Greens coalition}
+\caption{Development of the governing possibility of the coalition SPD-Left-Greens before the German federal election in September 2013 based on pooled opinion polls.
+Left top: Observed voter shares after redistribution. Left bottom: Probabilities to reach a majority of seats in parliament, based on $10\,000$ simulations. Right: Densities of simulated parliament seat shares based on $10\,000$ simulations. The parts of the densities encoding for seat majorities are colored blue.
 \label{fig:2013_spdleftgreens}
 }
 \end{figure}
@@ -431,7 +449,8 @@ we do not look at such event probabilities.
 \\
 \includegraphics[height=.15\textwidth]{figures/2017_pooled_cdufdp_prob.pdf}
 \end{tabular}
-\caption{\red{caption. CDU-FDP coalition}
+\caption{Development of the governing possibility of the coalition Union-FDP before the German federal election in September 2017 based on pooled opinion polls.
+Left top: Observed voter shares after redistribution. Left bottom: Probabilities to reach a majority of seats in parliament, based on $10\,000$ simulations. Right: Densities of simulated parliament seat shares based on $10\,000$ simulations. The parts of the densities encoding for seat majorities are colored blue.
 \label{fig:2017_cdufdp}
 }
 \end{figure}
@@ -447,7 +466,8 @@ we do not look at such event probabilities.
 \\
 \includegraphics[height=.15\textwidth]{figures/2017_pooled_spdleftgreens_prob.pdf}
 \end{tabular}
-\caption{\red{caption. SPD-Left-Greens coalition}
+\caption{Development of the governing possibility of the coalition SPD-Left-Greens before the German federal election in September 2017 based on pooled opinion polls.
+Left top: Observed voter shares after redistribution. Left bottom: Probabilities to reach a majority of seats in parliament, based on $10\,000$ simulations. Right: Densities of simulated parliament seat shares based on $10\,000$ simulations. The parts of the densities encoding for seat majorities are colored blue.
 \label{fig:2017_spdleftgreens}
 }
 \end{figure}
@@ -461,7 +481,8 @@ we do not look at such event probabilities.
 \\
 \includegraphics[height=.15\textwidth]{figures/2017_pooled_afd_thirdPartyProb.pdf}
 \end{tabular}
-\caption{\red{caption. AfD third biggest party}
+\caption{Development of the chance of AfD to become the third strongest party before the German federal election in September 2017 based on pooled opinion polls.
+Left top: Observed voter shares before redistribution. Left bottom: Probabilities to become third strongest party, based on $10\,000$ simulations.
 \label{fig:2017_afd}
 }
 \end{figure}

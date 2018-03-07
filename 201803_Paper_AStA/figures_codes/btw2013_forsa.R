@@ -171,7 +171,8 @@ plot_dat$probs_skewed <- 100 * coalishin:::transform_cps(plot_dat$cdufdp_majorit
 gg <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
   geom_line(lwd = 1.3, col = "gray30") +
   scale_y_continuous(limits = c(0,100), breaks = skewed_ticks,
-                     labels = axis_labels, name = "seat majority probability") +
+                     labels = axis_labels, name = "seat majority probability",
+                     minor_breaks = NULL) +
   scale_x_datetime(breaks = as.POSIXct(c("2013-01-01","2013-04-01","2013-07-01","2013-09-22")),
                    labels = c("Jan 2013","Apr 2013","Jul 2013","Election day")) +
   theme_bw(base_size = 20) +
