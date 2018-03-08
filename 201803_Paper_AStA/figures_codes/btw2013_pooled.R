@@ -9,6 +9,10 @@ library(ggridges)
 source("helpers.R")
 theme_set(theme_bw())
 
+# revert time axis
+rev_date <- c_trans("reverse", "time")
+
+
 # Data and code source: https://gist.github.com/adibender/28041453a2a8c3e42c09484a55668d55
 
 # Scrapers funktionieren nicht optimal (z.B. bei Allensbach)! Andy frong, ob er funktionierende Versionen davo hod fuer 2013
@@ -71,9 +75,8 @@ sim_oneDate <- function(dat) {
   seat.shares_cdufdp <- 
     
     return(data.frame("coal_percent_cdufdp" = sapply(1:nsim, function(i) { get_seatShares_coal(i, c("cdu","fdp")) }),
-                      "coal_percent_spdleftgreens" = sapply(1:nsim, function(i) { get_seatShares_coal(i, c("spd","left","greens")) }),
+                      "coal_percent_spdgreens" = sapply(1:nsim, function(i) { get_seatShares_coal(i, c("spd","greens")) }),
                       "fdp_rawPercent" = 100 * dirichlet.draws$fdp,
-                      "left_rawPercent" = 100 * dirichlet.draws$left,
                       "greens_rawPercent" = 100 * dirichlet.draws$greens,
                       "date" = as.POSIXct(dat)))
 }
@@ -121,9 +124,9 @@ plot_dat <- data.frame("date" = dates,
                        "left_share_redist" = sapply(dates, function(dat) get_redistributed_partyShares_oneDate(dat, "left") %>% pull(percent)),
                        "greens_share_redist" = sapply(dates, function(dat) get_redistributed_partyShares_oneDate(dat, "greens") %>% pull(percent)),
                        "cdufdp_share_redist" = sapply(dates, function(dat) get_redistributed_partyShares_oneDate(dat, c("cdu","fdp")) %>% pull(percent) %>% sum()),
-                       "spdleftgreens_share_redist" = sapply(dates, function(dat) get_redistributed_partyShares_oneDate(dat, c("spd","left","greens")) %>% pull(percent) %>% sum()),
+                       "spdgreens_share_redist" = sapply(dates, function(dat) get_redistributed_partyShares_oneDate(dat, c("spd","greens")) %>% pull(percent) %>% sum()),
                        "cdufdp_majority_prob" = sapply(dates, function(dat) { get_maj_prob(dat, "coal_percent_cdufdp") }),
-                       "spdleftgreens_majority_prob" = sapply(dates, function(dat) { get_maj_prob(dat, "coal_percent_spdleftgreens") }),
+                       "spdgreens_majority_prob" = sapply(dates, function(dat) { get_maj_prob(dat, "coal_percent_spdgreens") }),
                        "fdp_passing_prob" = sapply(dates, function(dat) get_pass_prob(dat, "fdp_rawPercent")))
 
 ### prepare skewed probability scale for the majority probability plots
@@ -143,12 +146,14 @@ ticks_col[ticks %in% axis_ticks_minor] <- gray(0.7)
 ### 1) Redistributed raw shares
 gg <- ggplot(plot_dat, aes(x = date, y = cdufdp_share_redist)) +
   geom_hline(yintercept = 50, lty = 2, lwd = 1.2, col = "gray") +
+  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(40,55), name = "redistributed voter share") +
   geom_line(lwd = 1.3, col = "gray30") +
-  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(0,60), name = "redistributed voter share") +
-  scale_x_datetime(breaks = as.POSIXct(c("2012-10-01","2013-01-01","2013-04-01","2013-07-01","2013-09-22")),
-                   labels = c("Oct 2012","Jan 2013","Apr 2013","Jul 2013","Election day")) +
+  scale_x_datetime(breaks = as.POSIXct(paste0(c(rep(2012,3),rep(2013,10)), "-", c("10","11","12","01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",12),"22"))),
+                   minor_breaks = NULL,
+                   labels = c("Oct 2012","","","Jan 2013","","","Apr 2013","","","Jul 2013","","","Election day")) +
   theme_bw(base_size = 20) +
-  theme(axis.title.x = element_blank())
+  theme(axis.title.x = element_blank(),
+        plot.margin = unit(c(0, 25, 5.5, 15), units = "pt"))
 pdf("../figures/2013_pooled_cdufdp_rawSharesRedist.pdf", width = 7.5, height = 3.5)
 gg
 dev.off()
@@ -160,10 +165,12 @@ gg <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
   scale_y_continuous(limits = c(0,100), breaks = skewed_ticks,
                      labels = axis_labels, name = "seat majority probability",
                      minor_breaks = NULL) +
-  scale_x_datetime(breaks = as.POSIXct(c("2012-10-01","2013-01-01","2013-04-01","2013-07-01","2013-09-22")),
-                   labels = c("Oct 2012","Jan 2013","Apr 2013","Jul 2013","Election day")) +
+  scale_x_datetime(breaks = as.POSIXct(paste0(c(rep(2012,3),rep(2013,10)), "-", c("10","11","12","01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",12),"22"))),
+                   minor_breaks = NULL,
+                   labels = c("Oct 2012","","","Jan 2013","","","Apr 2013","","","Jul 2013","","","Election day")) +
   theme_bw(base_size = 20) +
-  theme(axis.title.x = element_blank())
+  theme(axis.title.x = element_blank(),
+        plot.margin = unit(c(0, 25, 5.5, 4), units = "pt"))
 pdf("../figures/2013_pooled_cdufdp_prob.pdf", width = 7.5, height = 3.5)
 gg
 dev.off()
@@ -178,11 +185,14 @@ gg_shares <- ggplot(shares,
   scale_fill_manual(values = c("grey80","steelblue"), na.value = "grey80", guide = guide_legend(title = "Seat majority")) +
   geom_vline(xintercept = 50, lty = 1, lwd = 1.2, col = "grey90") +
   scale_x_continuous(labels = function(x) paste0(x, "%"), limits = c(38,55)) +
-  scale_y_continuous(trans  = rev_date, breaks = as.POSIXct(c("2012-10-01","2013-01-01","2013-04-01","2013-07-01","2013-09-22")),
-                     labels = c("Oct 2012","Jan 2013","Apr 2013","Jul 2013","Election day")) +
+  scale_y_continuous(trans  = rev_date,
+                     breaks = as.POSIXct(paste0(c(rep(2012,3),rep(2013,10)), "-", c("10","11","12","01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",12),"22"))),
+                     minor_breaks = NULL,
+                     labels = c("Oct 2012","","","Jan 2013","","","Apr 2013","","","Jul 2013","","","Election day")) +
   xlab("Share of parliament seats") + ylab("") +
   theme_bw(base_size = 25) +
-  theme(legend.position = "bottom")
+  theme(legend.position = "bottom",
+        plot.margin = unit(c(0,5.5,5.5,5.5), units = "pt"))
 
 pdf("../figures/2013_pooled_cdufdp_ridgeline.pdf", width = 7.5, height = 10)
 gg_shares
@@ -197,11 +207,13 @@ dev.off()
 gg <- ggplot(plot_dat, aes(x = date, y = fdp_share_raw)) +
   geom_hline(yintercept = 5, lty = 2, lwd = 1.2, col = "gray") +
   geom_line(lwd = 1.3) +
-  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(0,10), name = "Raw voter share") +
-  scale_x_datetime(breaks = as.POSIXct(c("2012-10-01","2013-01-01","2013-04-01","2013-07-01","2013-09-22")),
-                   labels = c("Oct 2012","Jan 2013","Apr 2013","Jul 2013","Election day")) +
+  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(0,7), name = "Raw voter share") +
+  scale_x_datetime(breaks = as.POSIXct(paste0(c(rep(2012,3),rep(2013,10)), "-", c("10","11","12","01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",12),"22"))),
+                   minor_breaks = NULL,
+                   labels = c("Oct 2012","","","Jan 2013","","","Apr 2013","","","Jul 2013","","","Election day")) +
   theme_bw(base_size = 20) +
-  theme(axis.title.x = element_blank())
+  theme(axis.title.x = element_blank(),
+        plot.margin = unit(c(0, 25, 5.5, 20.5), units = "pt"))
 pdf("../figures/2013_pooled_fdp_rawShares.pdf", width = 7.5, height = 3.5)
 gg
 dev.off()
@@ -213,10 +225,12 @@ gg <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
   scale_y_continuous(limits = c(0,100), breaks = skewed_ticks,
                      labels = axis_labels, name = "seat majority probability",
                      minor_breaks = NULL) +
-  scale_x_datetime(breaks = as.POSIXct(c("2012-10-01","2013-01-01","2013-04-01","2013-07-01","2013-09-24")),
-                   labels = c("Oct 2012","Jan 2013","Apr 2013","Jul 2013","Election day")) +
+  scale_x_datetime(breaks = as.POSIXct(paste0(c(rep(2012,3),rep(2013,10)), "-", c("10","11","12","01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",12),"22"))),
+                   minor_breaks = NULL,
+                   labels = c("Oct 2012","","","Jan 2013","","","Apr 2013","","","Jul 2013","","","Election day")) +
   theme_bw(base_size = 20) +
-  theme(axis.title.x = element_blank())
+  theme(axis.title.x = element_blank(),
+        plot.margin = unit(c(0, 25, 5.5, 0), units = "pt"))
 pdf("../figures/2013_pooled_fdp_PassingProb.pdf", width = 7.5, height = 3.5)
 gg
 dev.off()
@@ -231,11 +245,14 @@ gg_shares <- ggplot(shares,
   scale_fill_manual(values = c("grey80","steelblue"), na.value = "grey80", guide = guide_legend(title = "Seat majority")) +
   geom_vline(xintercept = 5, lty = 1, lwd = 1.2, col = "grey90") +
   scale_x_continuous(labels = function(x) paste0(x, "%"), limits = c(0,8)) +
-  scale_y_continuous(trans  = rev_date, breaks = as.POSIXct(c("2012-10-01","2013-01-01","2013-04-01","2013-07-01","2013-09-22")),
-                     labels = c("Oct 2012","Jan 2013","Apr 2013","Jul 2013","Election day")) +
-  xlab("Simulated raw voter share") + ylab("") +
+  scale_y_continuous(trans  = rev_date,
+                     breaks = as.POSIXct(paste0(c(rep(2012,3),rep(2013,10)), "-", c("10","11","12","01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",12),"22"))),
+                     minor_breaks = NULL,
+                     labels = c("Oct 2012","","","Jan 2013","","","Apr 2013","","","Jul 2013","","","Election day")) +
+  xlab("Share of parliament seats") + ylab("") +
   theme_bw(base_size = 25) +
-  theme(legend.position = "bottom")
+  theme(legend.position = "bottom",
+        plot.margin = unit(c(0,5.5,5.5,5.5), units = "pt"))
 
 pdf("../figures/2013_pooled_fdp_ridgeline.pdf", width = 7.5, height = 10)
 gg_shares
@@ -243,22 +260,22 @@ dev.off()
 
 
 
-# SPD/Left/Greens majority --------------------------------------------------
+# SPD/Greens majority --------------------------------------------------
 ### 1) Redistributed raw shares
-gg <- ggplot(plot_dat, aes(x = date, y = spdleftgreens_share_redist)) +
+gg <- ggplot(plot_dat, aes(x = date, y = spdgreens_share_redist)) +
   geom_hline(yintercept = 50, lty = 2, lwd = 1.2, col = "gray") +
   geom_line(lwd = 1.3, col = "gray30") +
-  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(0,60), name = "redistributed voter share") +
+  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(40,60), name = "redistributed voter share") +
   scale_x_datetime(breaks = as.POSIXct(c("2012-10-01","2013-01-01","2013-04-01","2013-07-01","2013-09-24")),
                    labels = c("Oct 2012","Jan 2013","Apr 2013","Jul 2013","Election day")) +
   theme_bw(base_size = 20) +
   theme(axis.title.x = element_blank())
-pdf("../figures/2013_pooled_spdleftgreens_rawSharesRedist.pdf", width = 7.5, height = 3.5)
+pdf("../figures/2013_pooled_spdgreens_rawSharesRedist.pdf", width = 7.5, height = 3.5)
 gg
 dev.off()
 
 ### 2) Majority probabilities
-plot_dat$probs_skewed <- 100 * coalishin:::transform_cps(plot_dat$spdleftgreens_majority_prob / 100)
+plot_dat$probs_skewed <- 100 * coalishin:::transform_cps(plot_dat$spdgreens_majority_prob / 100)
 gg <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
   geom_line(lwd = 1.3, col = "gray30") +
   scale_y_continuous(limits = c(0,100), breaks = skewed_ticks,
@@ -268,26 +285,26 @@ gg <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
                    labels = c("Oct 2012","Jan 2013","Apr 2013","Jul 2013","Election day")) +
   theme_bw(base_size = 20) +
   theme(axis.title.x = element_blank())
-pdf("../figures/2013_pooled_spdleftgreens_prob.pdf", width = 7.5, height = 3.5)
+pdf("../figures/2013_pooled_spdgreens_prob.pdf", width = 7.5, height = 3.5)
 gg
 dev.off()
 
 ### 3) ridgeline plot
 gg_shares <- ggplot(shares,
-                    aes(x = coal_percent_spdleftgreens, y = date, group = date, # basic aesthetics
+                    aes(x = coal_percent_spdgreens, y = date, group = date, # basic aesthetics
                         fill = ifelse(..x..>50, "yes", "no"), # "cut-off" gradient
                         frame = date, cumulative = TRUE)) + # aesthetics for animation
   geom_density_ridges_gradient(
     scale=10, size = 0.25, rel_min_height = 0.03, calc_ecdf=TRUE) +
   scale_fill_manual(values = c("grey80","steelblue"), na.value = "grey80", guide = guide_legend(title = "Seat majority")) +
   geom_vline(xintercept = 50, lty = 1, lwd = 1.2, col = "grey90") +
-  scale_x_continuous(labels = function(x) paste0(x, "%"), limits = c(44,62)) +
+  scale_x_continuous(labels = function(x) paste0(x, "%"), limits = c(35,60)) +
   scale_y_continuous(trans  = rev_date, breaks = as.POSIXct(c("2012-10-01","2013-01-01","2013-04-01","2013-07-01","2013-09-24")),
                      labels = c("Oct 2012","Jan 2013","Apr 2013","Jul 2013","Election day")) +
   xlab("Share of parliament seats") + ylab("") +
   theme_bw(base_size = 25) +
   theme(legend.position = "bottom")
 
-pdf("../figures/2013_pooled_spdleftgreens_ridgeline.pdf", width = 7.5, height = 10)
+pdf("../figures/2013_pooled_spdgreens_ridgeline.pdf", width = 7.5, height = 10)
 gg_shares
 dev.off()
