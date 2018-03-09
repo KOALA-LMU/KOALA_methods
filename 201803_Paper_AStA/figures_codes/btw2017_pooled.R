@@ -43,7 +43,6 @@ sim_oneDate <- function(dat) {
   seat.distributions <- coalitions::get_seats(dirichlet.draws, survey = pool_dat, 
                                               distrib.fun = coalitions::sls, n_seats = 598)
   get_seatShares_coal <- function(i, parties) { sum(seat.distributions$seats[seat.distributions$sim == i & seat.distributions$party %in% parties]) / 598 * 100 }
-  seat.shares_cdufdp <- 
   
   return(data.frame("coal_percent_cdufdp" = sapply(1:nsim, function(i) { get_seatShares_coal(i, c("cdu","fdp")) }),
                     "coal_percent_spdleftgreens" = sapply(1:nsim, function(i) { get_seatShares_coal(i, c("spd","left","greens")) }),
@@ -121,19 +120,51 @@ ticks_col[ticks %in% axis_ticks_minor] <- gray(0.7)
 
 
 
+
+# Development of (pooled) raw poll shares ---------------------------------
+# prepare data for using the plotting function
+plot_dat_raw <- surveys %>% unnest() %>% bind_rows(pool)
+
+# plot
+lk <- coalishin::lookup_parties %>% filter(id_election == "btw")
+partycols <- lk$col
+names(partycols) <- lk$id_party
+partycols["fdp"] <- lk %>% filter(id_party == "fdp") %>% pull(colDark)
+
+gg <- coalishin::plot_pooledSurvey_byTime(plot_dat_raw, election = "btw", plot_intervals = FALSE, partycols = partycols,
+                                          hline = NULL)
+pdf("../figures/2017_pooled_rawShares.pdf", width = 7.5, height = 3.5)
+gg + 
+  scale_y_continuous(name = "Raw voter share",
+                     limits = c(0,55),
+                     breaks = seq(0,55,by = 5),
+                     minor_breaks = NULL,
+                     labels = c("0%","5%","10%","","20%","","30%","","40%","","50%","")) +
+  geom_hline(yintercept = 50, lty = 2, lwd = 1, col = "gray") +
+  geom_hline(yintercept = 5, lty = 2, lwd = 1, col = "gray") +
+  theme_bw(base_size = 20) +
+  theme(axis.title.x = element_blank())
+dev.off()
+
+
+
 # CDU/FDP majority --------------------------------------------------------
 ### 1) Redistributed raw shares
 gg <- ggplot(plot_dat, aes(x = date, y = cdufdp_share_redist)) +
-  geom_hline(yintercept = 50, lty = 2, lwd = 1.2, col = "gray") +
+  geom_hline(yintercept = 50, lty = 2, lwd = 1, col = "gray") +
   geom_line(lwd = 1.3, col = "gray30") +
-  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(0,60), name = "redistributed voter share") +
+  scale_y_continuous(name = "Redistributed voter share",
+                     limits = c(0,55),
+                     breaks = seq(0,55,by = 5),
+                     minor_breaks = NULL,
+                     labels = c("0%","","10%","","20%","","30%","","40%","","50%","")) +
   scale_x_datetime(breaks = as.POSIXct(paste0(c(rep(2016,3),rep(2017,10)), "-", c("10","11","12","01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",12),"24"))),
                    minor_breaks = NULL,
                    labels = c("Oct 2016","","","Jan 2017","","","Apr 2017","","","Jul 2017","","","Election day")) +
   theme_bw(base_size = 20) +
   theme(axis.title.x = element_blank(),
         plot.margin = unit(c(0, 25, 5.5, 15), units = "pt"))
-pdf("../figures/2017_pooled_cdufdp_rawSharesRedist.pdf", width = 7.5, height = 3.5)
+pdf("../figures/2017_pooled_cdufdp_rawSharesRedist.pdf", width = 9, height = 3)
 gg
 dev.off()
 
@@ -142,14 +173,14 @@ plot_dat$probs_skewed <- 100 * coalishin:::transform_cps(plot_dat$cdufdp_majorit
 gg <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
   geom_line(lwd = 1.3, col = "gray30") +
   scale_y_continuous(limits = c(0,100), breaks = skewed_ticks, minor_breaks = NULL,
-                     labels = axis_labels, name = "seat majority probability") +
+                     labels = axis_labels, name = "Seat majority probability") +
   scale_x_datetime(breaks = as.POSIXct(paste0(c(rep(2016,3),rep(2017,10)), "-", c("10","11","12","01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",12),"24"))),
                    minor_breaks = NULL,
                    labels = c("Oct 2016","","","Jan 2017","","","Apr 2017","","","Jul 2017","","","Election day")) +
   theme_bw(base_size = 20) +
   theme(axis.title.x = element_blank(),
         plot.margin = unit(c(0, 25, 5.5, 4), units = "pt"))
-pdf("../figures/2017_pooled_cdufdp_prob.pdf", width = 7.5, height = 3.5)
+pdf("../figures/2017_pooled_cdufdp_prob.pdf", width = 9, height = 3)
 gg
 dev.off()
 
@@ -172,7 +203,7 @@ gg_shares <- ggplot(shares,
   theme(legend.position = "bottom",
         plot.margin = unit(c(0,5.5,5.5,5.5), units = "pt"))
 
-pdf("../figures/2017_pooled_cdufdp_ridgeline.pdf", width = 7.5, height = 10)
+pdf("../figures/2017_pooled_cdufdp_ridgeline.pdf", width = 10, height = 8)
 gg_shares
 dev.off()
 
@@ -233,16 +264,20 @@ dev.off()
 # SPD/Left/Greens majority --------------------------------------------------
 ### 1) Redistributed raw shares
 gg <- ggplot(plot_dat, aes(x = date, y = spdleftgreens_share_redist)) +
-  geom_hline(yintercept = 50, lty = 2, lwd = 1.2, col = "gray") +
+  geom_hline(yintercept = 50, lty = 2, lwd = 1, col = "gray") +
   geom_line(lwd = 1.3, col = "gray30") +
-  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(0,60), name = "redistributed voter share") +
+  scale_y_continuous(name = "Redistributed voter share",
+                     limits = c(0,55),
+                     breaks = seq(0,55,by = 5),
+                     minor_breaks = NULL,
+                     labels = c("0%","","10%","","20%","","30%","","40%","","50%","")) +
   scale_x_datetime(breaks = as.POSIXct(paste0(c(rep(2016,3),rep(2017,10)), "-", c("10","11","12","01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",12),"24"))),
                    minor_breaks = NULL,
                    labels = c("Oct 2016","","","Jan 2017","","","Apr 2017","","","Jul 2017","","","Election day")) +
   theme_bw(base_size = 20) +
   theme(axis.title.x = element_blank(),
         plot.margin = unit(c(0, 25, 5.5, 15), units = "pt"))
-pdf("../figures/2017_pooled_spdleftgreens_rawSharesRedist.pdf", width = 7.5, height = 3.5)
+pdf("../figures/2017_pooled_spdleftgreens_rawSharesRedist.pdf", width = 9, height = 3)
 gg
 dev.off()
 
@@ -251,14 +286,14 @@ plot_dat$probs_skewed <- 100 * coalishin:::transform_cps(plot_dat$spdleftgreens_
 gg <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
   geom_line(lwd = 1.3, col = "gray30") +
   scale_y_continuous(limits = c(0,100), breaks = skewed_ticks, minor_breaks = NULL,
-                     labels = axis_labels, name = "seat majority probability") +
+                     labels = axis_labels, name = "Seat majority probability") +
   scale_x_datetime(breaks = as.POSIXct(paste0(c(rep(2016,3),rep(2017,10)), "-", c("10","11","12","01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",12),"24"))),
                    minor_breaks = NULL,
                    labels = c("Oct 2016","","","Jan 2017","","","Apr 2017","","","Jul 2017","","","Election day")) +
   theme_bw(base_size = 20) +
   theme(axis.title.x = element_blank(),
         plot.margin = unit(c(0, 25, 5.5, 4), units = "pt"))
-pdf("../figures/2017_pooled_spdleftgreens_prob.pdf", width = 7.5, height = 3.5)
+pdf("../figures/2017_pooled_spdleftgreens_prob.pdf", width = 9, height = 3)
 gg
 dev.off()
 
@@ -281,7 +316,7 @@ gg_shares <- ggplot(shares,
   theme(legend.position = "bottom",
         plot.margin = unit(c(0,5.5,5.5,5.5), units = "pt"))
 
-pdf("../figures/2017_pooled_spdleftgreens_ridgeline.pdf", width = 7.5, height = 10)
+pdf("../figures/2017_pooled_spdleftgreens_ridgeline.pdf", width = 10, height = 8)
 gg_shares
 dev.off()
 
@@ -293,7 +328,7 @@ plot_dat_afd <- plot_dat %>% select(date, fdp_share_raw, afd_share_raw, left_sha
   gather("party", "share", 2:5)
 cols <- c("afd" = "skyblue2", "fdp" = "gold2", "left" = "deeppink3", "greens" = "#46962b")
 gg <- ggplot(plot_dat_afd, aes(x = date, y = share, col = party)) +
-  geom_hline(yintercept = 5, lty = 2, lwd = 1.2, col = "gray") +
+  geom_hline(yintercept = 5, lty = 2, lwd = 1, col = "gray") +
   geom_line(lwd = 1.3) +
   scale_color_manual(values = cols) +
   scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(0,15), name = "Raw voter share") +
@@ -304,7 +339,7 @@ gg <- ggplot(plot_dat_afd, aes(x = date, y = share, col = party)) +
   theme(axis.title.x = element_blank(),
         legend.position = "bottom",
         plot.margin = unit(c(0, 25, 5.5, 15), units = "pt"))
-pdf("../figures/2017_pooled_afd_rawShares.pdf", width = 7.5, height = 3.5)
+pdf("../figures/2017_pooled_afd_rawShares.pdf", width = 9, height = 3)
 gg
 dev.off()
 
@@ -313,13 +348,13 @@ plot_dat$probs_skewed <- 100 * coalishin:::transform_cps(plot_dat$afd_thirdParty
 gg <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
   geom_line(lwd = 1.3, col = "gray30") +
   scale_y_continuous(limits = c(0,100), breaks = skewed_ticks, minor_breaks = NULL,
-                     labels = axis_labels, name = "seat majority probability") +
+                     labels = axis_labels, name = "Seat majority probability") +
   scale_x_datetime(breaks = as.POSIXct(paste0(c(rep(2016,3),rep(2017,10)), "-", c("10","11","12","01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",12),"24"))),
                    minor_breaks = NULL,
                    labels = c("Oct 2016","","","Jan 2017","","","Apr 2017","","","Jul 2017","","","Election day")) +
   theme_bw(base_size = 20) +
   theme(legend.position = "bottom",
         plot.margin = unit(c(0, 25, 5.5, 4), units = "pt"))
-pdf("../figures/2017_pooled_afd_thirdPartyProb.pdf", width = 7.5, height = 3.5)
+pdf("../figures/2017_pooled_afd_thirdPartyProb.pdf", width = 9, height = 3)
 gg
 dev.off()

@@ -95,14 +95,14 @@ gg_shares <- ggplot(shares_short,
     scale=10, size = 0.25, rel_min_height = 0.03, calc_ecdf=TRUE) +
   scale_fill_manual(values = c("grey80","steelblue"), na.value = "grey80", guide = guide_legend(title = "Seat majority")) +
   geom_vline(xintercept = 50, lty = 1, lwd = 1.2, col = "grey90") +
-  scale_x_continuous(labels = function(x) paste0(x, "%"), limits = c(40,57)) +
+  scale_x_continuous(labels = function(x) paste0(x, "%"), limits = c(40,60)) +
   xlab("Share of parliament seats") + ylab("Density") +
   theme_bw(base_size = 25) +
   theme(legend.position = "bottom",
         axis.ticks.y = element_blank(),
         axis.text.y = element_blank())
 
-pdf("../figures/2013_forsa_cdufdp_lastPreelectionPoll.pdf", width = 7, height = 4)
+pdf("../figures/2013_forsa_cdufdp_lastPreelectionPoll.pdf", width = 8, height = 4)
 gg_shares
 # brand_plot(gg_shares, xmin = 53, xmax = 57.75, ymin = shares_short$date[1] + 0.65)
 dev.off()
@@ -118,7 +118,7 @@ gg_shares <- ggplot(shares,
     scale=10, size = 0.25, rel_min_height = 0.03, calc_ecdf=TRUE) +
   scale_fill_manual(values = c("grey80","steelblue"), na.value = "grey80", guide = guide_legend(title = "Seat majority")) +
   geom_vline(xintercept = 50, lty = 1, lwd = 1.2, col = "grey90") +
-  scale_x_continuous(labels = function(x) paste0(x, "%"), limits = c(40,57)) +
+  scale_x_continuous(labels = function(x) paste0(x, "%"), limits = c(40,60)) +
   scale_y_continuous(trans  = rev_date,
                      breaks = as.POSIXct(paste0(rep(2013,10), "-", c("01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",9),"22"))),
                      minor_breaks = NULL,
@@ -128,7 +128,7 @@ gg_shares <- ggplot(shares,
   theme(legend.position = "bottom",
         plot.margin = unit(c(0,5.5,5.5,5.5), units = "pt"))
 
-pdf("../figures/2013_forsa_cdufdp_ridgeline.pdf", width = 7.5, height = 8)
+pdf("../figures/2013_forsa_cdufdp_ridgeline.pdf", width = 10, height = 8)
 gg_shares
 dev.off()
 
@@ -159,16 +159,20 @@ dev.off()
 # 3) Line plot of CDU-FDP probabilities -----------------------------------
 ### 1) Redistributed raw shares
 gg <- ggplot(plot_dat, aes(x = date, y = cdufdp_share_redist)) +
-  geom_hline(yintercept = 50, lty = 2, lwd = 1.2, col = "gray") +
+  geom_hline(yintercept = 50, lty = 2, lwd = 1, col = "gray") +
   geom_line(lwd = 1.3, col = "gray30") +
-  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(40,55), name = "redistributed voter share") +
+  scale_y_continuous(name = "Redistributed voter share",
+                     limits = c(0,55),
+                     breaks = seq(0,55,by = 5),
+                     minor_breaks = NULL,
+                     labels = c("0%","","10%","","20%","","30%","","40%","","50%","")) +
   scale_x_datetime(breaks = as.POSIXct(paste0(rep(2013,10), "-", c("01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",9),"22"))),
                    minor_breaks = NULL,
                    labels = c("Jan 2013","","","Apr 2013","","","Jul 2013","","","Election day")) +
   theme_bw(base_size = 20) +
   theme(axis.title.x = element_blank(),
         plot.margin = unit(c(0, 25, 5.5, 15), units = "pt"))
-pdf("../figures/2013_forsa_cdufdp_rawSharesRedist.pdf", width = 7.5, height = 3.5)
+pdf("../figures/2013_forsa_cdufdp_rawSharesRedist.pdf", width = 9, height = 3)
 gg
 dev.off()
 
@@ -177,7 +181,7 @@ plot_dat$probs_skewed <- 100 * coalishin:::transform_cps(plot_dat$cdufdp_majorit
 gg <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
   geom_line(lwd = 1.3, col = "gray30") +
   scale_y_continuous(limits = c(0,100), breaks = skewed_ticks,
-                     labels = axis_labels, name = "seat majority probability",
+                     labels = axis_labels, name = "Seat majority probability",
                      minor_breaks = NULL) +
   scale_x_datetime(breaks = as.POSIXct(paste0(rep(2013,10), "-", c("01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",9),"22"))),
                    minor_breaks = NULL,
@@ -185,7 +189,7 @@ gg <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
   theme_bw(base_size = 20) +
   theme(axis.title.x = element_blank(),
         plot.margin = unit(c(0, 25, 5.5, 4), units = "pt"))
-pdf("../figures/2013_forsa_cdufdp_prob.pdf", width = 7.5, height = 3.5)
+pdf("../figures/2013_forsa_cdufdp_prob.pdf", width = 9, height = 3)
 gg
 dev.off()
 
