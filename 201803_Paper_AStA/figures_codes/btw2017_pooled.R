@@ -140,6 +140,11 @@ gg +
                      breaks = seq(0,55,by = 5),
                      minor_breaks = NULL,
                      labels = c("0%","5%","10%","","20%","","30%","","40%","","50%","")) +
+  scale_x_date(breaks = as.Date(paste0(c(rep(2016,3),rep(2017,10)), "-", c("10","11","12","01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",12),"24"))),
+               minor_breaks = NULL,
+               labels = c("Oct 2016","","","Jan 2017","","","Apr 2017","","","Jul 2017","","","Election day")) +
+  scale_color_manual(name = "Parties", values = partycols,
+                     labels = c("Union","SPD","AfD","FDP","Left","Greens","Others")) +
   geom_hline(yintercept = 50, lty = 2, lwd = 1, col = "gray") +
   geom_hline(yintercept = 5, lty = 2, lwd = 1, col = "gray") +
   theme_bw(base_size = 20) +
@@ -323,24 +328,34 @@ dev.off()
 
 # AfD third biggest party -------------------------------------------------
 ### 1) Raw voter shares
-plot_dat_afd <- plot_dat %>% select(date, fdp_share_raw, afd_share_raw, left_share_raw, greens_share_raw) %>% 
-  rename(fdp = fdp_share_raw, afd = afd_share_raw, left = left_share_raw, greens = greens_share_raw) %>%
-  gather("party", "share", 2:5)
-cols <- c("afd" = "skyblue2", "fdp" = "gold2", "left" = "deeppink3", "greens" = "#46962b")
-gg <- ggplot(plot_dat_afd, aes(x = date, y = share, col = party)) +
+parties <- c("afd","fdp","left","greens")
+plot_dat_raw <- surveys %>% unnest() %>% bind_rows(pool) %>% unnest() %>%
+  filter(party %in% parties) %>% nest(-pollster, -date, -start, -end, -respondents, .key = "survey")
+lk <- coalishin::lookup_parties %>% filter(id_election == "btw")
+partycols <- lk$col
+names(partycols) <- lk$id_party
+partycols["fdp"] <- lk %>% filter(id_party == "fdp") %>% pull(colDark)
+partycols <- partycols[names(partycols) %in% parties]
+gg <- coalishin::plot_pooledSurvey_byTime(plot_dat_raw, election = "btw", plot_intervals = FALSE, partycols = partycols,
+                                          hline = NULL)
+pdf("../figures/2017_pooled_afd_rawShares.pdf", width = 9, height = 4)
+gg + 
+  scale_y_continuous(name = "Raw voter share",
+                     limits = c(0,15),
+                     breaks = seq(0,15,by = 5),
+                     minor_breaks = NULL,
+                     labels = c("0%","5%","10%","15%")) +
+  scale_x_date(breaks = as.Date(paste0(c(rep(2016,3),rep(2017,10)), "-", c("10","11","12","01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",12),"24"))),
+               minor_breaks = NULL,
+               labels = c("Oct 2016","","","Jan 2017","","","Apr 2017","","","Jul 2017","","","Election day")) +
+  scale_color_manual(name = "Parties", values = partycols,
+                     labels = c("AfD","FDP","Left","Greens")) +
+  geom_hline(yintercept = 50, lty = 2, lwd = 1, col = "gray") +
   geom_hline(yintercept = 5, lty = 2, lwd = 1, col = "gray") +
-  geom_line(lwd = 1.3) +
-  scale_color_manual(values = cols) +
-  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(0,15), name = "Raw voter share") +
-  scale_x_datetime(breaks = as.POSIXct(paste0(c(rep(2016,3),rep(2017,10)), "-", c("10","11","12","01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",12),"24"))),
-                   minor_breaks = NULL,
-                   labels = c("Oct 2016","","","Jan 2017","","","Apr 2017","","","Jul 2017","","","Election day")) +
   theme_bw(base_size = 20) +
   theme(axis.title.x = element_blank(),
         legend.position = "bottom",
         plot.margin = unit(c(0, 25, 5.5, 15), units = "pt"))
-pdf("../figures/2017_pooled_afd_rawShares.pdf", width = 9, height = 3)
-gg
 dev.off()
 
 ### 2) Majority probabilities

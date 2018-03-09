@@ -160,6 +160,11 @@ gg +
                      breaks = seq(0,55,by = 5),
                      minor_breaks = NULL,
                      labels = c("0%","5%","10%","","20%","","30%","","40%","","50%","")) +
+  scale_x_date(breaks = as.Date(paste0(c(rep(2012,3),rep(2013,10)), "-", c("10","11","12","01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",12),"22"))),
+               minor_breaks = NULL,
+               labels = c("Oct 2012","","","Jan 2013","","","Apr 2013","","","Jul 2013","","","Election day")) +
+  scale_color_manual(name = "Parties", values = partycols,
+                     labels = c("Union","SPD","FDP","Left","Greens","Others")) +
   geom_hline(yintercept = 50, lty = 2, lwd = 1, col = "gray") +
   geom_hline(yintercept = 5, lty = 2, lwd = 1, col = "gray") +
   theme_bw(base_size = 20) +
@@ -277,7 +282,7 @@ gg_shares <- ggplot(shares,
     scale=10, size = 0.25, rel_min_height = 0.03, calc_ecdf=TRUE) +
   scale_fill_manual(values = c("grey80","steelblue"), na.value = "grey80", guide = guide_legend(title = "Seat majority")) +
   geom_vline(xintercept = 5, lty = 1, lwd = 1.2, col = "grey90") +
-  scale_x_continuous(labels = function(x) paste0(x, "%"), limits = c(0,8)) +
+  scale_x_continuous(labels = function(x) paste0(x, "%"), limits = c(0,10)) +
   scale_y_continuous(trans  = rev_date,
                      breaks = as.POSIXct(paste0(c(rep(2012,3),rep(2013,10)), "-", c("10","11","12","01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",12),"22"))),
                      minor_breaks = NULL,
