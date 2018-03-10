@@ -102,7 +102,7 @@ Potential biases of specific agencies are not taken into account.
 Sample uncertainty-based probabilities are estimated, assuming the election was held today,
 not accounting for potential shifts until election day.
 Possible visualizations of the results are shown and the benefit of the approach is outlined
-by discussing the German federal elections 2013 and 2017.
+by discussing election polls before the German federal elections 2013 and 2017.
 An implementation is freely available in the \texttt{R} package \texttt{coalitions}.
 
 \keywords{\red{4 to 6 keywords} Election analysis \and Opinion polls \and Election reporting \and Multinomial-Dirichlet \and Pooling}
@@ -170,7 +170,7 @@ taking into consideration potential shifts until election day.
 Approaches for predicting future election outcomes based on past
 information can e.g. be found in \citet{graefe_2017} or \citet{norpoth_gschwend_2010}.
 
-All methods aree implemented in \texttt{R} \citep{r_2017} and are available in the open-source
+All methods are implemented in \texttt{R} \citep{r_2017} and are available in the open-source
 package \texttt{coalitions} on GitHub \citep{bender_bauer_2018}. An
 interactive \texttt{shiny}-based \citep{chang_2017} website \texttt{koala.stat.uni-\allowbreak muenchen.\allowbreak de}
 visualizes estimated coalition probabilities and is used to communicate the results
@@ -179,8 +179,9 @@ The process of fetching new polls, updating the website and sending out Twitter 
 
 The article is structured as follows: Section 2 introduces the Bayesian method
 used to estimate event probabilities. The pooling approach is outlined in
-Section 3. Section 4 discusses selected results for the German federal elections
-2013 and 2017. We finish with a conclusion in Section 5.
+Section 3. Section 4 discusses selected results based on election polls before
+the German federal elections 2013 and 2017.
+We finish with a conclusion in Section 5.
 
 
 
@@ -246,7 +247,7 @@ probability of $26.33\%$.
 
 If it is known that specific parties are underrepresented or
 overrepresented in election polls, this information
-can be included in the model by using an informative prior distribution.
+could be included in the model by using an informative prior distribution.
 Underrepresented and overrepresented parties then would get higher and lower
 $\alpha_j$ values, respectively.
 However, such biases of polling agencies are hard to quantify
@@ -277,10 +278,11 @@ and then simulate one observation from the posterior.
 
 Figure \ref{fig:seatDist} shows the simulated
 parliament seat shares for the coalition Union-FDP, based on the observed
-voter shares in Table \ref{bauer:tab_fdp}. The estimated density is clearly bimodal
+voter shares in Table \ref{tab_fdp}. The estimated density is clearly bimodal
 as the observed FDP share before redistribution equals exactly $5\%$ and
 so FDP only enters the parliament in half of the simulations. As mentioned,
-the estimated probability with $26.33\%$ lies around a quarter.
+the estimated probability of a coalition majority is $26.33\%$ as
+a majority was observed in around a quarter of the simulations.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.45\textwidth]{figures/2013_forsa_cdufdp_lastPreelectionPoll.pdf}
@@ -291,7 +293,7 @@ the estimated probability with $26.33\%$ lies around a quarter.
 
 As such density plots depict both the probability and the underlying
 uncertainty for specific coalitions, they are a nice possibility to communicate
-uncertainty underlying opinion polls to the general public.
+uncertainty underlying opinion polls.
 
 To visualize the {\it development} of such probabilities
 %together with the underlying uncertainty
@@ -313,17 +315,19 @@ Left top: Observed voter shares after redistribution. Left bottom: Probabilities
 \end{figure}
 
 Comparing the redistributed voter shares and the seat majority probabilities
-in Figure~\ref{fig:seatDist_time} it is clear that the probabilities consist
-of a lot more information than the voter shares. Especially, even small changes
-in the redistributed voter shares can make an immense difference regarding the
-chance of the coalition to form a government.
+in Figure~\ref{fig:seatDist_time} it is clear that the probabilities contain
+a lot more information than the voter shares. Especially, even small changes
+in the redistributed voter share can make an immense difference regarding the
+probability of the coalition to form a government.
 
 To focus on the most relevant changes in the majority probabilities, we propose
-the use of a skewed axis as shown in Figure~\ref{fig:seatDist_time}. This axis
-stretches the range of values around $50\%$ as a change in absolute probabilities
-from $40\%$ to $60\%$ is more relevant than a change from $70\%$ to $90\%$ as
-a success for achieving a seat majority is becoming more probable than a failure
-to do so, or in both cases a success is already very probable, respectively.
+the use of a skewed axis as shown in Figure~\ref{fig:seatDist_time}. In this axis
+the range of values around $50\%$ is stretched and the range of values near
+$0\%$ and $100\%$ is compressed. In this way, we put less weight on changes
+where an event is {\it still highly (im)probable} and emphasize more relevant
+changes after which an event gets more or less probable than $50\%$. Also,
+consistently using another axis for the estimated probabilities prevents
+confusion of probabilities and voter shares.
 
 
 
@@ -344,16 +348,17 @@ Pooling over multiple such polls as independent random samples leads to another 
 \sum\limits_i X_{i1},\ldots, \sum\limits_i X_{ik} \sim Multinomial \left( \sum\limits_i n_i,\theta_1,\ldots,\theta_k \right).
 \end{equation}
 
-Further analyses, however, show that polls from different
+Further analyses, however, showed that polls from different (German)
 polling agencies are correlated
 and the independency assumption does not hold.
 Therefore, we adjust the resulting multinomial
 distribution by using an \textit{effective sample size} \citep{hanley_2003},
-reflecting that the aggregation over multiple polls does not reflect the 
-information from a sample with $\sum_i n_i$ observations.
+reflecting that the aggregation over multiple polls does not contain 
+information of a sample with $\sum_i n_i$ observations.
 
 Quantification of pairwise correlation is done based on the variance of the
-difference between two polls. The following equation holds for two independent
+party share difference between two polls for a specific party.
+The following equation holds for two independent
 random sample polls $A$ and $B$:
 
 \begin{equation}
@@ -363,7 +368,7 @@ Var(X_A - X_B) &= Var(X_A) + Var(X_B) - 2 \cdot Cov(X_A, X_B) \\
 \end{aligned}
 \end{equation}
 
-We take $Var(X_{Aj})$ and $Var(X_{Bj})$ as the theoretical variances of the binomially distributed, observed voter numbers and estimate $Var(X_{Aj} - X_{Bj})$ based on the observed differences between the party shares. Having done so, one can estimate the covariance $Cov(X_{Aj}, X_{Bj})$ and accordingly also the correlation. As the binomial distribution is directly proportional to the sample size, the effective sample size $n_{\text{eff}}$ can be defined as the ratio between the estimated variance for the pooled sample and the theoretical variance of a sample of size one:
+We take $Var(X_{Aj})$ and $Var(X_{Bj})$ as the theoretical variances of the binomially distributed, observed voter numbers and estimate $Var(X_{Aj} - X_{Bj})$ based on the observed differences between the party shares. Having done so, one can estimate the covariance $Cov(X_{Aj}, X_{Bj})$ and accordingly also the correlation. As the binomial variance is directly proportional to sample size, the effective sample size $n_{\text{eff}}$ can be defined as the ratio between the estimated variance of the pooled sample and the theoretical variance of a sample of size one:
 $$
 n_{\text{eff}} = \frac{Var(\text{pooled})}{Var(\text{sample of size 1})},
 $$
@@ -373,19 +378,19 @@ Var(\text{pooled}) = Var(X_A + X_B) = Var(X_A) + Var(X_B) + 2 Cov(X_A,X_B)
 $$
 and $Var(\text{sample of size 1})$ the theoretical variance of the pooled share.
 
-Looking at the party-specific correlations between 20 surveys conducted by the two most regular German polling agencies, Emnid and Forsa, we on average end up with a medium high correlation, using mean party shares and sample sizes per institute for the theoretical variances. Other institute comparisons were not performed as too few published surveys were conducted cover comparable time frames. For simplicity, we do not recalculate the correlation for each simulation, but rather set the correlation used in our methodology to $0.5$.
+Looking at the party-specific correlations between 20 surveys conducted by the two most regular German polling agencies, Emnid and Forsa, we on average end up with a medium high correlation, using mean party shares and sample sizes per institute for the theoretical variances. Other institute comparisons were not performed as too few published surveys were conducted that cover comparable time frames. For simplicity, we do not recalculate the correlation for each simulation, but rather set the correlation used in our methodology to $0.5$, i.e. a medium positive correlation.
 For convenience, the calculation of $n_{\text{eff}}$ is based on the party with most votes, as the specific party choice only marginally affects the results.
 
 In the case of two published polls with $1500$ and $2000$ respondents, respectively, and a pooled share of $40\%$
 for the strongest party, the method leads
-to an effective sample size of $n_{eff} = 2341$. Thus, the method reduces sample uncertainty
-compared to using only single polls, but the method is also clearly conservative, compared to
+to an effective sample size of $n_{\text{eff}} = 2341$. Thus, the method reduces sample uncertainty
+compared to using only single polls, but it is also quite conservative, compared to
 assuming independence between the polls and using a summed sample size of $1500 + 2000 = 3500$.
 
 As noted, in practice we use a timeframe of 14 days, i.e. all surveys published at maximum 14 days ago are included
 in the calculation of the pooled sample. In the case of opinion polls for a specific election getting published
-only very rarely one can also extend this timeframe, e.g. using the heuristic of including all surveys published up to 14 days
-ago with weight 1 (using their whole sample size), and all surveys within 14 to 28 days before today with halved weight
+only very rarely one can also extend this timeframe, e.g. using the heuristics of including all surveys published up to 14 days
+ago with weight 1 (using their true sample size), and all surveys within 15 to 28 days age with halved weight
 (using the halved sample size).
 
 
