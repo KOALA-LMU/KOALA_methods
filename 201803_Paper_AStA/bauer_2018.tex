@@ -396,29 +396,32 @@ ago with weight 1 (using their true sample size), and all surveys within 15 to 2
 
 
 \section{Application} \label{sec:application}
-We applied (an earlier iteration of) our method to the German federal elections
-2013 and 2017, accompanied by news coverage in general media \citep[cf.][]{wahlistik_2013, gelitz_2017}.
-In the following, we take these two elections as examples to underline
-the differences between standard media reporting on opinion polls and our approach,
-which focus on interpreting the raw observed shares after redistribution and
-the estimated Bayesian probabilities, respectively.
+As previously mentioned, (an earlier iteration of) our method entered news coverage 
+in general media reporting about opinion polls before the German federal elections
+2013 and 2017 \citep[cf.][]{wahlistik_2013, gelitz_2017}.
+We will in the following revise the polling situation before these two elections
+to underline the differences between standard media reporting on election polls
+-- focusing on interpreting the raw observed shares after redistribution --
+and our approach based on estimated Bayesian probabilities.
 
-For each election, 2013 and 2017, we base the event probabilities on
+For each of the two elections we base the event probabilities on
 pooled surveys, which use the opinion polls published by the major
-German polling agencies, i.e. Allensbach, Emnid, Forsa, Forschungsgruppe Wahlen,
-GMS, Infratest dimap and INSA.
-Opinion poll data from these polling agencies is publicly available1
-on \texttt{www.wahlrecht.de}. 
+German polling agencies (Allensbach, Emnid, Forsa, Forschungsgruppe Wahlen,
+GMS, Infratest dimap and INSA) and a pooling time window of 14 days.
+Opinion poll data from these polling agencies is publicly available
+on \texttt{www.wahlrecht.de}. For the estimation of probabilities $10\,000$
+simulations were used.
 
 
 \subsection{German federal election 2013} \label{subsec:2013}
-From 2009 to 2013, the German government was formed by a coalition of 
-conservative CDU/CSU (or ''Union'') and the liberal FDP. 
-Thus, main interest before the election on September 22nd was in whether this
-coalition could maintain its majority of parliament seats. As FDP in opinion
-polls was very close to a voter share of $5\%$, i.e. the minimum hurdle to
-pass into parliament, FDP successfully passing into parliament was crucial
-for the success of the coalition.
+In the legislative period from 2009 to 2013, the German government was formed by
+a coalition of the conservative ''Union'' (a formation of the parties CDU and CSU)
+and the liberal FDP.
+Main interest before the election on September 22nd, 2013 was in whether the
+coalition could sustain its majority of parliament seats. FDP successfully passing
+into parliament thereby played a key role for the success of the coalition.
+In opinion polls, the liberals only rarely had a voter share clearly over
+$5\%$, i.e. the minimum hurdle to pass into parliament (see Fig.~\ref{fig:2013}).
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.6\textwidth]{figures/2013_pooled_rawShares.pdf}
@@ -429,12 +432,46 @@ As specific voter shares for AfD were only sparsely reported before the election
 \end{figure}
 
 
+\paragraph{FDP passing the 5\% hurdle} \ \\
+The poll-based prospect of FDP to pass the $5\%$ hurdle is visualized in Figure~\ref{fig:2013_fdp}.
+As can be seen, the raw voter share of the FDP only exceeds the necessary share
+of $5\%$ over short periods of time and only once reaches a pooled voter share
+of $6\%$ (top left pane in Fig.~\ref{fig:2013_fdp}). Similarly, the probability
+for the party to pass the hurdle only rarely rises over $50\%$ (bottom left pane). However, beginning
+from the end of August 2013 until election day, the pooled voter shares and the
+corresponding probabilities consitently lie over $5\%$ and $50\%$, respectively,
+stating that -- shortly before election day -- a success of the FDP is more
+probable than a failure.
+
+Comparing voter shares and probabilities, Figure~\ref{fig:2013_fdp} shows
+that small changes in the overall share of a party can dramatically influence
+event probabilities. Especially as probabilities contain sample uncertainty
+and the raw voter shares do not, it is easier to deduce relevant information about
+the success of the party from the probabilities.
+E.g., even if the voter share is just $1\%$ away from the $5\%$ hurdle, the probability
+plot shows that voter shares of $4\%$ and $6\%$ correspond to very clear
+probabilities of near $0\%$ and $100\%$, respectively, based on sample uncertainty.
+
+\begin{figure}[H]\centering
+\begin{tabular}{ll}
+\includegraphics[height=.15\textwidth]{figures/2013_pooled_fdp_rawShares.pdf}
+&
+\multirow{2}{*}[13ex]{\includegraphics[height=30ex]{figures/2013_pooled_fdp_ridgeline.pdf}}
+\\
+\includegraphics[height=.15\textwidth]{figures/2013_pooled_fdp_passingProb.pdf}
+\end{tabular}
+\caption{Development of the prospect of FDP to pass the $5\%$ hurdle before the German federal election in September 2013 based on pooled opinion polls.
+Left top: Observed voter shares before redistribution. Left bottom: Probabilities to pass the $5\%$ hurdle, based on $10\,000$ simulations. Right: Densities of simulated raw voter shares based on $10\,000$ simulations. The parts of the densities encoding for successfully possing the hurdle are colored blue.
+\label{fig:2013_fdp}
+}
+\end{figure}
+
 
 \paragraph{Union-FDP coalition majority} \ \\
 Figure \ref{fig:2013_cdufdp} visualizes the pooled opinion poll results
-for the potential coalition Union-FDP, since one year before the election.
+for the potential coalition Union-FDP.
 Starting from a redistributed voter share of around $43\%$ in October 2012,
-the voter share in the pooled results rose steadily, reaching its maximum
+the voter share rose steadily, reaching its maximum
 of ca. $51\%$ about one month before election day.
 
 Only taking this development of the redistributed voter share into
@@ -481,34 +518,6 @@ the coalition are rather small. This can best be seen in the
 ridgeline plot (right panel in Fig.~\ref{fig:2013_cdufdp}), where
 the densities are bimodal if the raw voter share of FDP is close
 to $5\%$ (see Fig.~\ref{fig:2013_fdp}).
-
-
-\paragraph{FDP passing the 5\% hurdle} \ \\
-As mentioned, our approach can also be used to quantify the probability
-for other events than seat majorities, e.g. for the FDP successfully
-passing the $5\%$ hurdle. Figure~\ref{fig:2013_fdp} again shows that
-small changes in raw voter share of the party dramatically influence
-the success probabilities. Overall, based on the opinion polls
-correctly representing the whole population, a success of the FDP seemed
-very uncertain in most times. Only around the end of August 2013
-the pooled voter share rose to $6\%$ and the corresponding probability
-rose to nearly $100\%$.
-
-\begin{figure}[H]\centering
-\begin{tabular}{ll}
-\includegraphics[height=.15\textwidth]{figures/2013_pooled_fdp_rawShares.pdf}
-&
-\multirow{2}{*}[13ex]{\includegraphics[height=30ex]{figures/2013_pooled_fdp_ridgeline.pdf}}
-\\
-\includegraphics[height=.15\textwidth]{figures/2013_pooled_fdp_passingProb.pdf}
-\end{tabular}
-\caption{Development of the prospect of FDP to pass the $5\%$ hurdle before the German federal election in September 2013 based on pooled opinion polls.
-Left top: Observed voter shares before redistribution. Left bottom: Probabilities to pass the $5\%$ hurdle, based on $10\,000$ simulations. Right: Densities of simulated raw voter shares based on $10\,000$ simulations. The parts of the densities encoding for successfully possing the hurdle are colored blue.
-\label{fig:2013_fdp}
-}
-\end{figure}
-
-
 
 
 
