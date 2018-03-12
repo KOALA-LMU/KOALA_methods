@@ -171,7 +171,7 @@ Approaches for predicting future election outcomes based on past
 information can e.g. be found in \citet{graefe_2017} or \citet{norpoth_gschwend_2010}.
 
 All methods are implemented in \texttt{R} \citep{r_2017} and are available in the open-source
-package \texttt{coalitions} on GitHub \citep{bender_bauer_2018}. An
+package \texttt{coalitions} \citep{bender_bauer_2018}. An
 interactive \texttt{shiny}-based \citep{chang_2017} website \texttt{koala.stat.uni-\allowbreak muenchen.\allowbreak de}
 visualizes estimated coalition probabilities and is used to communicate the results
 for German federal and state-wide elections to the general public.
@@ -186,7 +186,7 @@ We finish with a conclusion in Section 5.
 
 
 \section{Calculation of probabilities} \label{sec:method}
-In the last opinion poll conducted before the German federal election 2013 \citep{forsa_2013}, special interest was on whether CDU/CSU-FDP (also ``Union-FDP'') would obtain enough votes to form the governing coalition:
+In the last opinion poll conducted before the German federal election 2013 \citep{forsa_2013}, special interest was on whether the conservative ``Union'' -- i.e. a union of the parties CDU and CSU -- and the liberal FDP would together obtain enough votes to form the governing coalition:
 
 \begin{table}[!ht]\centering
 \caption{Observed voter shares in the Forsa opinion poll for the German federal election, published September 20th, 2013 with $n=1995$ respondents
@@ -396,32 +396,30 @@ ago with weight 1 (using their true sample size), and all surveys within 15 to 2
 
 
 \section{Application} \label{sec:application}
-As previously mentioned, (an earlier iteration of) our method entered news coverage 
-in general media reporting about opinion polls before the German federal elections
+As previously mentioned, (an earlier iteration of) our method entered
+general media reporting about opinion polls before the German federal elections
 2013 and 2017 \citep[cf.][]{wahlistik_2013, gelitz_2017}.
 We will in the following revise the polling situation before these two elections
 to underline the differences between standard media reporting on election polls
--- focusing on interpreting the raw observed shares after redistribution --
-and our approach based on estimated Bayesian probabilities.
+-- focusing on the interpretation of the raw or redistributed observed shares --
+and our approach based on estimated probabilities.
 
-For each of the two elections we base the event probabilities on
-pooled surveys, which use the opinion polls published by the major
-German polling agencies (Allensbach, Emnid, Forsa, Forschungsgruppe Wahlen,
-GMS, Infratest dimap and INSA) and a pooling time window of 14 days.
+For each of the two elections we base the discussion on opinion polls published
+by major German polling agencies (i.e. Allensbach, Emnid, Forsa, Forschungsgruppe Wahlen,
+GMS, Infratest dimap and INSA), starting one year before each election.
 Opinion poll data from these polling agencies is publicly available
-on \texttt{www.wahlrecht.de}. For the estimation of probabilities $10\,000$
-simulations were used.
+on \texttt{www.wahlrecht.de}. The polls are pooled using a time window
+of 14 days. For the estimation of event probabilities $10\,000$ simulations
+were used.
 
 
 \subsection{German federal election 2013} \label{subsec:2013}
 In the legislative period from 2009 to 2013, the German government was formed by
-a coalition of the conservative ''Union'' (a formation of the parties CDU and CSU)
-and the liberal FDP.
+a coalition of the conservatives (Union) and the liberals (FDP).
 Main interest before the election on September 22nd, 2013 was in whether the
-coalition could sustain its majority of parliament seats. FDP successfully passing
-into parliament thereby played a key role for the success of the coalition.
-In opinion polls, the liberals only rarely had a voter share clearly over
-$5\%$, i.e. the minimum hurdle to pass into parliament (see Fig.~\ref{fig:2013}).
+coalition could sustain its majority of parliament seats. A key role thereby played the FDP,
+which had to successfully pass into parliament -- i.e. achieve at least the
+minimum voter share of $5\%$ -- for a success of the coalition.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.6\textwidth]{figures/2013_pooled_rawShares.pdf}
@@ -433,24 +431,29 @@ As specific voter shares for AfD were only sparsely reported before the election
 
 
 \paragraph{FDP passing the 5\% hurdle} \ \\
-The poll-based prospect of FDP to pass the $5\%$ hurdle is visualized in Figure~\ref{fig:2013_fdp}.
-As can be seen, the raw voter share of the FDP only exceeds the necessary share
-of $5\%$ over short periods of time and only once reaches a pooled voter share
+The poll-based prospect of FDP to successfully pass into parliament is visualized
+in Figure~\ref{fig:2013_fdp}.
+As can be seen, the raw voter share of the party only exceeded the necessary share
+of $5\%$ over short periods of time and only once reached a pooled voter share
 of $6\%$ (top left pane in Fig.~\ref{fig:2013_fdp}). Similarly, the probability
-for the party to pass the hurdle only rarely rises over $50\%$ (bottom left pane). However, beginning
+for the party to pass the hurdle only rarely rised over $50\%$ (bottom left pane). 
+However, beginning
 from the end of August 2013 until election day, the pooled voter shares and the
-corresponding probabilities consitently lie over $5\%$ and $50\%$, respectively,
-stating that -- shortly before election day -- a success of the FDP is more
+corresponding probabilities consitently lay over $5\%$ and $50\%$, respectively,
+stating that -- shortly before election day -- a success of the FDP was more
 probable than a failure.
 
 Comparing voter shares and probabilities, Figure~\ref{fig:2013_fdp} shows
 that small changes in the overall share of a party can dramatically influence
-event probabilities. Especially as probabilities contain sample uncertainty
-and the raw voter shares do not, it is easier to deduce relevant information about
-the success of the party from the probabilities.
-E.g., even if the voter share is just $1\%$ away from the $5\%$ hurdle, the probability
-plot shows that voter shares of $4\%$ and $6\%$ correspond to very clear
-probabilities of near $0\%$ and $100\%$, respectively, based on sample uncertainty.
+event probabilities, depending on the base level of the voter share and 
+-- in this example -- its closeness to the $5\%$ hurdle.
+Probabilities in this regard make it easier to deduce {\it relevant} information
+from election polls as they incorporate both the closeness of the observed shares
+to the relevant threshold and sample uncertainty.
+E.g., the probability corresponding to voter shares of $4\%$ and $6\%$ correspond to
+very definite probabilities of near $0\%$ and $100\%$, respectively,
+and communicating such probabilities leads to a way clearer perception of
+the current public opinion than does the reporting of FDP voter share and sample size only.
 
 \begin{figure}[H]\centering
 \begin{tabular}{ll}
@@ -466,6 +469,21 @@ Left top: Observed voter shares before redistribution. Left bottom: Probabilitie
 }
 \end{figure}
 
+\begin{figure}[H]\centering
+\begin{tabular}{llll}
+\includegraphics[height=.1\textwidth]{figures/2013_pooled_fdp_rawShares.pdf}
+&
+\multirow{2}{*}[13ex]{\includegraphics[height=20ex]{figures/2013_pooled_fdp_ridgeline.pdf}}
+&
+\multirow{2}{*}[13ex]{\includegraphics[height=20ex]{figures/2013_pooled_cdufdp_ridgeline.pdf}}
+&
+\includegraphics[height=.1\textwidth]{figures/2013_pooled_cdufdp_rawSharesRedist.pdf}
+\\
+\includegraphics[height=.1\textwidth]{figures/2013_pooled_fdp_passingProb.pdf}
+& & &
+\includegraphics[height=.1\textwidth]{figures/2013_pooled_cdufdp_prob.pdf}
+\end{tabular}
+\end{figure}
 
 \paragraph{Union-FDP coalition majority} \ \\
 Figure \ref{fig:2013_cdufdp} visualizes the pooled opinion poll results
@@ -477,10 +495,10 @@ of ca. $51\%$ about one month before election day.
 Only taking this development of the redistributed voter share into
 consideration, one would conclude that -- apart from a short
 time window in August/September of 2013 -- a majority of the Union-FDP
-coalition would not be possible if elections would have been held.
-In the best case, sample uncertainty would be mentioned, making
-a majority for the coalition {\it (highly) improbable}, but a more
-solid quantification of uncertainty is not easily possible.
+coalition would be slightly missed if the election would have been held.
+In the best case, sample uncertainty would be reported, making
+a majority for the coalition {\it (highly) improbable}. A more
+solid quantification of uncertainty however is not given.
 
 \begin{figure}[H]\centering
 \begin{tabular}{ll}
@@ -496,41 +514,52 @@ Left top: Observed voter shares after redistribution. Left bottom: Probabilities
 }
 \end{figure}
 
-Using the calculated seat majority probabilities together with
-the simulated densities instead draws a more comprehensive picture
-of the situation. While the overall development of probabilities
-growing with time is the same as with the redistributed voter shares,
+Looking at the calculated seat majority probabilities together with
+the simulated seat share densities instead draws a more comprehensive picture
+of the situation.
+While the overall development of probabilities is the same as with the redistributed voter shares,
+i.e. they rose with time,
 there are two points that clearly get more weight when shifting 
-the focus in reporting from a black-and-white reporting towards
-discussing {\it how probable} events are:
-
+the focus in reporting towards discussing {\it how probable} events are:
 First of all, the impact of small changes in voter shares is nicely resembled
-in the probability development. Thus, a rise in voter share from $45\%$ to 
-$48\%$ in March 2013 only has a very small impact on the absolute
-probability, whereas changes near a share of $50\%$ are much more influential.
-
+in the probability development. As is the case for the FDP prospect in Figure~\ref{fig:2013_fdp},
+how big the {\it relevant} impact of a change in voter share on event
+probabilities is depends heavily on the base level of the voter shares.
+E.g., a rise in voter share from $45\%$ to $48\%$ in March 2013 only had a very small impact on 
+the absolute probability, as a seat majority is still very improbable based on a share of $48\%$.
+Instead, even very small changes near a voter share of $50\%$ heavily influence the event probabilities.
 Second of all, probabilities do not only take the summed party
-shares into consideration, but also implicitly cover the 
-uncertainty regarding e.g. whether FDP passes the $5\%$ hurdle
-or not. Apart from the end of August 2013, FDP passing into the
-parliament is highly uncertain and thus majority probabilities of
-the coalition are rather small. This can best be seen in the
+shares and their general uncertainty into consideration,
+but also implicitly cover the 
+uncertainty regarding whether FDP passes the $5\%$ hurdle
+or not. Apart from the end of August 2013, the latter event 
+is highly uncertain and thus the overall majority probabilities of
+the coalition are comparatively small, even for pooled voter shares around $50\%$.
+This inclusion of the FDP-based uncertainty is nicely visualized in the
 ridgeline plot (right panel in Fig.~\ref{fig:2013_cdufdp}), where
-the densities are bimodal if the raw voter share of FDP is close
-to $5\%$ (see Fig.~\ref{fig:2013_fdp}).
+the densities are bimodal or unimodal depending on whether the raw FDP voter share
+is close to $5\%$ or not (see Fig.~\ref{fig:2013_fdp}), respectively.
 
 
 
 \subsection{German federal election 2017} \label{subsec:2017}
-Similar to the previous election, prior to the election on
-September 24th of 2017 main interest lied in whether Union-FDP
-would succeed in getting a seat majority in parliament.
-However, the situation differed regarding that the FDP in opinion
-polls was safely over $5\%$ (cf. Fig.~\ref{fig:2017_afd}).
-The same was true for the right-wing party AfD, which in 2013
-slightly failed to getting into parliament. Also, another potential
-left-wing coalition between SPD, the green party and the Left
-was a valid option to a Union-reigned coalition.
+After the federal election in 2013, none of the desired coalitions
+reached a seat majority
+and a grand coalition between Union and the social democratic SPD
+became the government from 2013 to 2017.
+The goal of both Union and SPD for the election on September 24th, 2017
+was to achieve majorities with coalitions apart from the grand coalition
+and thus there were multiple coalitions of interest before the election.
+In this regard, we will focus on the most prominent Union-led coalition,
+i.e. again Union-FDP, and the most prominent SPD-led coalition,
+i.e. a union of SPD, the Left and the Greens, which was
+-- based on the joint voter share -- the strongest alternative to a Union-led
+government and was not clearly denied by the member parties until several weeks
+before election day.
+Also, after the rise of the right-wing party AfD major interest was
+in whether the party -- which in 2013 slightly missed the $5\%$ hurdle --
+would become the third strongest party in parliament after Union and SPD.
+The pooled poll results before the 2017 election are shown in Figure~\ref{fig:2017}.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.6\textwidth]{figures/2017_pooled_rawShares.pdf}
@@ -541,18 +570,37 @@ was a valid option to a Union-reigned coalition.
 
 
 \paragraph{Union-FDP coalition majority} \ \\
-The development of redistributed voter shares and majority probabilities
-for Union-FDP over the window of one year before election day
-is depicted in Figure~\ref{fig:2017_cdufdp}.
-Especially as FDP was at all times over $5\%$ in the pooled opinion polls,
-the development of voter shares is much more smooth, compared to 
-the development of 2013.
-Again, it can be seen that even very small changes in voter share
-cause immense changes in probability. E.g., at the end of August 2017,
-the seat majority probability rises by $30\%$ and reaches its
-maximum, only caused by a voter share rise of around $1\%$.
-Also, according to the ridgeline plot, redistributed voter shares of under
-$47\%$ usually correspond to negligibly small majority probabilities.
+Compared to the federal election 2013, the situation for a
+coalition between Union and FDP before the election in 2017 
+was quite different as FDP voter shares were at most times
+clearly above the $5\%$ hurdle (see Fig.~\ref{fig:2017}).
+However, as the share of Union was a bit lower than in 2013,
+the joint redistributed voter share shortly before election day
+was at no moment bigger than $50\%$.
+As can be seen in Figure~\ref{fig:2017_cdufdp}, the coalition had
+a poll-based redistributed share of around $40\%$ in october 2016
+and reached its maximum share of $49.8\%$ about one month
+before election day.
+
+Again, interpreting only the observed redistributed voter shares
+is hard for the general public.
+Especially as of the rising voter shares starting in February 2017,
+an interesting question is which voter share is necessary to have
+a relevant prospect to gain seat majority and which voter shares
+encode for an irrelevantly small majority probability.
+Regarding the latter, the ridgeline plot in Figure~\ref{fig:2017_cdufdp}
+shows that parliament seat shares (or correspondingly voter shares)
+below around $47.5\%$ correspond to very small success probabilities of $<1\%$,
+based on the pooled effective sample sizes of around \red{XXXX}.
+On the other hand, observed shares of $49\%$, $49.5\%$ and $49.8\%$
+correspond to probabilities of \red{XXX, XXX and XXX}, respectively.
+
+Overall, one month before election day the coalition had a good prospect
+on winning the election based on a redistributed share of $49.8\%$ and
+a probability of \red{XXX}.
+However, two days before the election the pooled share and the probability
+dropped to \red{XXX} and \red{XXX}, respectively, making a success
+of the two parties highly improbable.
 
 \begin{figure}[H]\centering
 \begin{tabular}{ll}
@@ -570,15 +618,27 @@ Left top: Observed voter shares after redistribution. Left bottom: Probabilities
 
 
 \paragraph{SPD-Left-Greens coalition majority} \ \\
-The same as for Union-FDP holds for the potential coalition of
-SPD, Greens and Left (see Fig.~\ref{fig:2017_spdleftgreens}).
-Between February and April 2017 the redistributed voter
-shares reach a high plateau near $50\%$, and there a small change
-of about $1\%$ at the end of March 2017 causes a rise of
-the probability of over $35\%$.
-In the end, especially SPD voter shares declined as heavily as
-they rose at the beginning of 2017, and thus a majority of
-the coalition shortly before election day was very unlikely.
+Regarding the voter share development of SPD, the year before 
+the federal election in 2017 was shaped by an extreme uprise starting
+in the end of January 2017 when Martin Schulz was elected to be the SPD chancellor
+candidate and a subsequent, steady decline from April 2017 on (see Fig.~\ref{fig:2017}).
+Accordingly, the coalition between SPD, the Left and the Greens had
+their best poll results between February and May 2017 as is shown in Figure~\ref{fig:2017_spdleftgreens}.
+The maximum share was reached in \red{XXX} with a redistributed voter
+share of \red{XXX} and a corresponding probability to obain the
+parliament seat majority of \red{XXX}.
+From mid/end April on, the probability again became negligibly small.
+Shortly before election day, the joint share
+dropped to around $41\%$ and a success at the election wasn't even
+slightly possible.
+
+As a special note, the ridgeline plot in Figure~\ref{fig:2017_spdleftgreens}
+again nicely visualizes the uncertainty underlying the event of
+interest. This is not only limited to parties forming the potential coalition,
+but also holds for all other uncertainties in the data.
+E.g., in November and December of 2016, the seat share distribution clearly
+is bimodal as in a relevant share of simulations FDP does not pass
+the $5\%$ hurdle and more votes are redistributed in these cases.
 
 \begin{figure}[H]\centering
 \begin{tabular}{ll}
@@ -596,24 +656,26 @@ Left top: Observed voter shares after redistribution. Left bottom: Probabilities
 
 
 \paragraph{AfD becoming third strongest party} \ \\
-Specific interest in the election lied in which party would
+Special interest in the election lay in which party would
 get the third best result after the major parties Union and SPD.
-In the year running up to the election, the right-wing party
-AfD oftentimes was leading in raw voter shares (see Fig.~\ref{fig:2017_afd}),
-but two weeks before election day three parties were almost
-head-to-head.
-
-Using our approach it is easily possible to estimate probabilities
-for the event that AfD becomes third biggest party in parliament,
-thereby quantifying the sample uncertainty that underlies the
-opinion polls and summarizing this complex issue into one
+With observed voter shares of at most times over $8\%$,
+the right-wing AfD could plan to pass into the German parliament
+for the first time (see Fig.~\ref{fig:2017_afd}).
+Using our KOALA approach it is easily possible to estimate probabilities
+for the event that AfD becomes third strongest party in parliament,
+summarizing this complex issue with several parties involved into one
 development of probabilities.
-The corresponding probability until April 2017
-is always at least $70\%$, then varies heavily over the course
-of two months, drops to under $10\%$, and rises back up to
-over $90\%$ shortly before election day, where the AfD is
-nearly $2\%$ over its heaviest competitor -- The Left -- in
-absolute raw voter share.
+
+During the year before the federal election in 2017, the polling situation
+regarding AfD changed heavily. The party in January 2017 had a \red{XXX\%} lead
+over Left and Greens (corresponding to a probability of \red{XXX\%}, 
+dropped to a \red{XXX\% Rueckstand} compared to the Left in June (\red{XXX\%})
+and rose back to a \red{XXX\%} lead over the Left and FDP shortly before election
+day (\red{XXX\%}).
+
+Again, reporting probabilities instead of multiple raw voter shares
+for the multiple parties allows for a much clearer communication of the
+uncertainty underlying the situation.
 
 \begin{figure}[H]\centering
 \begin{tabular}{l}
@@ -627,12 +689,16 @@ Left top: Observed voter shares before redistribution. Left bottom: Probabilitie
 }
 \end{figure}
 
+
 \section{Conclusion} \label{sec:conclusion}
-We presented a Bayesian approach to estimate probabilities of specific election outcomes based on
-publicly available opinion polls. Pooling allows for the inclusion of information from multiple
+We presented the KOALA (Coalition analysis) approach,
+i.e. a Bayesian, Monte Carlo based method to estimate probabilities of specific 
+election outcomes based on publicly available opinion polls.
+A pooling approach allows for the inclusion of information from multiple
 surveys and reduces sample uncertainty.
-The estimated event probabilities are easy to communicate to the general public and prevent
-improper poll-based reporting as they readily include sample uncertainty.
+The estimated event probabilities are easy to communicate to the general
+public and prevent improper poll-based reporting as they include 
+sample uncertainty in a natural way.
 We visualize the results on a publicly available website for chosen elections and
 provide the open-source \texttt{R} package \texttt{coalitions} that allows for an easy
 application of the method to any multi-party electoral system.
