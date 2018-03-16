@@ -91,16 +91,17 @@
 \maketitle
 
 \begin{abstract} \red{150 to 250 words} \\
-Common election poll reporting is often misleading as sample uncertainty is either not covered at all or only insufficiently. For a more comprehensive coverage, we propose shifting the focus towards reporting survey-based probabilities of specific election outcomes.
-We present such an approach for multi-party electoral systems, 
+Common election poll reporting is often misleading as sample uncertainty is insufficiently addressed or  not covered at all. Furthermore, the main interest is beyond the simple percentages of the contenders.  For a more comprehensive coverage, we propose shifting the focus towards reporting survey-based probabilities of specific election outcomes.
+We present such an approach for multi-party electoral systems,
 focusing on probabilities of coalition majorities.
-A Monte Carlo based Bayesian Multinomial-Dirichlet model is used for estimation. The method utilizes published opinion polls
-conducted by established polling agencies
+A Monte Carlo based Bayesian Multinomial-Dirichlet model is used for estimation. The method utilizes published opinion polls conducted by established polling agencies
 and is accompanied by a pooling approach to summarize multiple current surveys
 to reduce sample uncertainty, thereby accounting for dependencies between polling agencies.
-Potential biases of specific agencies are not taken into account.
 Sample uncertainty-based probabilities are estimated, assuming the election was held today,
-not accounting for potential shifts until election day.
+not accounting for potential shifts until election. 
+
+Since our method is based on the posterior distribution of the election outcome, our method can be applied to specific questions relating to the outcome of the election.  
+ 
 Possible visualizations of the results are shown and the benefit of the approach is outlined
 by discussing election polls before the German federal elections 2013 and 2017.
 An implementation is freely available in the \texttt{R} package \texttt{coalitions}.
@@ -113,7 +114,7 @@ An implementation is freely available in the \texttt{R} package \texttt{coalitio
 \section{Introduction and data} \label{intro}
 Election polls
 are conducted by different polling agencies and
-try to represent the public opinion based on a finite sample.
+try to represent the public opinion based on a sample.
 Usually, polling agencies publish the shares of the electorate
 who would vote for the reported political parties {\it if the election was held today},
 the number of overall respondents and -- more or less prominent -- information
@@ -222,7 +223,7 @@ Union & SPD & Greens & FDP & The Left & Pirates & AfD & Others \\
 
 As can be seen in Table \ref{tab_fdp_redist}, Union-FDP with its 45\% raw voter share would get exactly 50\% of parliament seats after redistribution. Thus, ingoring uncertainty one would conclude that a majority of the coalition is slightly missed. However, it is clear that this only holds with a certain probability and particularly depends on whether FDP and/or AfD pass the 5\% hurdle.
 
-The model to estimate event probabilities is based on the Multinomial distribution of the observed
+For the type of questions, we want to address, the Bayesian approach is useful. From the posterior multivariate distribution of the voting shares, probabilities for many types of events can be deduced. This includes the resulting majorities in complex system of rules for parliaments seats. technically we deduce this probabilies by sampling form the posterior distribution.  The model to estimate event probabilities is based on the Multinomial distribution of the observed
 number of voters per party. We use a Bayesian Multinomial-Dirichlet model
 with Jeffreys prior as an uninformative prior for the true party shares
 $\theta_j$ \citep{gelman_2013}:
@@ -241,15 +242,14 @@ vote counts $x_j$.
 
 Using Monte Carlo simulations of election outcomes, one can obtain
 specific event probabilities by taking their relative frequency of
-occurence. E.g., Union-FDP got a seat majority
-in $2\,633$ of $10\,000$ simulations, which equals an estimated 
+occurrence. E.g., Union-FDP got a seat majority
+in $2\,633$ of $10\,000$ simulations, which equals an estimated
 probability of $26.33\%$.
 
-If it is known that specific parties are underrepresented or
-overrepresented in election polls, this information
+{\bf Helmut: das evtl. verschieben} If it is known that estimates for specific parties are biased in election polls, this information
 could be included in the model by using an informative prior distribution.
-Underrepresented and overrepresented parties then would get higher and lower
-$\alpha_j$ values, respectively.
+Then some  parties then would get higher or lower
+$\alpha_j$ values. 
 However, such biases of polling agencies are hard to quantify
 as the true party share in the electorate is only known on election days.
 For our analyses, we therefore use an uninformative prior.
@@ -257,7 +257,7 @@ For our analyses, we therefore use an uninformative prior.
 As voter shares are usually rounded before opinion polls get published,
 we adjust the available raw data
 by adding uniformly distributed random noise to the
-observed voter shares $x_j$ in order to avoid potential biases caused 
+observed voter shares $x_j$ in order to avoid potential biases caused
 by the use of rounded numbers:
 \begin{equation}
 \begin{aligned}
@@ -270,7 +270,7 @@ rounding accuracy.
 E.g., for data rounded to $1\%$ steps we use $\gamma = 0.5\%$.
 After random noise was added the adjusted shares are rescaled to
 ensure a sum of $100\%$. Overall, instead of using rounded numbers
-and simulating $n_s$ values from the resulting posterior, we perform 
+and simulating $n_s$ values from the resulting posterior, we perform
 $n_s$ simulations where
 we first adjust the voter shares using individually drawn random noise
 and then simulate one observation from the posterior.
@@ -353,7 +353,7 @@ polling agencies are correlated
 and the independency assumption does not hold.
 Therefore, we adjust the resulting multinomial
 distribution by using an \textit{effective sample size} \citep{hanley_2003},
-reflecting that the aggregation over multiple polls does not contain 
+reflecting that the aggregation over multiple polls does not contain
 information of a sample with $\sum_i n_i$ observations.
 
 Quantification of pairwise correlation is done based on the variance of the
@@ -436,7 +436,7 @@ in Figure~\ref{fig:2013_fdp}.
 As can be seen, the raw voter share of the party only exceeded the necessary share
 of $5\%$ over short periods of time and only once reached a maximum value
 of $6\%$ (top left pane in Fig.~\ref{fig:2013_fdp}). Similarly, the probability
-for the party to pass the hurdle only rarely rose over $50\%$ (bottom left pane). 
+for the party to pass the hurdle only rarely rose over $50\%$ (bottom left pane).
 However, beginning
 from the end of August 2013 until election day, the pooled voter shares and the
 corresponding probabilities consitently lay over $5\%$ and $50\%$, respectively,
@@ -445,7 +445,7 @@ probable than a failure.
 
 Comparing voter shares and probabilities, Figure~\ref{fig:2013_fdp} shows
 that small changes in the overall share of a party can dramatically influence
-event probabilities, depending on the base level of the voter share and 
+event probabilities, depending on the base level of the voter share and
 -- in this example -- its closeness to the $5\%$ hurdle.
 In this regard, probabilities make it easier to deduce {\it relevant} information
 from election polls as they incorporate both the closeness of the observed shares
@@ -504,20 +504,20 @@ the simulated seat share densities instead draws a more comprehensive picture
 of the situation.
 While the overall development of probabilities has the same structure
 as the redistributed voter shares, i.e. they rose with time,
-there are two points that clearly get more weight when shifting 
+there are two points that clearly get more weight when shifting
 the focus in reporting towards discussing {\it how probable} events are:
 First of all, the impact of small changes in voter shares is nicely resembled
 in the probability development. As is the case for the FDP prospect in Figure~\ref{fig:2013_fdp},
 how big the {\it relevant} impact of a change in voter share on event
 probabilities is depends heavily on the base level of the voter share.
-E.g., a rise in voter share from $45\%$ to $48\%$ in March 2013 only had a very small impact on 
+E.g., a rise in voter share from $45\%$ to $48\%$ in March 2013 only had a very small impact on
 the absolute probability, as a seat majority is still very improbable based on a share of $48\%$.
 Instead, even very small changes near a voter share of $50\%$ heavily influence the event probabilities.
 Second of all, probabilities do not only take the summed party
 shares and their general uncertainty into account,
-but also implicitly cover the 
+but also implicitly cover the
 uncertainty regarding whether FDP passes the $5\%$ hurdle
-or not. Apart from the end of August 2013, the latter event 
+or not. Apart from the end of August 2013, the latter event
 is highly uncertain and thus overall majority probabilities of
 the coalition are comparatively small, even for pooled voter shares around $50\%$.
 The inclusion of the FDP-based uncertainty is nicely visualized in the
@@ -556,7 +556,7 @@ The pooled poll results before the 2017 election are shown in Figure~\ref{fig:20
 
 \paragraph{Union-FDP coalition majority} \ \\
 Compared to the federal election 2013, the situation for a
-coalition between Union and FDP before the election in 2017 
+coalition between Union and FDP before the election in 2017
 was quite different as FDP voter shares were at most times
 clearly above the $5\%$ hurdle (see Fig.~\ref{fig:2017}).
 However, as the share of Union was lower than in 2013,
@@ -567,7 +567,7 @@ a poll-based redistributed share of around $40\%$ in october 2016
 and reached its maximum share of nearly $49.8\%$ about one month
 before election day.
 Again, interpreting only the observed redistributed voter shares
-is hard for the general public as no easily accessible quantification 
+is hard for the general public as no easily accessible quantification
 of uncertainty is given.
 
 Especially as of the rising voter shares starting in February 2017,
@@ -606,7 +606,7 @@ Left top: Observed voter shares after redistribution. Left bottom: Probabilities
 
 
 \paragraph{SPD-Left-Greens coalition majority} \ \\
-Regarding the voter share development of SPD, the year before 
+Regarding the voter share development of SPD, the year before
 the federal election in 2017 was shaped by an extreme uprise starting
 in the end of January 2017 when Martin Schulz was elected to be the SPD chancellor
 candidate and a subsequent, steady decline from April 2017 on (see Fig.~\ref{fig:2017}).
@@ -656,7 +656,7 @@ development of probabilities.
 
 During the year before the federal election in 2017, the polling situation
 regarding AfD underwent heavy changes. The party in January 2017 had a $3.9\%$ lead
-over Left and Greens (corresponding to an estimated probability of $100\%$), 
+over Left and Greens (corresponding to an estimated probability of $100\%$),
 dropped to being $1.9\%$ behind the Left in June ($1.2\%$)
 and rose back to a $1.7\%$ lead over the Left and FDP shortly before election
 day ($96.8\%$).
@@ -682,12 +682,12 @@ Left top: Observed voter shares before redistribution. Left bottom: Probabilitie
 
 \section{Conclusion} \label{sec:conclusion}
 We presented the KOALA (Coalition analysis) approach,
-i.e. a Bayesian, Monte Carlo based method to estimate probabilities of specific 
+i.e. a Bayesian, Monte Carlo based method to estimate probabilities of specific
 election outcomes based on publicly available opinion polls.
 A pooling approach allows for the inclusion of information from multiple
 surveys and reduces sample uncertainty.
 The estimated event probabilities are easy to communicate to the general
-public and prevent improper poll-based reporting as they include 
+public and prevent improper poll-based reporting as they include
 sample uncertainty in a natural way.
 We visualize the results on a publicly available website for chosen elections and
 provide the open-source \texttt{R} package \texttt{coalitions} that allows for a
