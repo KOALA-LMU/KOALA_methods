@@ -64,14 +64,14 @@
 % The preamble of the document should be left unchanged.
 
 % proofreading
-\usepackage[textsize=scriptsize, backgroundcolor=lightgray, draft]{todonotes}
+% \usepackage[textsize=scriptsize, backgroundcolor=lightgray, draft]{todonotes}
 % ab todo note definition
-\newcounter{todocounter}
-\newcommand{\abtodo}[1]{
-  \stepcounter{todocounter}\todo[color=black!30]{
-    \textbf{AB[\thetodocounter]: }#1
-  }
-}
+% \newcounter{todocounter}
+% \newcommand{\abtodo}[1]{
+%   \stepcounter{todocounter}\todo[color=black!30]{
+%     \textbf{AB[\thetodocounter]: }#1
+%   }
+% }
 
 \begin{document}
 
@@ -140,7 +140,7 @@ Our approach is to be differentiated from prediction-aimed methods (cf. Graefe, 
 A Bayesian Multinomial-Dirichlet model with Monte Carlo simulations is used for estimation. Also, a pooling approach is presented to summarize multiple current opinion polls to reduce sample uncertainty.
 
 All methods were implemented in \texttt{R} and are available in the open-source
-package \texttt{coalitions} on GitHub (Bender \& Bauer, 2018). An
+package \texttt{coalitions} (Bender \& Bauer, 2018). An
 interactive \texttt{shiny}-based (Chang et al., 2017) website \texttt{koala.stat.uni-\allowbreak muenchen.\allowbreak de}
 visualizes the results and is used for communication to the general public.
 %visualizes estimated coalition probabilities and is used to communicate the results to the general public.
@@ -282,8 +282,9 @@ in general opinion poll-based reporting the rule, rather than an exception.
 \references
 \begin{description}
 \item[Bender, A. and Bauer, A.] (2018).
-     {\it adibender/coalitions (Version v0.5.7)}.
-     Zenodo. \texttt{http://doi.org/10.5281/zenodo.1172595}
+     coalitions: Coalition probabilities in multi-party democracies.
+     {\it Journal of Open Source Software}, {\bf 3(23)},
+     606, \texttt{https://doi.org/10.21105/joss.00606}.
 \item[Chang, W. et al.] (2017).
      {\it shiny: Web Application Framework for R}.
      R package version 1.0.5.
