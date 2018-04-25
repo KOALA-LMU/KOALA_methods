@@ -4,6 +4,7 @@
 \usepackage[english]{babel}
 \usepackage[latin1]{inputenc}
 \usepackage{amsmath, amsthm, amssymb, latexsym}
+\usepackage{pifont} % for \ding symbols
 
 %\usepackage{times}\usefonttheme{professionalfonts}  % obsolete
 %\usefonttheme[onlymath]{serif}
@@ -15,7 +16,18 @@
 
 
 % Eigene Befehle und Einstellungen -------------------------
+\newcommand{\grayHeader}[1]{\textcolor{koaladarkgray}{{\large #1} \vspace{2ex}}}
 \newcommand{\bfBlue}[1]{\textcolor{koaladarkestblue}{\textbf{#1}}}
+\newcommand{\blue}[1]{\textcolor{koaladarkestblue}{#1}}
+\newcommand{\colHeader}[1]{
+  \vspace{-3ex}
+  \begin{center}
+  \bfBlue{#1}
+  \end{center}
+  \vspace{-2ex}
+  \textcolor{koalablue}{\hrule{\linewidth}}
+  \vspace{2ex}
+}
 % Numbers with circles around it for headers
 \usepackage{tikz}
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{
@@ -65,89 +77,112 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
 \begin{column}{1\textwidth} % 1 Seite, die die ganze Seite einnimmt
 
 
-% Application ---------------------------------------------
+% Motivation ---------------------------------------------
 \begin{beamercolorbox}[center,wd=\textwidth]{postercolumn}
 \begin{minipage}[T]{.95\textwidth}  % tweaks the width, makes a new \textwidth
 \begin{block}{\footnotesize Data and Research Question}
-  \begin{columns}[t]
-  \begin{column}{.6\textwidth}
-  \vspace{-3ex}
   \begin{center}
-  \bfBlue{Setting}
+  \grayHeader{Election poll-based reporting}
   \end{center}
-  We analyze artificial earthquake data derived from large-scale computer simulations based on a 1994 earthquake in Northridge (USA). In each of 135 simulations, the (isotropic) \bfBlue{absolute ground velocity} [m/s] was measured at 6146 virtual seismograms with a temporal resolution of 2Hz.
-  \\[2ex]
-  This project marks the first time that physics-based simulations of earthquakes are combined with modern statistical methods. Apart from gaining new insights in the geophysical processes regression models could in future be used to predict expected ground movements in earthquake regions.
-  \\[4ex]
-  \begin{tabularx}{\textwidth}{ZZ}
-  \raggedright \bfBlue{Main research question}
-  \\[0.35ex] % align the following text block horizontally with the itemize in the other column
-  How do the physical conditions at an earthquake fault affect the surficial ground velocity measured over time?
-  &
-  \raggedright \bfBlue{Challenges}
-  \begin{itemize}
-    \item Very high-dimensional data
-    \item Spatio-temporal functional data
-  \end{itemize}
-  
-  \end{tabularx}
-  \vspace{2ex}
-  \begin{figure}[!ht]\centering
-  \includegraphics[width=0.2\linewidth]{figures/bauer_73_gm_3D_ausschnitt.pdf}
-  \hspace{5ex}
-  \includegraphics[width=0.27\linewidth]{figures/motivation2.pdf}
-  \caption{\footnotesize Left: Categorized mean absolute ground velocity in one simulation over the area under study, darker colours correspond to increased velocity. Right: Typical observations of absolute ground velocity over time. The initial peak of the ground velocity is delayed and smaller as hypocentral distance increases.}
-  \end{figure}
+
+  % Upper columns with general description -----
+  \begin{columns}[t]
+
+  \begin{column}{.275\textwidth}
+  \colHeader{What's the status quo?}
+  Election poll reporting is mostly based on observed mean voter shares.
   \end{column}
-  
+
   \hspace{-1.5ex}
   \textcolor{LMUlightgray}{\vrule{}}
   \hspace{1.5ex}
-  
-  \begin{column}{.35\textwidth}
-  \vspace{-3ex}
-  \begin{center}
-  \bfBlue{Simulation setup}
-  \end{center}
-   The artificial earthquake data were generated using the open-source software SeisSol (\texttt{www.seissol.org}). In each simulation:
+
+  \begin{column}{.275\textwidth}
+  \colHeader{So what's wrong?}
+  The current style has several shortcomings:
   \begin{enumerate}
-    \item Five \mybox{simulation parameters} were pre-set, and
-    \item absolute ground velocities were simulated solving elastic wave equations coupled to frictional failure at the earthquake fault.
+    \item Sample uncertainty is insufficiently addressed
+    \item The main interest is beyond the simple percentages
   \end{enumerate}
-  \vspace{2ex}
-  \begin{center}
-  \bfBlue{Influence parameters}
-  \end{center}
-  The influence parameters are all \bfBlue{constant over time}.
-  \hspace{-2pt}
-  \begin{tcolorbox}[colframe=chocolate4,colback=verylightgray,boxrule=2pt,arc=4pt,
-  left=-5pt]
-  % {nobeforeafter,colframe=niceblue,colback=lightgray,boxrule=2pt,arc=4pt,
-  % boxsep=0pt,left=6pt,right=6pt,top=6pt,bottom=6pt,tcbox raise base}
-  \begin{itemize} \footnotesize
-    \item soil material (\{$rock$, $sediment$\})
-    \item linear slip weakening distance [m]
-    \item static coefficient of friction
-    \item dynamic coefficient of friction
-    \item direction of tectonic background stress [$^\circ$]
-  \end{itemize}
-  \end{tcolorbox}
-  \vspace{-10px}
-  \begin{itemize} \footnotesize
-    \item hypocentral distance of seismometer [m]
-    \item elevation of seismometer [m]
-    \item landform at seismometer$^\ast$ (\{$ridge$, $plain$, $valley$, \ldots\})
-    \item moment magnitude [Nm]
-  \end{itemize}
-  \vspace{1ex}
-  {\footnotesize $^\ast$Categorization into landforms was performed using the Topographic Position Index (TPI) of Weiss (2001)}
   \end{column}
+
+  \hspace{-1.5ex}
+  \textcolor{LMUlightgray}{\vrule{}}
+  \hspace{1.5ex}
+
+  \begin{column}{.35\textwidth}
+  \colHeader{What do we propose?}
+   Bla blub
+  \begin{enumerate}
+    \item ...
+    \item ...
+  \end{enumerate}
+  \begin{center}
+  We want to \bfBlue{shift the focus} from \\[2ex]
+  \begin{tabular}{ccc}
+  \includegraphics[height=10ex]{figures/motivation_bars}
+  &
+  to
+  &
+  \includegraphics[height=10ex]{figures/motivation_density}
+  \\
+  incomprehensive & & uncertainty-based \\
+  \bfBlue{reporting of observed shares} & & \bfBlue{reporting of probabilities} \\
+  \end{tabular}
+  \end{center}
+  \vspace{1ex}
+  \end{column}
+
   \end{columns}
+
+  \vspace{2ex}
+  \textcolor{LMUlightgray}{\hrule{\linewidth}}
+  \vspace{2ex}
+
+  % Lower columns with specific examples -----
+  \begin{columns}[t]
+
+  \begin{column}{.275\textwidth}
+  Based on the last opinion poll before the German federal election 2013
+  \\[1ex]
+  \begin{center}
+  \begin{tabular}{ccccccc}
+  \toprule
+  \bfBlue{Union} & SPD & Greens & \bfBlue{FDP} & The Left & AfD & Others \\ \midrule
+  \bfBlue{40\%} & 26\% & 10\% & \bfBlue{5\%} & 9\% & 4\% & 6\% \\
+  \bottomrule
+  \end{tabular}
+  \end{center}
+  \vspace{1ex}
+  the parties CDU/CSU (or ''Union``) and FDP -- which planned to jointly form the government -- obtained 50\% (after redistributing party votes $<$5\%).
+  \\[2ex]
+  Media headline: ZITAT
+  \end{column}
+
+  \begin{column}{.025\textwidth}
+  \hspace{10ex}
+  \huge{\blue{\ding{223}}}
+  \end{column}
+
+  \begin{column}{.275\textwidth}
+  Example
+  \end{column}
+
+  \begin{column}{.025\textwidth}
+  \hspace{10ex}
+  \huge{\blue{\ding{223}}}
+  \end{column}
+
+  \begin{column}{.35\textwidth}
+  Example
+  \end{column}
+
+  \end{columns}
+
   \vskip-1ex
 \end{block}
 \end{minipage}
 \end{beamercolorbox}
-
 
 
 % Begin main part -----------------------------------
@@ -164,69 +199,15 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
 % \parbox[t][\columnheight]{\textwidth}{ % must be some better way to set the the height, width and textwidth simultaneously
 % Since all columns are the same length, it is all nice and tidy.  You have to get the height empirically
 
-% Modeling process ---------------------------------------
-\begin{block}{\footnotesize \circled{1} Modeling process}
-\begin{minipage}[T]{.95\textwidth}  % tweaks the width, makes a new \textwidth
-\vspace{1ex}
-We use a \bfBlue{Generalized Functional Additive Model} (GFAM) (see Scheipl et al., 2016) which is an extension of the GAM model class.
-\\
-In our case, only the response is functional and we use a Gamma model with log-link.
-\\
-$$
-y_i(t_l) \sim F(\mu_{il}, \boldsymbol{\nu}) \text{\ \ with\ \ } g(\mu_{il}) = \beta_0(t) + \sum\limits_{r=1}^R f_r(\boldsymbol{\mathcal{X}}_{ri}, t_l), \ \ \ i = 1,\ldots,n
-$$
-\begin{itemize}
-  \item $y_i(t_l)$: Value of functional response observed at time point $t_l$
-  \item $F(\mu_{il}, \boldsymbol{\nu})$: Conditional distribution of $y_i(t_l)$ with conditional expectation $\mu_{il}$ and shape parameters $\boldsymbol{\nu}$
-  \item $g(\cdot)$: Link function
-  \item $\beta_0(t)$: Functional intercept
-  \item $f_r(\boldsymbol{\mathcal{X}}_{ri}, t_l)$: One of $R$ additive effects with associated covariates $\boldsymbol{\mathcal{X}}_{ri}$ and potentially varying over the functional time domain $t$
-  \item $n$: number of functional observations
-\end{itemize}
-\vspace{2ex}
-
-\noindent \textcolor[RGB]{220,220,220}{\rule{0.9\linewidth}{3pt}}
-\vspace{2ex}
-
-\noindent
-We use a \bfBlue{highly performant estimation algorithm} from Wood et al. (2016) to make estimation of this complex model on such large data feasible. Major advances are:
-\begin{itemize}
-  \item a block-wise Cholesky decomposition
-  \item a compressed representation of marginal spline bases
-\end{itemize}
-\vspace{1ex}
-A prediction error based approach was used for tuning basis sizes, resulting smooth effects were estimated using (tensor product) P-splines.
-\end{minipage}
+% Main block 1 ---------------------------------------
+\begin{block}{\footnotesize \circled{1} Main block 1}
+text
 \end{block}
 
 
-% Covariate effects -------------------------------------
-\begin{block}{\footnotesize \circled{2} Covariate effects}
-The hypocentral distance and the dynamic frictional resistance have by far the strongest effects, with higher values leading to decreased ground velocities for both.
-\\[5.0ex]
-\begin{tabularx}{.95\textwidth}{ZZZ!{\color{LMUdarkgray}\vrule{}}Z}
-% & Hypocentral distance & & Dynamic coefficient of friction \\
-\includegraphics[width=.9\linewidth]{figures/Effekte_hypoDis1.pdf}
-&
-\includegraphics[width=.9\linewidth]{figures/Effekte_hypoDis2.pdf}
-&
-\includegraphics[width=.9\linewidth]{figures/Effekte_hypoDis3.pdf}
-&
-\includegraphics[width=.9\linewidth]{figures/Effekte_md1.pdf}
-\\
-\end{tabularx}
-\vspace{-3.5ex}
-\begin{center}
-\begin{tabularx}{.97\textwidth}{Z}
-\begin{figure}[!ht]\centering
-\caption{\footnotesize Left: Nonlinear, time-varying effect of hypocentral distance as heatmap and 3D surface, and predictions based on varying hypocentral distances, while other covariates are held constant at realistic values.
-Right: Predictions based on varying values of the dynamic coefficient of friction, which has a linear, time-constant effect of -5.48 \\
-}
-%Nonlinear, time-varying smooth effects of hypocentral distance (left) and the dynamic coefficient of friction (right) and model predictions based on varying values, while other covariates are held constant at realistic values.}
-\end{figure}
-\end{tabularx}
-\end{center}
-\vspace{-3ex}
+% Main block 2 -------------------------------------
+\begin{block}{\footnotesize \circled{2} Main block 2}
+text
 \end{block}
 
 
@@ -241,67 +222,80 @@ Right: Predictions based on varying values of the dynamic coefficient of frictio
 \begin{minipage}[T]{.95\textwidth}  % tweaks the width, makes a new \textwidth
 
 
-% Model evaluation & Conclusion -------------------
-\begin{block}{\footnotesize \circled{3} Model evaluation}
-\vspace{-3ex}
+% Implementation -----------------------------------
+\begin{block}{\footnotesize \circled{3} Technical implementation}
 \begin{center}
-\begin{tabularx}{0.975\linewidth}{Z}
-  \begin{figure}[!ht]\centering
-  \includegraphics[width=0.8\linewidth]{figures/Residuen}
-  \caption{\footnotesize From left to right: Residuals vs fitted values, residuals vs the time domain, residuals vs space, autocovariance of residuals over the functional domain. The black dot in the third plot marks the epicenter.}
-  \end{figure}
-\end{tabularx}
+\includegraphics[height=5ex]{figures/Koala_Logo_ohneSchrift}
+\\[2ex]
+We present results for selected elections on
+\bfBlue{\texttt{\href{test}{koala.stat.uni-muenchen.de}}}
 \end{center}
+\\[2ex]
+The implementation is based on several points:
+\begin{itemize}
+  \item Our approach is implemented in the \bfBlue{R package \texttt{coalitions}}   \item The website is shiny-based
+  \item The website update approach is automated
+  \item Automatic tweets are sent in the case of new results
+  \item For sharing our results we automatically export them to Google Sheets
+\end{itemize}
 
-\vspace{-5ex}
+% Footer with software icons
+\vspace{1ex}
+\textcolor{LMUlightgray}{\hrule{\linewidth}}
+\vspace{1ex}
+\begin{columns}[t]
+  \begin{column}{.15\textwidth}
+  \begin{center}
+  \includegraphics[height=5ex]{figures/implementation_r}
+  \end{center}
+  \end{column}
 
-\begin{center}
-\begin{tabularx}{0.975\linewidth}{Z}
-  \begin{figure}[!ht]\centering
-  \includegraphics[width=0.6\linewidth]{figures/predictions}
-  \caption{\footnotesize Comparison of model predictions and raw observations for typical observations with different hypocentral distances.}
-  \end{figure}
-\end{tabularx}
-\end{center}
+  \hspace{-1.5ex}
+  \textcolor{LMUlightgray}{\vrule{}}
+  \hspace{1.5ex}
 
-\vspace{-2ex}
-\textcolor{koaladarkblue}{$\Rightarrow$} Spatial residual structure remaining \\[0.15cm]
-\textcolor{koaladarkblue}{$\Rightarrow$} Predictions in general behave well (70.7\% explained null deviance)
+  \begin{column}{.15\textwidth}
+  \begin{center}
+  \vspace{1ex}
+  \includegraphics[height=3ex]{figures/implementation_shiny}
+  \end{center}
+  \end{column}
 
-% \vspace{3ex}
-% \noindent \textcolor[RGB]{220,220,220}{\rule{0.9\linewidth}{3pt}}
-% \vspace{2ex}
-% \begin{center}
-% \bfBlue{Results}
-% \end{center}
+  \hspace{-1.5ex}
+  \textcolor{LMUlightgray}{\vrule{}}
+  \hspace{1.5ex}
+
+  \begin{column}{.15\textwidth}
+  \begin{center}
+  \includegraphics[height=5ex]{figures/implementation_coalitions}
+  \end{center}
+  \end{column}
+
+  \hspace{-1.5ex}
+  \textcolor{LMUlightgray}{\vrule{}}
+  \hspace{1.5ex}
+
+  \begin{column}{.15\textwidth}
+  \begin{center}
+  \includegraphics[height=5ex]{figures/implementation_sheets}
+  \end{center}
+  \end{column}
+
+  \hspace{-1.5ex}
+  \textcolor{LMUlightgray}{\vrule{}}
+  \hspace{1.5ex}
+
+  \begin{column}{.15\textwidth}
+  \begin{center}
+  \includegraphics[height=5ex]{figures/implementation_twitter}
+  \end{center}
+  \end{column}
+\end{columns}
 \end{block}
 
-\begin{block}{\footnotesize \circled{4} Conclusion \& Outlook}
-\begin{minipage}[T]{.95\textwidth}  % tweaks the width, makes a new \textwidth
-\vspace{1ex}
-Functional additive regression models are a promising approach for modeling surficial ground velocity.
-\\[2.4ex]
-\bfBlue{Our model}
-\begin{itemize}
-  \item allows a better understanding of the observed seismological patterns
-  \item adds value to the current seismological discussion of how important precise determination of specific physical parameters is
-  \item offers predictions which could in future replace computer-intensive earthquake simulations
-  % \item \bfBlue{Secondary finding:} Moment magnitude can be predicted very well using the simulation parameters (98.2\% explained null deviance)
-\end{itemize}
-\vspace{2.2ex}
-{\small
-\bfBlue{Secondary finding} \\[0.15cm] Moment magnitude can be predicted very well using the simulation parameters (98.2\% explained null deviance)
-}
-\\[2.3ex]
-% \bfBlue{Specific findings}
-% \begin{itemize}
-%   \item Mean estimates are sharp, but prediction intervals are wide / Mean ground velocities can be predicted quite well, ground velocities for specific earthquakes not!
-% \end{itemize}
-\bfBlue{Future research} \\[0.1cm]
-The model will be refined further, e.g. by explicitly modeling spatial correlation and by relaxing the strict assumption of the hypocenter as fixed point source for all earthquakes. Furthermore model performance will be examined for additional earthquakes.
-% In future research, the model will be refined further, e.g. by explicitly modeling spatial correlation and by relaxing the strict assumption of the hypocenter as fixed point source for all earthquakes. Furthermore the model will be tested on different real earthquake data.
-% \vspace{5ex} % white space at the end to align the right box with the left one
-\end{minipage}
+% Communication -----------------------------------
+\begin{block}{\footnotesize \circled{4} Communicating our results}
+text
 \end{block}
 
 
