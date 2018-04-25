@@ -15,7 +15,7 @@
 
 
 % Eigene Befehle und Einstellungen -------------------------
-\newcommand{\bfGreen}[1]{\textcolor{koalablue}{\textbf{#1}}}
+\newcommand{\bfBlue}[1]{\textcolor{koaladarkestblue}{\textbf{#1}}}
 % Numbers with circles around it for headers
 \usepackage{tikz}
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{
@@ -26,7 +26,7 @@
 \usepackage[font={footnotesize,it,color=black}]{caption}
 \captionsetup[figure]{labelfont={color=black}}
 \captionsetup[figure]{labelfont=bf}
-% Highlight text parts ♦with a color block with rounded corners
+% Highlight text parts with a color block with rounded corners
 \usepackage{tcolorbox}
 \newtcbox{\mybox}{nobeforeafter,colframe=chocolate4,colback=verylightgray,boxrule=2pt,arc=4pt,
   boxsep=0pt,left=6pt,right=6pt,top=6pt,bottom=6pt,tcbox raise base}
@@ -73,18 +73,18 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \begin{column}{.6\textwidth}
   \vspace{-3ex}
   \begin{center}
-  \bfGreen{Setting}
+  \bfBlue{Setting}
   \end{center}
-  We analyze artificial earthquake data derived from large-scale computer simulations based on a 1994 earthquake in Northridge (USA). In each of 135 simulations, the (isotropic) \bfGreen{absolute ground velocity} [m/s] was measured at 6146 virtual seismograms with a temporal resolution of 2Hz.
+  We analyze artificial earthquake data derived from large-scale computer simulations based on a 1994 earthquake in Northridge (USA). In each of 135 simulations, the (isotropic) \bfBlue{absolute ground velocity} [m/s] was measured at 6146 virtual seismograms with a temporal resolution of 2Hz.
   \\[2ex]
   This project marks the first time that physics-based simulations of earthquakes are combined with modern statistical methods. Apart from gaining new insights in the geophysical processes regression models could in future be used to predict expected ground movements in earthquake regions.
   \\[4ex]
   \begin{tabularx}{\textwidth}{ZZ}
-  \raggedright \bfGreen{Main research question}
+  \raggedright \bfBlue{Main research question}
   \\[0.35ex] % align the following text block horizontally with the itemize in the other column
   How do the physical conditions at an earthquake fault affect the surficial ground velocity measured over time?
   &
-  \raggedright \bfGreen{Challenges}
+  \raggedright \bfBlue{Challenges}
   \begin{itemize}
     \item Very high-dimensional data
     \item Spatio-temporal functional data
@@ -107,7 +107,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \begin{column}{.35\textwidth}
   \vspace{-3ex}
   \begin{center}
-  \bfGreen{Simulation setup}
+  \bfBlue{Simulation setup}
   \end{center}
    The artificial earthquake data were generated using the open-source software SeisSol (\texttt{www.seissol.org}). In each simulation:
   \begin{enumerate}
@@ -116,9 +116,9 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \end{enumerate}
   \vspace{2ex}
   \begin{center}
-  \bfGreen{Influence parameters}
+  \bfBlue{Influence parameters}
   \end{center}
-  The influence parameters are all \bfGreen{constant over time}.
+  The influence parameters are all \bfBlue{constant over time}.
   \hspace{-2pt}
   \begin{tcolorbox}[colframe=chocolate4,colback=verylightgray,boxrule=2pt,arc=4pt,
   left=-5pt]
@@ -168,7 +168,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
 \begin{block}{\footnotesize \circled{1} Modeling process}
 \begin{minipage}[T]{.95\textwidth}  % tweaks the width, makes a new \textwidth
 \vspace{1ex}
-We use a \bfGreen{Generalized Functional Additive Model} (GFAM) (see Scheipl et al., 2016) which is an extension of the GAM model class.
+We use a \bfBlue{Generalized Functional Additive Model} (GFAM) (see Scheipl et al., 2016) which is an extension of the GAM model class.
 \\
 In our case, only the response is functional and we use a Gamma model with log-link.
 \\
@@ -189,7 +189,7 @@ $$
 \vspace{2ex}
 
 \noindent
-We use a \bfGreen{highly performant estimation algorithm} from Wood et al. (2016) to make estimation of this complex model on such large data feasible. Major advances are:
+We use a \bfBlue{highly performant estimation algorithm} from Wood et al. (2016) to make estimation of this complex model on such large data feasible. Major advances are:
 \begin{itemize}
   \item a block-wise Cholesky decomposition
   \item a compressed representation of marginal spline bases
@@ -265,14 +265,14 @@ Right: Predictions based on varying values of the dynamic coefficient of frictio
 \end{center}
 
 \vspace{-2ex}
-\textcolor{koalablue}{$\Rightarrow$} Spatial residual structure remaining \\[0.15cm]
-\textcolor{koalablue}{$\Rightarrow$} Predictions in general behave well (70.7\% explained null deviance)
+\textcolor{koaladarkblue}{$\Rightarrow$} Spatial residual structure remaining \\[0.15cm]
+\textcolor{koaladarkblue}{$\Rightarrow$} Predictions in general behave well (70.7\% explained null deviance)
 
 % \vspace{3ex}
 % \noindent \textcolor[RGB]{220,220,220}{\rule{0.9\linewidth}{3pt}}
 % \vspace{2ex}
 % \begin{center}
-% \bfGreen{Results}
+% \bfBlue{Results}
 % \end{center}
 \end{block}
 
@@ -281,23 +281,23 @@ Right: Predictions based on varying values of the dynamic coefficient of frictio
 \vspace{1ex}
 Functional additive regression models are a promising approach for modeling surficial ground velocity.
 \\[2.4ex]
-\bfGreen{Our model}
+\bfBlue{Our model}
 \begin{itemize}
   \item allows a better understanding of the observed seismological patterns
   \item adds value to the current seismological discussion of how important precise determination of specific physical parameters is
   \item offers predictions which could in future replace computer-intensive earthquake simulations
-  % \item \bfGreen{Secondary finding:} Moment magnitude can be predicted very well using the simulation parameters (98.2\% explained null deviance)
+  % \item \bfBlue{Secondary finding:} Moment magnitude can be predicted very well using the simulation parameters (98.2\% explained null deviance)
 \end{itemize}
 \vspace{2.2ex}
 {\small
-\bfGreen{Secondary finding} \\[0.15cm] Moment magnitude can be predicted very well using the simulation parameters (98.2\% explained null deviance)
+\bfBlue{Secondary finding} \\[0.15cm] Moment magnitude can be predicted very well using the simulation parameters (98.2\% explained null deviance)
 }
 \\[2.3ex]
-% \bfGreen{Specific findings}
+% \bfBlue{Specific findings}
 % \begin{itemize}
 %   \item Mean estimates are sharp, but prediction intervals are wide / Mean ground velocities can be predicted quite well, ground velocities for specific earthquakes not!
 % \end{itemize}
-\bfGreen{Future research} \\[0.1cm]
+\bfBlue{Future research} \\[0.1cm]
 The model will be refined further, e.g. by explicitly modeling spatial correlation and by relaxing the strict assumption of the hypocenter as fixed point source for all earthquakes. Furthermore model performance will be examined for additional earthquakes.
 % In future research, the model will be refined further, e.g. by explicitly modeling spatial correlation and by relaxing the strict assumption of the hypocenter as fixed point source for all earthquakes. Furthermore the model will be tested on different real earthquake data.
 % \vspace{5ex} % white space at the end to align the right box with the left one
