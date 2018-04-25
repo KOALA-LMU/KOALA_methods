@@ -25,7 +25,7 @@
   \bfBlue{#1}
   \end{center}
   \vspace{-2ex}
-  \textcolor{koalablue}{\hrule{\linewidth}}
+  \textcolor{koalablue}{\hrule{}}
   \vspace{2ex}
 }
 % Numbers with circles around it for headers
@@ -136,7 +136,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \end{columns}
 
   \vspace{2ex}
-  \textcolor{LMUlightgray}{\hrule{\linewidth}}
+  \textcolor{LMUlightgray}{\hrule{}}
   \vspace{2ex}
 
   % Lower columns with specific examples -----
@@ -230,10 +230,11 @@ text
 We present results for selected elections on
 \bfBlue{\texttt{\href{test}{koala.stat.uni-muenchen.de}}}
 \end{center}
-\\[2ex]
+\vspace{2ex}
 The implementation is based on several points:
 \begin{itemize}
-  \item Our approach is implemented in the \bfBlue{R package \texttt{coalitions}}   \item The website is shiny-based
+  \item Our approach is implemented in the \bfBlue{R package \texttt{coalitions}} 
+  \item The website is shiny-based
   \item The website update approach is automated
   \item Automatic tweets are sent in the case of new results
   \item For sharing our results we automatically export them to Google Sheets
@@ -241,7 +242,7 @@ The implementation is based on several points:
 
 % Footer with software icons
 \vspace{1ex}
-\textcolor{LMUlightgray}{\hrule{\linewidth}}
+\textcolor{LMUlightgray}{\hrule{}}
 \vspace{1ex}
 \begin{columns}[t]
   \begin{column}{.15\textwidth}
