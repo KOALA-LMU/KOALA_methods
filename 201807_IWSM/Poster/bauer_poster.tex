@@ -5,6 +5,7 @@
 \usepackage[latin1]{inputenc}
 \usepackage{amsmath, amsthm, amssymb, latexsym}
 \usepackage{pifont} % for \ding symbols
+\usepackage{multirow}
 
 %\usepackage{times}\usefonttheme{professionalfonts}  % obsolete
 %\usefonttheme[onlymath]{serif}
@@ -112,24 +113,17 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
 
   \begin{column}{.35\textwidth}
   \colHeader{What do we propose?}
-   Bla blub
-  \begin{enumerate}
-    \item ...
-    \item ...
-  \end{enumerate}
-  \begin{center}
-  We want to \bfBlue{shift the focus} from \\[2ex]
-  \begin{tabular}{ccc}
-  \includegraphics[height=10ex]{figures/motivation_bars}
-  &
-  to
-  &
-  \includegraphics[height=10ex]{figures/motivation_density}
-  \\
-  incomprehensive & & uncertainty-based \\
-  \bfBlue{reporting of observed shares} & & \bfBlue{reporting of probabilities} \\
+  Text
+  \\[5ex]
+  We want to \textbf{shift the focus} from \\[2ex]
+  \begin{tabular}{clccl}
+  \multirow{2}{*}[-0.6ex]{\includegraphics[height=4ex]{figures/motivation_pictoBar_col}} & 
+  \textcolor{koaladarkgray}{\footnotesize Incomprehensive} &
+  \multirow{2}{*}{\ \ \ \ \ \ \textcolor{koaladarkgray}{to} \ \ \ \ \ } &
+  \multirow{2}{*}[-0.6ex]{\includegraphics[height=4ex]{figures/motivation_pictoDens_col}} & 
+  \textcolor{koaladarkgray}{\footnotesize Uncertainty-based} \\
+   & observed party shares & & & event probabilities \\
   \end{tabular}
-  \end{center}
   \vspace{1ex}
   \end{column}
 
@@ -144,19 +138,27 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
 
   \begin{column}{.275\textwidth}
   Based on the last opinion poll before the German federal election 2013
-  \\[1ex]
+  \\[2.5ex]
   \begin{center}
+  \scalebox{0.75}{%
   \begin{tabular}{ccccccc}
   \toprule
   \bfBlue{Union} & SPD & Greens & \bfBlue{FDP} & The Left & AfD & Others \\ \midrule
   \bfBlue{40\%} & 26\% & 10\% & \bfBlue{5\%} & 9\% & 4\% & 6\% \\
   \bottomrule
   \end{tabular}
+  }
   \end{center}
-  \vspace{1ex}
+  \vspace{1.5ex}
   the parties CDU/CSU (or ''Union``) and FDP -- which planned to jointly form the government -- obtained 50\% (after redistributing party votes $<$5\%).
   \\[2ex]
-  Media headline: ZITAT
+  Resulting media headline:
+  \begin{center}
+  ``Union-FDP loses its majority''
+  \end{center}
+  \vspace{1ex}
+  \textcolor{LMUdarkgray}{\tiny Source: FAZ.net (2017). Umfrage zur Bundestagswahl: Schwarz-Gelb verliert \\[-2ex]
+  die Mehrheit.http://archive.is/SuXVt. Accessed 26 April 2018.}
   \end{column}
 
   \begin{column}{.025\textwidth}
@@ -227,13 +229,13 @@ text
 \begin{center}
 \includegraphics[height=5ex]{figures/Koala_Logo_ohneSchrift}
 \\[2ex]
-We present results for selected elections on
-\bfBlue{\texttt{\href{test}{koala.stat.uni-muenchen.de}}}
+Results for selected elections are presented on
+\bfBlue{\texttt{\href{http://koala.stat.uni-muenchen.de}{koala.stat.uni-muenchen.de}}}
 \end{center}
 \vspace{2ex}
 The implementation is based on several points:
 \begin{itemize}
-  \item Our approach is implemented in the \bfBlue{R package \texttt{coalitions}} 
+  \item Our approach is implemented in the R package \bfBlue{\texttt{coalitions}} 
   \item The website is shiny-based
   \item The website update approach is automated
   \item Automatic tweets are sent in the case of new results
