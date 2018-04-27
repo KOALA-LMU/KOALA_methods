@@ -19,7 +19,10 @@
 % Eigene Befehle und Einstellungen -------------------------
 \newcommand{\grayHeader}[1]{\textcolor{koaladarkgray}{{\large #1} \vspace{2ex}}}
 \newcommand{\bfBlue}[1]{\textcolor{koaladarkestblue}{\textbf{#1}}}
+\newcommand{\bfDarkgray}[1]{\textcolor{koaladarkgray}{\textbf{#1}}}
 \newcommand{\blue}[1]{\textcolor{koaladarkestblue}{#1}}
+\newcommand{\darkgray}[1]{\textcolor{koaladarkgray}{#1}}
+\newcommand{\lightgray}[1]{\textcolor{koalagray}{#1}}
 \newcommand{\colHeader}[1]{
   \vspace{-3ex}
   \begin{center}
@@ -81,7 +84,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
 % Motivation ---------------------------------------------
 \begin{beamercolorbox}[center,wd=\textwidth]{postercolumn}
 \begin{minipage}[T]{.95\textwidth}  % tweaks the width, makes a new \textwidth
-\begin{block}{\footnotesize Data and Research Question}
+\begin{block}{\footnotesize Motivation}
   \begin{center}
   \grayHeader{Election poll-based reporting}
   \end{center}
@@ -89,7 +92,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   % Upper columns with general description -----
   \begin{columns}[t]
 
-  \begin{column}{.275\textwidth}
+  \begin{column}{.3\textwidth}
   \colHeader{What's the status quo?}
   Election poll reporting is mostly based on observed mean voter shares.
   \end{column}
@@ -98,7 +101,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \textcolor{LMUlightgray}{\vrule{}}
   \hspace{1.5ex}
 
-  \begin{column}{.275\textwidth}
+  \begin{column}{.3\textwidth}
   \colHeader{So what's wrong?}
   The current style has several shortcomings:
   \begin{enumerate}
@@ -111,17 +114,17 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \textcolor{LMUlightgray}{\vrule{}}
   \hspace{1.5ex}
 
-  \begin{column}{.35\textwidth}
+  \begin{column}{.3\textwidth}
   \colHeader{What do we propose?}
   Text
   \\[5ex]
   We want to \textbf{shift the focus} from \\[2ex]
   \begin{tabular}{clccl}
-  \multirow{2}{*}[-0.6ex]{\includegraphics[height=4ex]{figures/motivation_pictoBar_col}} & 
-  \textcolor{koaladarkgray}{\footnotesize Incomprehensive} &
-  \multirow{2}{*}{\ \ \ \ \ \ \textcolor{koaladarkgray}{to} \ \ \ \ \ } &
-  \multirow{2}{*}[-0.6ex]{\includegraphics[height=4ex]{figures/motivation_pictoDens_col}} & 
-  \textcolor{koaladarkgray}{\footnotesize Uncertainty-based} \\
+  \multirow{2}{*}[-0.95ex]{\includegraphics[height=3ex]{figures/motivation_pictoBar_col}} & 
+  \darkgray{\footnotesize Incomprehensive} &
+  \multirow{2}{*}{\ \ \darkgray{to} \ } &
+  \multirow{2}{*}[-1ex]{\includegraphics[height=3ex]{figures/motivation_pictoDens_col}} & 
+  \darkgray{\footnotesize Uncertainty-based} \\
    & observed party shares & & & event probabilities \\
   \end{tabular}
   \vspace{1ex}
@@ -131,33 +134,48 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
 
   \vspace{2ex}
   \textcolor{LMUlightgray}{\hrule{}}
-  \vspace{2ex}
+  \vspace{1ex}
 
+  % Header for lower columns -----------------
+  \begin{center}
+  \bfBlue{Example} \\
+  {\footnotesize \lightgray{Reporting on}} \darkgray{Union} {\footnotesize \lightgray{and}} \darkgray{FDP} {\footnotesize \lightgray{to jointly obtain a majority before the German federal election 2013}}
+  \end{center}
+  
+  \vspace{-1ex}
+  \textcolor{LMUlightgray}{\hrule{}}
+  \vspace{2ex}
+  
   % Lower columns with specific examples -----
   \begin{columns}[t]
 
-  \begin{column}{.275\textwidth}
-  Based on the last opinion poll before the German federal election 2013
+  \begin{column}{.28\textwidth}
+  \darkgray{Last pre-election opinion poll:} \lightgray{\tiny Source: Forsa, 20.09.2013}
   \\[2.5ex]
   \begin{center}
-  \scalebox{0.75}{%
+  % \scalebox{0.75}{%
   \begin{tabular}{ccccccc}
   \toprule
-  \bfBlue{Union} & SPD & Greens & \bfBlue{FDP} & The Left & AfD & Others \\ \midrule
-  \bfBlue{40\%} & 26\% & 10\% & \bfBlue{5\%} & 9\% & 4\% & 6\% \\
+  \darkgray{Union} & {\footnotesize \lightgray{SPD}} & {\footnotesize \lightgray{Greens}} & \darkgray{FDP} & {\footnotesize \lightgray{The Left}} & {\footnotesize \lightgray{AfD}} & {\footnotesize \lightgray{Others}} \\ \midrule
+  \darkgray{40\%} & {\footnotesize \lightgray{26\%}} & {\footnotesize \lightgray{10\%}} & \darkgray{5\%} & {\footnotesize \lightgray{9\%}} & {\footnotesize \lightgray{4\%}} & {\footnotesize \lightgray{6\%}} \\
   \bottomrule
   \end{tabular}
-  }
+  % }
   \end{center}
   \vspace{1.5ex}
-  the parties CDU/CSU (or ''Union``) and FDP -- which planned to jointly form the government -- obtained 50\% (after redistributing party votes $<$5\%).
-  \\[2ex]
-  Resulting media headline:
   \begin{center}
-  ``Union-FDP loses its majority''
+  \darkgray{After redistribution} \lightgray{\footnotesize of party votes $<$5\% \\ (i.e. the minimum hurdle to pass into German parliament)} \\
+  \darkgray{Union-FDP} \lightgray{\footnotesize jointly} \darkgray{obtain} \lightgray{\footnotesize exactly} \darkgray{50\%}.
+  \end{center}
+  \vspace{-3ex}
+  \textcolor{koalablue}{$$ \underbrace{\resizebox{\hsize}{!}{ }}_{ } $$}
+  \ \\ \vspace{-2ex}
+  \lightgray{\footnotesize Media headline:}
+  \begin{center}
+  \darkgray{\textit{\normalsize ``Union-FDP loses its majority''}}
   \end{center}
   \vspace{1ex}
-  \textcolor{LMUdarkgray}{\tiny Source: FAZ.net (2017). Umfrage zur Bundestagswahl: Schwarz-Gelb verliert \\[-2ex]
+  \lightgray{\tiny Source: FAZ.net (2017). Umfrage zur Bundestagswahl: Schwarz-Gelb verliert \\[-2ex]
   die Mehrheit.http://archive.is/SuXVt. Accessed 26 April 2018.}
   \end{column}
 
@@ -166,7 +184,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \huge{\blue{\ding{223}}}
   \end{column}
 
-  \begin{column}{.275\textwidth}
+  \begin{column}{.28\textwidth}
   Example
   \end{column}
 
@@ -175,7 +193,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \huge{\blue{\ding{223}}}
   \end{column}
 
-  \begin{column}{.35\textwidth}
+  \begin{column}{.28\textwidth}
   Example
   \end{column}
 
@@ -319,13 +337,12 @@ text
 \begin{beamercolorbox}[center,wd=\textwidth]{postercolumn}
 \begin{minipage}[T]{.95\textwidth}  % tweaks the width, makes a new \textwidth
 \begin{block}{\footnotesize References}
-{\footnotesize % begin footnotesize
-Bauer, A. (2016). \textit{Auswirkungen der Erdbebenquelldynamik auf den zeitlich\-en Verlauf der Bodenbewegung}. MA thesis. Ludwig-Maximilians-Uni\-versi\-t\"{a}t, Munich, Germany. Available: https://epub.ub.uni-muenchen .de/31976/ \\
-% Breuer, A. et al. (2014). Sustained petascale performance of seismic simulations with seissol on supermuc. \textit{Supercomputing - 29th International Conference, ISC 2014}, Leipzig, Germany, 1\,--\,18. Springer International Publishing. \\
-Scheipl, F., Gertheiss, J., Greven, S. (2016). Generalized functional additive mixed models. \textit{Electronic Journal of Statistics}, \textbf{10.1}, 1455\,--\,1492. \\
-Weiss, A. (2001). Topographic position and landforms analysis. \textit{Poster presentation, ESRI user conference}, San Diego, CA, \textbf{200}. \\
-Wood, S.N. et al. (2016). Generalized additive models for gigadata: modelling the UK black smoke network daily data. \textit{Journal of the American Statistical Association}. DOI: 10.1080/01621459.2016.1195744.
-} % end footnotesize
+{\footnotesize
+Bender, A. and Bauer, A. (2018). coalitions: Coalition probabilities in multi-party democracies.
+\textit{Journal of Open Source Software}, \textbf{3(23)}, 606,
+\href{https://doi.org/10.21105/joss.00606}{\texttt{https://doi.org/10.21105/joss.00606}}. \\
+Gelman, A. et al. (2013). \textit{Bayesian Data Analysis, 3rd edition}. Boca Raton, FL: CRC press.
+}
 \end{block}
 \end{minipage}
 \end{beamercolorbox}
