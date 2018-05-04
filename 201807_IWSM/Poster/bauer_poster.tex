@@ -92,32 +92,51 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   % Upper columns with general description -----
   \begin{columns}[t]
 
-  \begin{column}{.3\textwidth}
+  \begin{column}{.45\textwidth}
   \colHeader{What's the status quo?}
-  Election poll reporting is mostly based on observed mean voter shares.
+  Typical election poll reporting: \\[1cm]
+  \begin{tabular}{p{10cm}p{25cm}}
+  \includegraphics[width=9.5cm]{figures/motivation_bars}
+  &
+  \vspace{-4.5cm}
+  \begin{itemize}
+    \item \ldots is based on observed mean voter shares
+    \item \ldots sets the focus on individual parties
+    \item \ldots imparts sample uncertainty only insufficiently
+  \end{itemize}
+  \end{tabular}
+  \begin{center}
+  \vspace{2ex}
+  % Example header
+  {
+  \setlength{\fboxrule}{5pt} % Border thickness
+  \fcolorbox{koalawhitegray}{koalawhitegray2}{
+  \begin{minipage}{\textwidth}
+  \vspace{2ex}
+  \begin{center}
+  \bfBlue{Example} \\
+  {\footnotesize \lightgray{Reporting on}} \darkgray{Union} {\footnotesize \lightgray{and}} \darkgray{FDP} {\footnotesize \lightgray{to jointly obtain a majority before the German federal election 2013}}
+  \end{center}
+  \vspace{2ex}
+  \end{minipage}
+  }
+  }
+  \end{center}
   \end{column}
 
   \hspace{-1.5ex}
   \textcolor{LMUlightgray}{\vrule{}}
   \hspace{1.5ex}
 
-  \begin{column}{.3\textwidth}
-  \colHeader{So what's wrong?}
-  The current style has several shortcomings:
-  \begin{enumerate}
-    \item Sample uncertainty is insufficiently addressed
-    \item The main interest is beyond the simple percentages
-  \end{enumerate}
-  \end{column}
-
-  \hspace{-1.5ex}
-  \textcolor{LMUlightgray}{\vrule{}}
-  \hspace{1.5ex}
-
-  \begin{column}{.3\textwidth}
+  \begin{column}{.45\textwidth}
   \colHeader{What do we propose?}
-  Text
-  \\[5ex]
+  Propose:
+  \begin{enumerate}
+    \item Point 1
+    \item Point 2
+    \item Point 3
+  \end{enumerate}
+  \vspace{5ex}
   We want to \textbf{shift the focus} from \\[2ex]
   \begin{tabular}{clccl}
   \multirow{2}{*}[-0.95ex]{\includegraphics[height=3ex]{figures/motivation_pictoBar_col}} & 
@@ -131,22 +150,19 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \end{column}
 
   \end{columns}
-
-  \vspace{2ex}
-  \textcolor{LMUlightgray}{\hrule{}}
-  \vspace{1ex}
-
-  % Header for lower columns -----------------
-  \begin{center}
-  \bfBlue{Example} \\
-  {\footnotesize \lightgray{Reporting on}} \darkgray{Union} {\footnotesize \lightgray{and}} \darkgray{FDP} {\footnotesize \lightgray{to jointly obtain a majority before the German federal election 2013}}
-  \end{center}
   
-  \vspace{-1ex}
-  \textcolor{LMUlightgray}{\hrule{}}
-  \vspace{2ex}
+  % \noindent\hfil\textcolor{LMUlightgray}{\rule{0.93\textwidth}{.4pt}}\hfil
+  % % \textcolor{LMUlightgray}{\hrule{}}
+  % \vspace{3ex}
   
   % Lower columns with specific examples -----
+  \vspace{-4pt}
+  \hspace{-5.8pt}
+  {
+  \setlength{\fboxrule}{3pt} % Border thickness
+  \fcolorbox{koalawhitegray}{koalawhitegray3}{
+  \begin{minipage}{0.94\textwidth}
+  \vspace{3ex}
   \begin{columns}[t]
 
   \begin{column}{.28\textwidth}
@@ -185,7 +201,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \end{column}
 
   \begin{column}{.28\textwidth}
-  Example
+  Drawbacks of this type of reporting:
   \end{column}
 
   \begin{column}{.025\textwidth}
@@ -198,11 +214,15 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \end{column}
 
   \end{columns}
+  \end{minipage}
+  }
+  }
 
   \vskip-1ex
 \end{block}
 \end{minipage}
 \end{beamercolorbox}
+
 
 
 % Begin main part -----------------------------------
