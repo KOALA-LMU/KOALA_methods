@@ -7,6 +7,7 @@
 \usepackage{pifont} % for \ding symbols
 \usepackage{multirow}
 
+
 %\usepackage{times}\usefonttheme{professionalfonts}  % obsolete
 %\usefonttheme[onlymath]{serif}
 %\boldmath % macht ALLE Gleichungen automatisch fett
@@ -23,6 +24,8 @@
 \newcommand{\blue}[1]{\textcolor{koaladarkestblue}{#1}}
 \newcommand{\darkgray}[1]{\textcolor{koaladarkgray}{#1}}
 \newcommand{\lightgray}[1]{\textcolor{koalagray}{#1}}
+\newcommand{\fndarkgray}[1]{\textcolor{koaladarkgray}{\footnotesize #1}}
+\newcommand{\fnlightgray}[1]{\textcolor{koalagray}{\footnotesize #1}}
 \newcommand{\colHeader}[1]{
   \vspace{-3ex}
   \begin{center}
@@ -101,18 +104,18 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \vspace{-4.5cm}
   \begin{itemize}
     \item \ldots is based on observed mean voter shares
-    \item \ldots sets the focus on individual parties
+    \item \ldots sets the focus on individual party achievements
     \item \ldots imparts sample uncertainty only insufficiently
   \end{itemize}
   \end{tabular}
   \begin{center}
-  \vspace{2ex}
+  \vspace{1.5ex}
   % Example header
   {
   \setlength{\fboxrule}{3pt} % Border thickness
   \fcolorbox{koalawhitegray}{koalawhitegray2}{
   \begin{minipage}{\textwidth}
-  \vspace{2ex}
+  \vspace{2.5ex}
   \begin{center}
   \bfBlue{Example} \\
   {\footnotesize \lightgray{Reporting on}} \darkgray{Union} {\footnotesize \lightgray{and}} \darkgray{FDP} {\footnotesize \lightgray{to jointly obtain a majority before the German federal election 2013}}
@@ -130,14 +133,15 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
 
   \begin{column}{.45\textwidth}
   \colHeader{What do we propose?}
-  Propose:
-  \begin{enumerate}
-    \item Point 1
-    \item Point 2
-    \item Point 3
-  \end{enumerate}
-  \vspace{5ex}
-  We want to \textbf{shift the focus} from \\[2ex]
+  Good reporting should:
+  \vspace{2.5ex}
+  \begin{itemize}
+    \item \ldots impart findings in an easily graspable way
+    \item \ldots prevent potential misunderstandings
+    \item \ldots focus on the most relevant topics
+  \end{itemize}
+  \vspace{6.2ex}
+  We aim at \textbf{shifting the focus} from \\[1.3ex]
   \begin{tabular}{clccl}
   \multirow{2}{*}[-0.95ex]{\includegraphics[height=3ex]{figures/motivation_pictoBar_col}} & 
   \darkgray{\footnotesize Incomprehensive} &
@@ -146,7 +150,6 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \darkgray{\footnotesize Uncertainty-based} \\
    & observed party shares & & & event probabilities \\
   \end{tabular}
-  \vspace{1ex}
   \end{column}
 
   \end{columns}
@@ -165,7 +168,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \vspace{3ex}
   \begin{columns}[t]
 
-  \begin{column}{.28\textwidth}
+  \begin{column}{.29\textwidth}
   \darkgray{Last pre-election opinion poll:} \lightgray{\tiny Source: Forsa, 20.09.2013}
   \\[2.5ex]
   \begin{center}
@@ -196,21 +199,42 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \end{column}
 
   \begin{column}{.025\textwidth}
-  \hspace{10ex}
+  \vspace{11ex}
   \huge{\blue{\ding{223}}}
   \end{column}
 
-  \begin{column}{.28\textwidth}
-  Drawbacks of this type of reporting:
+  \begin{column}{.26\textwidth}
+  Flaws of this type of reporting:
+  \vspace{1ex}
+  \begin{itemize}
+    \item \darkgray{Misleading conclusions are drawn} \\[0.2cm] \fnlightgray{A mean share of 50\% only means that it's} \fndarkgray{slightly more probable} \fnlightgray{that a majority is missed}
+    \item \darkgray{Redistribution of votes is ignored} \\[0.2cm] \fnlightgray{In their article, FAZ.net bases the conclusion on the observed voter share and not on the redistributed 50\%}
+    \item \darkgray{FDP sample uncertainty is ignored} \\[0.2cm] \fnlightgray{With a mean voter share of 5\%, FDP will only pass into parliament with $\sim$50\%}
+  \end{itemize}
   \end{column}
 
   \begin{column}{.025\textwidth}
-  \hspace{10ex}
+  \vspace{11ex}
   \huge{\blue{\ding{223}}}
   \end{column}
 
-  \begin{column}{.28\textwidth}
-  Example
+  \begin{column}{.29\textwidth}
+  Components of our proposed style of reporting:
+  \vspace{1ex}
+  \begin{itemize}
+    \item \darkgray{Use event \textbf{probabilities}} \fnlightgray{instead of voter shares} \\[0.2cm] \fnlightgray{Probabilities comprise sample uncertainty in a natural way and are less at risk to be misinterpreted}
+    \item \darkgray{Use \textbf{event} probabilities} \fnlightgray{instead of voter shares} \\[0.2cm] \fnlightgray{Focusing on the main events allows the reader to easily grasp the big picture}
+  \end{itemize}
+  \vspace{-3ex}
+  \textcolor{koalablue}{$$ \underbrace{\resizebox{\hsize}{!}{ }}_{ } $$}
+  \ \\ \vspace{-2ex}
+  \lightgray{\footnotesize Our headline:}
+  \begin{center}
+  \darkgray{\textit{\normalsize
+  ``Union-FDP gains seat majority with 26\%, \ \ \\[0.1cm] \ \ FDP passes into parliament with 51\%$^*$''
+  }}
+  \end{center}
+  \lightgray{\tiny ${}^*$ If the election was held today}
   \end{column}
 
   \end{columns}
