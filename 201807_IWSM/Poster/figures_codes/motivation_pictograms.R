@@ -3,6 +3,22 @@ library(ggplot2)
 
 
 
+# Survey chart ------------------------------------------------------------
+dat3 <- data.frame("party" = LETTERS[1:7],
+                   "share" = c(33.3,18.3,13.6,8.9,10.3,11.7,4.1),
+                   "col" = c("black","#E3000F","skyblue2","#ffed00","deeppink3","#46962b","grey"))
+ggplot(dat3, aes(x = party, weight = share, fill = party)) +
+  geom_bar() +
+  scale_fill_manual(values = as.character(dat3$col)) +
+  scale_y_continuous("Share in %") +
+  theme_bw(base_size = 43) +
+  theme(legend.position = "none",
+        axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        plot.margin=unit(c(0,0,0,0),"mm")) +
+  ggsave("../figures/motivation_survey.pdf", height = 5, width = 8)
+
 # Bar chart ---------------------------------------------------------------
 dat <- data.frame("party" = LETTERS[1:5],
                   "share" = c(30,20,12,14,11))

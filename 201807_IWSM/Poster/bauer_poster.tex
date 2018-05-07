@@ -116,11 +116,11 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   % Upper columns with general description -----
   \begin{columns}[t]
 
-  \begin{column}{.45\textwidth}
+  \begin{column}{.475\textwidth}
   \colHeader{What's the status quo?}
   Typical election poll reporting: \\[1cm]
-  \begin{tabular}{p{10cm}p{25cm}}
-  \includegraphics[width=9.5cm]{figures/motivation_bars}
+  \begin{tabular}{p{7.5cm}p{25cm}}
+  \includegraphics[height=4.75cm]{figures/motivation_survey}
   &
   \vspace{-4.5cm}
   \begin{itemize}
@@ -129,13 +129,12 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
     \item \ldots imparts sample uncertainty only insufficiently
   \end{itemize}
   \end{tabular}
-  \begin{center}\centering
-  \vspace{1.5ex}
+  \\[2.5ex]
   % Example header
   {
   \setlength{\fboxrule}{3pt} % Border thickness
   \fcolorbox{koalawhitegray}{koalawhitegray2}{
-  \begin{minipage}{\textwidth}
+  \begin{minipage}{0.9\textwidth}
   \vspace{2.5ex}
   \begin{center}\centering
   \bfBlue{Example} \\
@@ -145,14 +144,13 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \end{minipage}
   }
   }
-  \end{center}
   \end{column}
 
-  \hspace{-1.5ex}
-  \textcolor{LMUlightgray}{\vrule{}}
-  \hspace{1.5ex}
-
-  \begin{column}{.45\textwidth}
+  % \hspace{-3.1ex}
+  % \textcolor{LMUlightgray}{\vrule{}}
+  % \hspace{3.1ex}
+  
+  \begin{column}{.475\textwidth}
   \colHeader{What do we propose?}
   Good reporting should:
   \vspace{2.5ex}
@@ -179,13 +177,13 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   % % \textcolor{LMUlightgray}{\hrule{}}
   % \vspace{3ex}
   
-  % Lower columns with specific examples -----
-  \vspace{-4pt}
-  \hspace{-5.8pt}
+  % Lower columns with a specific example ----
   {
+  \vspace{-4pt}
+  \hspace{-24.34pt}
   \setlength{\fboxrule}{3pt} % Border thickness
   \fcolorbox{koalawhitegray}{koalawhitegray3}{
-  \begin{minipage}{0.94\textwidth}
+  \begin{minipage}{.96\textwidth}
   \vspace{3ex}
   \begin{columns}[t]
 
@@ -235,8 +233,8 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \vspace{1.5ex}
   \begin{itemize}
     \item \darkgray{Misleading conclusions are drawn} \\[0.2cm] \fnlightgray{A mean share of 50\% only means that it's} \fndarkgray{slightly more probable} \fnlightgray{that a majority is missed}
+    \item \darkgray{Sample uncertainty is ignored} \\[0.2cm] \fnlightgray{E.g., with a mean voter share of 5\%, FDP will only enter the parliament with $\sim$50\%}
     \item \darkgray{Redistribution of votes is ignored} \\[0.2cm] \fnlightgray{FAZ.net bases the conclusion on the observed voter share and not on the redistributed 50\% share}
-    \item \darkgray{FDP sample uncertainty is ignored} \\[0.2cm] \fnlightgray{With a mean voter share of 5\%, FDP will only pass into parliament with $\sim$50\%}
   \end{itemize}
   \end{column}
 
@@ -246,7 +244,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \end{column}
 
   \begin{column}{.29\textwidth}
-  Foundations of our proposed style of reporting:
+  Foundations of KOALA-based reporting:
   \vspace{1.5ex}
   \begin{itemize}
     \item \darkgray{Use event \textbf{probabilities}} \fnlightgray{instead of voter shares} \\[0.2cm] \fnlightgray{Probabilities comprise sample uncertainty in a natural way and are less at risk to be misinterpreted}
@@ -258,7 +256,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   
   \begin{mdleftgreen}
   \begin{minipage}{\textwidth}
-  \lightgray{\footnotesize Our headline:}
+  \lightgray{\footnotesize KOALA headline:}
   \begin{center}\centering
   \darkgray{\textit{
   ``Union-FDP gains seat majority with 26\%, \ \ \\[0.1cm] \ \ FDP passes into parliament with 51\%$^*$''
@@ -297,13 +295,13 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
 % Since all columns are the same length, it is all nice and tidy.  You have to get the height empirically
 
 % Main block 1 ---------------------------------------
-\begin{block}{\footnotesize \circled{1} Main block 1}
+\begin{block}{\footnotesize \circled{1} Probability estimation}
 text
 \end{block}
 
 
 % Main block 2 -------------------------------------
-\begin{block}{\footnotesize \circled{2} Main block 2}
+\begin{block}{\footnotesize \circled{2} Visualization}
 text
 \end{block}
 
@@ -392,7 +390,7 @@ The implementation is based on several points:
 \end{block}
 
 % Communication -----------------------------------
-\begin{block}{\footnotesize \circled{4} Communicating our results}
+\begin{block}{\footnotesize \circled{4} Results communication}
 text
 \end{block}
 
