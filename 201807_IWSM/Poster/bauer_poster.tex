@@ -6,8 +6,27 @@
 \usepackage{amsmath, amsthm, amssymb, latexsym}
 \usepackage{pifont} % for \ding symbols
 \usepackage{multirow}
+\usepackage{ragged2e} % for \justify
+\let\olditem\item
+\renewcommand\item{\justifying\olditem} % NOTE: This justify-alignes itemize-items, but heavily influences
+% the rest of the document, s.t. the center-environment isn't working correctly anymore -> use \centering instead!
 
-
+\usepackage{mdframed}
+\newmdenv[%
+  backgroundcolor=koalawhitegray4,
+  linecolor=goodgreen,
+  linewidth=3pt,
+  topline=false,
+  rightline=false,
+  bottomline=false]{mdleftgreen}
+\newmdenv[%
+  backgroundcolor=koalawhitegray4,
+  linecolor=badred,
+  linewidth=3pt,
+  topline=false,
+  rightline=false,
+  bottomline=false]{mdleftred}
+  
 %\usepackage{times}\usefonttheme{professionalfonts}  % obsolete
 %\usefonttheme[onlymath]{serif}
 %\boldmath % macht ALLE Gleichungen automatisch fett
@@ -22,13 +41,15 @@
 \newcommand{\bfBlue}[1]{\textcolor{koaladarkestblue}{\textbf{#1}}}
 \newcommand{\bfDarkgray}[1]{\textcolor{koaladarkgray}{\textbf{#1}}}
 \newcommand{\blue}[1]{\textcolor{koaladarkestblue}{#1}}
+\newcommand{\badred}[1]{\textcolor{badred}{#1}}
+\newcommand{\goodgreen}[1]{\textcolor{goodgreen}{#1}}
 \newcommand{\darkgray}[1]{\textcolor{koaladarkgray}{#1}}
 \newcommand{\lightgray}[1]{\textcolor{koalagray}{#1}}
 \newcommand{\fndarkgray}[1]{\textcolor{koaladarkgray}{\footnotesize #1}}
 \newcommand{\fnlightgray}[1]{\textcolor{koalagray}{\footnotesize #1}}
 \newcommand{\colHeader}[1]{
   \vspace{-3ex}
-  \begin{center}
+  \begin{center}\centering
   \bfBlue{#1}
   \end{center}
   \vspace{-2ex}
@@ -88,7 +109,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
 \begin{beamercolorbox}[center,wd=\textwidth]{postercolumn}
 \begin{minipage}[T]{.95\textwidth}  % tweaks the width, makes a new \textwidth
 \begin{block}{\footnotesize Motivation}
-  \begin{center}
+  \begin{center}\centering
   \grayHeader{Election poll-based reporting}
   \end{center}
 
@@ -108,7 +129,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
     \item \ldots imparts sample uncertainty only insufficiently
   \end{itemize}
   \end{tabular}
-  \begin{center}
+  \begin{center}\centering
   \vspace{1.5ex}
   % Example header
   {
@@ -116,7 +137,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \fcolorbox{koalawhitegray}{koalawhitegray2}{
   \begin{minipage}{\textwidth}
   \vspace{2.5ex}
-  \begin{center}
+  \begin{center}\centering
   \bfBlue{Example} \\
   {\footnotesize \lightgray{Reporting on}} \darkgray{Union} {\footnotesize \lightgray{and}} \darkgray{FDP} {\footnotesize \lightgray{to jointly obtain a majority before the German federal election 2013}}
   \end{center}
@@ -171,7 +192,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \begin{column}{.29\textwidth}
   \darkgray{Last pre-election opinion poll:} \lightgray{\tiny Source: Forsa, 20.09.2013}
   \\[2.5ex]
-  \begin{center}
+  \begin{center}\centering
   % \scalebox{0.75}{%
   \begin{tabular}{ccccccc}
   \toprule
@@ -182,20 +203,26 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   % }
   \end{center}
   \vspace{1.5ex}
-  \begin{center}
+  \begin{center}\centering
   \darkgray{After redistribution} \lightgray{\footnotesize of party votes $<$5\% \\ (i.e. the minimum hurdle to pass into German parliament)} \\
   \darkgray{Union-FDP} \lightgray{\footnotesize jointly} \darkgray{obtain} \lightgray{\footnotesize exactly} \darkgray{50\%}.
   \end{center}
   \vspace{-3ex}
   \textcolor{koalablue}{$$ \underbrace{\resizebox{\hsize}{!}{ }}_{ } $$}
   \ \\ \vspace{-2ex}
+  \begin{mdleftred}
+  \begin{minipage}{\textwidth}
   \lightgray{\footnotesize Media headline:}
-  \begin{center}
-  \darkgray{\textit{\normalsize ``Union-FDP loses its majority''}}
+  \\
+  \begin{center}\centering
+  \vspace{-2ex}
+  \darkgray{\textit{``Union-FDP loses its majority''}}
+  \vspace{-.2ex}
   \end{center}
-  \vspace{1ex}
   \lightgray{\tiny Source: FAZ.net (2017). Umfrage zur Bundestagswahl: Schwarz-Gelb verliert \\[-2ex]
   die Mehrheit.http://archive.is/SuXVt. Accessed 26 April 2018.}
+  \end{minipage}
+  \end{mdleftred}
   \end{column}
 
   \begin{column}{.025\textwidth}
@@ -205,10 +232,10 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
 
   \begin{column}{.26\textwidth}
   Flaws of this type of reporting:
-  \vspace{1ex}
+  \vspace{1.5ex}
   \begin{itemize}
     \item \darkgray{Misleading conclusions are drawn} \\[0.2cm] \fnlightgray{A mean share of 50\% only means that it's} \fndarkgray{slightly more probable} \fnlightgray{that a majority is missed}
-    \item \darkgray{Redistribution of votes is ignored} \\[0.2cm] \fnlightgray{In their article, FAZ.net bases the conclusion on the observed voter share and not on the redistributed 50\%}
+    \item \darkgray{Redistribution of votes is ignored} \\[0.2cm] \fnlightgray{FAZ.net bases the conclusion on the observed voter share and not on the redistributed 50\% share}
     \item \darkgray{FDP sample uncertainty is ignored} \\[0.2cm] \fnlightgray{With a mean voter share of 5\%, FDP will only pass into parliament with $\sim$50\%}
   \end{itemize}
   \end{column}
@@ -219,24 +246,30 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \end{column}
 
   \begin{column}{.29\textwidth}
-  Components of our proposed style of reporting:
-  \vspace{1ex}
+  Foundations of our proposed style of reporting:
+  \vspace{1.5ex}
   \begin{itemize}
     \item \darkgray{Use event \textbf{probabilities}} \fnlightgray{instead of voter shares} \\[0.2cm] \fnlightgray{Probabilities comprise sample uncertainty in a natural way and are less at risk to be misinterpreted}
     \item \darkgray{Use \textbf{event} probabilities} \fnlightgray{instead of voter shares} \\[0.2cm] \fnlightgray{Focusing on the main events allows the reader to easily grasp the big picture}
   \end{itemize}
-  \vspace{-3ex}
+  \vspace{-1.7ex}
   \textcolor{koalablue}{$$ \underbrace{\resizebox{\hsize}{!}{ }}_{ } $$}
   \ \\ \vspace{-2ex}
+  
+  \begin{mdleftgreen}
+  \begin{minipage}{\textwidth}
   \lightgray{\footnotesize Our headline:}
-  \begin{center}
-  \darkgray{\textit{\normalsize
+  \begin{center}\centering
+  \darkgray{\textit{
   ``Union-FDP gains seat majority with 26\%, \ \ \\[0.1cm] \ \ FDP passes into parliament with 51\%$^*$''
   }}
   \end{center}
+  \vspace{-0.7ex}
   \lightgray{\tiny ${}^*$ If the election was held today}
+  \end{minipage}
+  % }
+  \end{mdleftgreen}
   \end{column}
-
   \end{columns}
   \end{minipage}
   }
@@ -288,7 +321,7 @@ text
 
 % Implementation -----------------------------------
 \begin{block}{\footnotesize \circled{3} Implementation}
-\begin{center}
+\begin{center}\centering
 \includegraphics[height=5ex]{figures/Koala_Logo_ohneSchrift}
 \\[2ex]
 Results for selected elections are presented on
@@ -310,7 +343,7 @@ The implementation is based on several points:
 \vspace{1ex}
 \begin{columns}[t]
   \begin{column}{.15\textwidth}
-  \begin{center}
+  \begin{center}\centering
   \includegraphics[height=5ex]{figures/implementation_r}
   \end{center}
   \end{column}
@@ -320,7 +353,7 @@ The implementation is based on several points:
   \hspace{1.5ex}
 
   \begin{column}{.15\textwidth}
-  \begin{center}
+  \begin{center}\centering
   \vspace{1ex}
   \includegraphics[height=3ex]{figures/implementation_shiny}
   \end{center}
@@ -331,7 +364,7 @@ The implementation is based on several points:
   \hspace{1.5ex}
 
   \begin{column}{.15\textwidth}
-  \begin{center}
+  \begin{center}\centering
   \includegraphics[height=5ex]{figures/hexSticker_icon}
   \end{center}
   \end{column}
@@ -341,7 +374,7 @@ The implementation is based on several points:
   \hspace{1.5ex}
 
   \begin{column}{.15\textwidth}
-  \begin{center}
+  \begin{center}\centering
   \includegraphics[height=5ex]{figures/implementation_sheets}
   \end{center}
   \end{column}
@@ -351,7 +384,7 @@ The implementation is based on several points:
   \hspace{1.5ex}
 
   \begin{column}{.15\textwidth}
-  \begin{center}
+  \begin{center}\centering
   \includegraphics[height=5ex]{figures/implementation_twitter}
   \end{center}
   \end{column}
