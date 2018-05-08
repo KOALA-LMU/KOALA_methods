@@ -327,11 +327,15 @@ occurence.
 
 % In the presence of multiple published opinion polls, pooling is used to summarize the observed results in order to reduce sample uncertainty. To assure a reliable pooling regarding the current public opinion, we only use polls published within the past 14 days and only use the most recent survey published by each polling agency.
 \bfBlue{Pooling} is used to summarize multiple polls to reduce sample uncertainty:
-\begin{itemize}\vspace{0.4cm}
+\begin{minipage}{\textwidth}
+\hspace{0.5in}
+\begin{itemize}
   \item We pool the most recent survey per polling agency within the past 14 days
   \item The summed number of votes per party are also multinomially distributed
   \item \textbf{\badred{But:}} Polls from different polling agencies are correlated
-\vspace{0.4cm}\end{itemize}
+\end{itemize}
+\end{minipage}
+\\[0.8cm]
 % To reliably estimate the current public opinion, we use polls published within the past 14 days, only using the most recent survey per polling agency.
 % To assure a reliable pooling regarding the current public opinion, we only use polls published within the past 14 days and only use the most recent survey published by each polling agency.
 % As vote counts $X_{ij}$ of party $j$ in poll $i$ are multinomially distributed, so are the summed number of votes $\sum_i X_{ij}$ when pooling multiple independent polls.
@@ -357,10 +361,14 @@ $$
 Cov(X_{Aj}, X_{Bj}) = \frac{1}{2} \cdot \left(Var(X_{Aj}) + Var(X_{Bj}) - Var(X_{Aj} - X_{Bj}) \right),
 $$
 with
+\begin{minipage}{\textwidth}
+\hspace{0.5in}
 \begin{itemize}
   \item $Var(X_{Aj})$, $Var(X_{Bj})$ the theoretical variances of binomial distributions,
   \item $Var(X_{Aj} - X_{Bj})$ estimated from the party share differences.
 \end{itemize}
+\end{minipage}
+\\[0.8cm]
 For simplicity, we set the correlation to a fixed value of $0.5$.
 % For simplicity, we do not recalculate the correlation for each simulation, but rather set the correlation to $0.5$, based on the initial calculation discussed above.
 The effective sample size $n_{\text{eff}}$ is then defined as the ratio between
@@ -429,6 +437,8 @@ Results for selected elections are presented on
 \end{center}
 \vspace{2ex}
 The implementation is based on several points:
+\begin{minipage}{\textwidth}
+\hspace{0.5in}
 \begin{itemize}
   \item Our approach is implemented in the R package \bfBlue{\texttt{coalitions}} 
   \item The website is shiny-based
@@ -436,6 +446,7 @@ The implementation is based on several points:
   \item Automatic tweets are sent in the case of new results
   \item For sharing our results we automatically export them to Google Sheets
 \end{itemize}
+\end{minipage}
 
 % Footer with software icons
 \vspace{1ex}
