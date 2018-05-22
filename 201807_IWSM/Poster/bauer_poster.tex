@@ -428,45 +428,13 @@ Looking at the probabilities based on the last opinion poll before the German el
 
 
 % Implementation -----------------------------------
-\begin{block}{\footnotesize \circled{3} Implementation and results communication}
-\begin{center}\centering
-% \includegraphics[height=5ex]{figures/Koala_Logo_ohneSchrift}
-% \\[2ex]
-Results for selected elections are presented on
-\bfBlue{\texttt{\href{http://koala.stat.uni-muenchen.de}{koala.stat.uni-muenchen.de}}}
-\end{center}
-\vspace{2ex}
-The implementation is based on several points:
-\begin{minipage}{\textwidth}
-\hspace{0.5in}
-\begin{itemize}
-  \item Our approach is implemented in the R package \bfBlue{\texttt{coalitions}} 
-  \item The website is shiny-based
-  \item The website update approach is automated
-  \item Automatic tweets are sent in the case of new results
-  \item For sharing our results we automatically export them to Google Sheets
-\end{itemize}
-\end{minipage}
-
-% Footer with software icons
-\vspace{1ex}
-\textcolor{LMUlightgray}{\hrule{}}
-\vspace{1ex}
+\begin{block}{\footnotesize \circled{3} Implementation}
+\vspace{-3ex}
 \begin{columns}[t]
-  % \begin{column}{.1\textwidth}
-  % \begin{center}\centering
-  % \includegraphics[height=5ex]{figures/qr}
-  % \end{center}
-  % \end{column}
-  % 
-  % \hspace{-1.5ex}
-  % \textcolor{LMUlightgray}{\vrule{}}
-  % \hspace{1.5ex}
-  
-  \begin{column}{.15\textwidth}
+  \begin{column}{.45\textwidth}
   \begin{center}\centering
-  \vspace{3ex}
-  \includegraphics[height=4ex]{figures/implementation_r}
+  \includegraphics[height=3.5ex]{figures/Koala_Logo_ohneSchrift} \\
+  \blue{\footnotesize \href{http://koala.stat.uni-muenchen.de}{koala.stat.uni-muenchen.de}}
   \end{center}
   \end{column}
 
@@ -474,45 +442,98 @@ The implementation is based on several points:
   \textcolor{LMUlightgray}{\vrule{}}
   \hspace{1.5ex}
 
-  \begin{column}{.15\textwidth}
+  \begin{column}{.45\textwidth}
   \begin{center}\centering
-  \vspace{3.8ex}
-  \includegraphics[height=2.6ex]{figures/implementation_shiny}
-  \end{center}
-  \end{column}
-
-  \hspace{-1.5ex}
-  \textcolor{LMUlightgray}{\vrule{}}
-  \hspace{1.5ex}
-
-  \begin{column}{.15\textwidth}
-  \begin{center}\centering
-  \includegraphics[height=8ex]{figures/qr}
-  \end{center}
-  \end{column}
-
-  \hspace{-1.5ex}
-  \textcolor{LMUlightgray}{\vrule{}}
-  \hspace{1.5ex}
-
-  \begin{column}{.15\textwidth}
-  \begin{center}\centering
-  \vspace{3ex}
-  \includegraphics[height=4ex]{figures/implementation_sheets}
-  \end{center}
-  \end{column}
-
-  \hspace{-1.5ex}
-  \textcolor{LMUlightgray}{\vrule{}}
-  \hspace{1.5ex}
-
-  \begin{column}{.15\textwidth}
-  \begin{center}\centering
-  \vspace{3ex}
-  \includegraphics[height=4ex]{figures/implementation_twitter}
+  \includegraphics[height=3.5ex]{figures/implementation_twitter} \\
+  \blue{\footnotesize \href{https://twitter.com/KOALA_LMU}{@KOALA\_LMU}}
   \end{center}
   \end{column}
 \end{columns}
+\vspace{1ex}
+\textcolor{LMUlightgray}{\hrule{}}
+\vspace{3ex}
+
+\bfBlue{Major components of the implementation}
+\begin{minipage}{\textwidth}
+\hspace{0.5in}
+\begin{itemize}
+  \item The accompanying R package \bfBlue{\texttt{coalitions}} 
+  \item An automated fetch-and-update approach for the website
+  \item An automated bot tweeting new results
+\end{itemize}
+\vspace{5ex}
+\end{minipage}
+
+\bfBlue{Future goals} \\
+Making the approach known to reporters,
+our long-term goal is to make proper uncertainty assessment in general opinion
+poll-based reporting the rule, rather than an exception. 
+
+% % Footer with software icons
+% \vspace{1ex}
+% \textcolor{LMUlightgray}{\hrule{}}
+% \vspace{1ex}
+% \begin{columns}[t]
+%   % \begin{column}{.1\textwidth}
+%   % \begin{center}\centering
+%   % \includegraphics[height=5ex]{figures/qr}
+%   % \end{center}
+%   % \end{column}
+%   % 
+%   % \hspace{-1.5ex}
+%   % \textcolor{LMUlightgray}{\vrule{}}
+%   % \hspace{1.5ex}
+%   
+%   \begin{column}{.15\textwidth}
+%   \begin{center}\centering
+%   \vspace{3ex}
+%   \includegraphics[height=4ex]{figures/implementation_r}
+%   \end{center}
+%   \end{column}
+% 
+%   \hspace{-1.5ex}
+%   \textcolor{LMUlightgray}{\vrule{}}
+%   \hspace{1.5ex}
+% 
+%   \begin{column}{.15\textwidth}
+%   \begin{center}\centering
+%   \vspace{3.8ex}
+%   \includegraphics[height=2.6ex]{figures/implementation_shiny}
+%   \end{center}
+%   \end{column}
+% 
+%   \hspace{-1.5ex}
+%   \textcolor{LMUlightgray}{\vrule{}}
+%   \hspace{1.5ex}
+% 
+%   \begin{column}{.15\textwidth}
+%   \begin{center}\centering
+%   \includegraphics[height=8ex]{figures/qr}
+%   \end{center}
+%   \end{column}
+% 
+%   \hspace{-1.5ex}
+%   \textcolor{LMUlightgray}{\vrule{}}
+%   \hspace{1.5ex}
+% 
+%   \begin{column}{.15\textwidth}
+%   \begin{center}\centering
+%   \vspace{3ex}
+%   \includegraphics[height=4ex]{figures/implementation_sheets}
+%   \end{center}
+%   \end{column}
+% 
+%   \hspace{-1.5ex}
+%   \textcolor{LMUlightgray}{\vrule{}}
+%   \hspace{1.5ex}
+% 
+%   \begin{column}{.15\textwidth}
+%   \begin{center}\centering
+%   \vspace{3ex}
+%   \includegraphics[height=4ex]{figures/implementation_twitter}
+%   \end{center}
+%   \end{column}
+% \end{columns}
 \end{block}
 
 
