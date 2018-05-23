@@ -85,7 +85,7 @@
 \usepackage{array,booktabs,tabularx}
 \newcolumntype{Z}{>{\centering\arraybackslash}X} % centered tabularx columns
 \newcommand{\pphantom}{\textcolor{ta3aluminium}} % phantom introduces a vertical space in p formatted table columns??!!
-  
+
   \listfiles
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -165,7 +165,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   % \hspace{-3.1ex}
   % \textcolor{LMUlightgray}{\vrule{}}
   % \hspace{3.1ex}
-  
+
   \begin{column}{.475\textwidth}
   \colHeader{What do we propose?}
   Proposed type of reporting: \\[1cm]
@@ -190,24 +190,24 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \end{minipage}
   \end{mdleftblue}
   \vspace{60px}
-  
-  We aim at \textbf{shifting the focus} from \\[1.3ex]
+
+  We aim to \textbf{shift the focus} from \\[1.3ex]
   \begin{tabular}{clccl}
-  \multirow{2}{*}[-0.95ex]{\includegraphics[height=3ex]{figures/motivation_pictoBar_col}} & 
+  \multirow{2}{*}[-0.95ex]{\includegraphics[height=3ex]{figures/motivation_pictoBar_col}} &
   \darkgray{\footnotesize Incomprehensive} &
   \multirow{2}{*}{\ \ \darkgray{to} \ } &
-  \multirow{2}{*}[-1ex]{\includegraphics[height=3ex]{figures/motivation_pictoDens_col}} & 
+  \multirow{2}{*}[-1ex]{\includegraphics[height=3ex]{figures/motivation_pictoDens_col}} &
   \darkgray{\footnotesize Uncertainty-based} \\
    & observed party shares & & & event probabilities \\
   \end{tabular}
   \end{column}
 
   \end{columns}
-  
+
   % \noindent\hfil\textcolor{LMUlightgray}{\rule{0.93\textwidth}{.4pt}}\hfil
   % % \textcolor{LMUlightgray}{\hrule{}}
   % \vspace{3ex}
-  
+
   % Lower columns with a specific example ----
   {
   \vspace{-4pt}
@@ -233,7 +233,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \end{center}
   \vspace{1.5ex}
   \begin{center}\centering
-  \darkgray{After redistribution} \lightgray{\footnotesize of party votes $<$5\% \\ (i.e. the minimum hurdle to pass into German parliament)} \\
+  \darkgray{After redistribution} \lightgray{\footnotesize of party votes $<$5\% \\ (i.e. the minimum vote share to enter the German parliament)} \\
   \darkgray{Union-FDP} \lightgray{\footnotesize jointly} \darkgray{obtain} \lightgray{\footnotesize exactly} \darkgray{50\%}.
   \end{center}
   \vspace{-3ex}
@@ -263,8 +263,8 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   Flaws of this type of reporting:
   \vspace{1.5ex}
   \begin{itemize}
-    \item \darkgray{Misleading conclusions are drawn} \\[0.2cm] \fnlightgray{A mean share of 50\% only means that it's} \fndarkgray{slightly more probable} \fnlightgray{that a majority is missed}
-    \item \darkgray{Sample uncertainty is ignored} \\[0.2cm] \fnlightgray{E.g., with a mean voter share of 5\%, FDP will only enter the parliament with $\sim$50\%}
+    \item \darkgray{Misleading conclusions are drawn} \\[0.2cm] \fnlightgray{A mean share of 50\% only means that it's} \fndarkgray{slightly more probable} \fnlightgray{to miss a majority}
+    \item \darkgray{Sample uncertainty is ignored} \\[0.2cm] \fnlightgray{E.g., with a mean voter share of 5\%, FDP will only enter the parliament with $\approx$50\%}
     \item \darkgray{Redistribution of votes is ignored} \\[0.2cm] \fnlightgray{FAZ.net bases the conclusion on the observed voter share and not on the redistributed 50\% share}
   \end{itemize}
   \end{column}
@@ -284,7 +284,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \vspace{-1.7ex}
   \textcolor{koalablue}{$$ \underbrace{\resizebox{\hsize}{!}{ }}_{ } $$}
   \ \\ \vspace{-2ex}
-  
+
   \begin{mdleftgreen}
   \begin{minipage}{\textwidth}
   \lightgray{\footnotesize KOALA headline:}
@@ -367,12 +367,12 @@ $$
 % \end{aligned}
 % $$
 Given one survey, we obtain a \darkgray{\textbf{Dirichlet posterior}}
-with $\alpha_j = x_j + \frac{1}{2}$ for each party $j$ and its observed
+with $\alpha_j = x_j + \frac{1}{2}$ for each party $j=1,\ldots,k$ and its observed
 vote counts $x_j$.
 \\[0.5cm]
-Using \darkgray{\textbf{Monte Carlo simulations}} of election outcomes, we obtain obtain
-specific event probabilities by taking their relative frequency of
-occurence.
+Using \darkgray{\textbf{Monte Carlo simulations}} of election outcomes, we obtain
+obtain specific event probabilities by calculating the relative frequency of their
+occurrence.
 % As vote shares are usually rounded before publication,
 % we adjust the available data by adding random noise to $x_j$ before
 % calculating the Bayesian posterior.
@@ -389,7 +389,7 @@ occurence.
 
 % In the presence of multiple published opinion polls, pooling is used to summarize the observed results in order to reduce sample uncertainty. To assure a reliable pooling regarding the current public opinion, we only use polls published within the past 14 days and only use the most recent survey published by each polling agency.
 \bfBlue{Pooling multiple surveys} \\[0.5cm]
-We pool the most recent survey per pollilng agency within the past 14 days to reduce
+We pool the most recent surveys within the past 14 days (one per polling agency) to reduce
 sample uncertainty. We adjust the uncertainty of the \darkgray{multinomially distributed}
 summed number of votes per party by using an \darkgray{\textbf{effective sample size}} {\footnotesize (Hanley et al., 2003)}.
 % \\[0.5cm]
@@ -424,7 +424,7 @@ $$
 \begin{minipage}{\textwidth}
 \hspace{0.5in}
 \begin{itemize}
-  \item \darkgray{\footnotesize $X_{Sj}$ the observed voter number of party $j$ in survey $S$,}
+  \item \darkgray{\footnotesize $X_{Sj}$ the observed votes for party $j$ in survey $S$,}
   \item \darkgray{\footnotesize $Var(X_{Aj})$, $Var(X_{Bj})$ the theoretical variances of binomial distributions,}
   \item \darkgray{\footnotesize $Var(X_{Aj} - X_{Bj})$ estimated from the party share differences.}
 \end{itemize}
@@ -577,7 +577,7 @@ $$
 \begin{minipage}{\textwidth}
 \hspace{0.5in}
 \begin{itemize}
-  \item The accompanying R package \bfBlue{\texttt{coalitions}} 
+  \item The accompanying R package \bfBlue{\href{https://adibender.github.io/coalitions/}{\texttt{coalitions}}}
   \item An automated fetch-and-update process for the website
   \item An automated bot tweeting new results
 \end{itemize}
@@ -586,7 +586,7 @@ $$
 % \bfBlue{Future goals} \\
 % Making the approach known to reporters,
 % our long-term goal is to make proper uncertainty assessment in general opinion
-% poll-based reporting the rule, rather than an exception. 
+% poll-based reporting the rule, rather than an exception.
 
 % % Footer with software icons
 % \vspace{1ex}
@@ -598,54 +598,54 @@ $$
 %   % \includegraphics[height=5ex]{figures/qr}
 %   % \end{center}
 %   % \end{column}
-%   % 
+%   %
 %   % \hspace{-1.5ex}
 %   % \textcolor{LMUlightgray}{\vrule{}}
 %   % \hspace{1.5ex}
-%   
+%
 %   \begin{column}{.15\textwidth}
 %   \begin{center}\centering
 %   \vspace{3ex}
 %   \includegraphics[height=4ex]{figures/implementation_r}
 %   \end{center}
 %   \end{column}
-% 
+%
 %   \hspace{-1.5ex}
 %   \textcolor{LMUlightgray}{\vrule{}}
 %   \hspace{1.5ex}
-% 
+%
 %   \begin{column}{.15\textwidth}
 %   \begin{center}\centering
 %   \vspace{3.8ex}
 %   \includegraphics[height=2.6ex]{figures/implementation_shiny}
 %   \end{center}
 %   \end{column}
-% 
+%
 %   \hspace{-1.5ex}
 %   \textcolor{LMUlightgray}{\vrule{}}
 %   \hspace{1.5ex}
-% 
+%
 %   \begin{column}{.15\textwidth}
 %   \begin{center}\centering
 %   \includegraphics[height=8ex]{figures/qr}
 %   \end{center}
 %   \end{column}
-% 
+%
 %   \hspace{-1.5ex}
 %   \textcolor{LMUlightgray}{\vrule{}}
 %   \hspace{1.5ex}
-% 
+%
 %   \begin{column}{.15\textwidth}
 %   \begin{center}\centering
 %   \vspace{3ex}
 %   \includegraphics[height=4ex]{figures/implementation_sheets}
 %   \end{center}
 %   \end{column}
-% 
+%
 %   \hspace{-1.5ex}
 %   \textcolor{LMUlightgray}{\vrule{}}
 %   \hspace{1.5ex}
-% 
+%
 %   \begin{column}{.15\textwidth}
 %   \begin{center}\centering
 %   \vspace{3ex}
@@ -694,11 +694,10 @@ Wilke C.O. (2017). \textit{ggridges: Ridgeline Plots in 'ggplot2'}. R package ve
 \end{columns}
 \end{frame}
 \end{document}
-  
-  
+
+
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %%% Local Variables: 
+    %%% Local Variables:
     %%% mode: latex
   %%% TeX-PDF-mode: t
   %%% End:
-    
