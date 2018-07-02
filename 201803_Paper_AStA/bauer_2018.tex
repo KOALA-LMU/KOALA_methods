@@ -94,22 +94,26 @@
 \begin{abstract} \red{150 to 250 words} \\
 Common election poll reporting is often misleading as sample uncertainty is
 insufficiently addressed or  not covered at all. Furthermore, the main interest
-is beyond the simple percentages of the contenders. For a more comprehensive
-coverage, we propose shifting the focus towards reporting survey-based probabilities
-of specific election outcomes. We present such an approach for multi-party
-electoral systems, focusing on probabilities of coalition majorities.
-A Monte Carlo based Bayesian Multinomial-Dirichlet model is used for estimation.
-The method utilizes published opinion polls conducted by established polling
-agencies and is accompanied by a pooling approach to summarize multiple current
-surveys to reduce sample uncertainty, thereby accounting for dependencies between
-polling agencies. Sample uncertainty-based probabilities are estimated, assuming
-the election was held today, not accounting for potential shifts until election.
-Since our method is based on the posterior distribution of the election outcome,
-our method can be applied to specific questions relating to the outcome of the election.
-
-Possible visualizations of the results are shown and the benefit of the approach is outlined
-by discussing election polls before the German federal elections 2013 and 2017.
-An implementation is freely available in the \texttt{R} package \texttt{coalitions}.
+is usually beyond the simple party shares. For a more comprehensive coverage of
+opinion polls and ultimately election coverage, we propose shifting the focus
+towards the reporting of survey-based probabilities for specific events of interest.
+We present such an approach for multi-party electoral systems, focusing on
+probabilities of coalition majorities. A Monte Carlo approach based on a Bayesian
+Multinomial-Dirichlet model is used for estimation.
+% The method utilizes published
+% opinion polls conducted by established polling agencies and is accompanied by a
+% pooling approach that aggregates multiple current surveys to reduce sample
+% uncertainty, simultaneously accounting for dependencies between polling agencies.
+Sample uncertainty-based probabilities are estimated, assuming the election was
+held today ("now-cast"), not accounting for potential shifts in the electorate
+until election ("fore-cast"). Since our method is based on the posterior distribution
+of party shares, our method can be applied to specific questions relating to the
+outcome of the election. We also introduce visualization techniques that
+facilitate a more adequate depiction of relevant quantities as well as
+respective uncertainties. The benefits of our approach are
+discussed by application to the German general elections in 2013 and 2017.
+An open source implementation of our methods is freely available in the
+\textbf{\texttt{R}} package \texttt{coalitions}.
 
 \keywords{\red{4 to 6 keywords} Election analysis \and Opinion polls \and Election reporting \and Multinomial-Dirichlet \and Pooling}
 % \PACS{PACS code1 \and PACS code2 \and more}
