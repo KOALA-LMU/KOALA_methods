@@ -104,7 +104,7 @@ Multinomial-Dirichlet model is used for estimation.
 % opinion polls conducted by established polling agencies and is accompanied by a
 % pooling approach that aggregates multiple current surveys to reduce sample
 % uncertainty, simultaneously accounting for dependencies between polling agencies.
-Sample uncertainty-based probabilities are estimated, assuming the election was
+Probabilities are estimated, assuming the election was
 held today (``now-cast''), not accounting for potential shifts in the electorate
 until election day (``fore-cast''). Since our method is based on the posterior distribution
 of party shares, our method can be applied for a variety of questions related to the
@@ -115,7 +115,7 @@ discussed by application to the German federal elections in 2013 and 2017.
 An open source implementation of our methods is freely available in the
 \textbf{\texttt{R}} package \texttt{coalitions}.
 
-\keywords{\red{4 to 6 keywords} Election analysis \and Opinion polls \and Election reporting \and Multinomial-Dirichlet \and Pooling}
+\keywords{\red{4 to 6 keywords} Election analysis \and Opinion polls \and Election reporting \and Multinomial-Dirichlet}
 % \PACS{PACS code1 \and PACS code2 \and more}
 % \subclass{MSC code1 \and MSC code2 \and more}
 \end{abstract}
@@ -129,10 +129,11 @@ political parties {\it if the election was held today} (party shares),
 the number of overall respondents and -- often less prominent -- information
 about sample uncertainty.\\
 
-One party often does not obtain enough votes for a governance majority by itself 
-if some kind of proportional representation is used. Thus, multiple parties form 
-a so-called \emph{coalition} to jointly obtain the necessary majority of seats 
-in parliament. Media usually reports the results of such surveys by focusing
+One party often does not obtain enough votes for a governance majority on its own,
+if the voting system has some kind of proportional allocation of seats in
+parliament. Thus, multiple parties form
+a so-called \emph{coalition} to jointly obtain the necessary majority of seats
+in parliament. Media usually reports the results of opinion polls by focusing
 on the reported voter shares while ignoring sample uncertainty. This is misleading,
 especially if shares are used to infer the possibility of a majority for
 a specific coalition. For example, in the prelude to the 2017 German federal election,
@@ -140,10 +141,10 @@ a coalition was oftentimes stated to ``lose'' its majority just because the repo
 voter share dropped below 50\% from one opinion poll to the next \citep[cf.][]{umfrage_2017}.
 Such interpretations are clearly inadequate as sample uncertainty
 (and often redistribution of votes) is not taken into account. This becomes especially
-problematic, when one or more parties are close to the country-specific threshold
+problematic, when one or more parties are close to the country specific threshold
 of votes that has to be passed in order to enter the parliament. This was the case
 in the 2013 German federal election, where the reported share of the Free Democratic
-Party (FDP) were close to but over the 5\% threshold but the party in the end failed 
+Party (FDP) were close to but over the 5\% threshold but the party in the end failed
 to pass the threshold. (cf. Section \ref{ssec:intro-ex-fdp}).\\
 
 % Additionally, the perception of
@@ -157,8 +158,8 @@ Beyond ensuring proper reporting of sample uncertainties, in our opinion, the
 focus in election poll reporting should in general be shifted away from the
 reported party shares. Instead, election coverage should focus on the most relevant
 question, i.e., how {\it probable} is a specific event or outcome, given
-the current political mood. As probabilities combine both, the reported shares and 
-sample uncertainty in one number, they allow more precise as well as more adequate 
+the current political mood. As probabilities combine both, the reported shares and
+sample uncertainty in one number, they allow more precise as well as more adequate
 statements about specific events. Usually of interest before an election are the
 probabilities of events (\textbf{POE}) like:
 
@@ -170,18 +171,18 @@ probabilities of events (\textbf{POE}) like:
 
 
 In this article, we present our approach for election and coalition analysis
-(in German: \textbf{Koal}itions-\textbf{A}nalyse (KOALA)) that estimates POEs 
+(in German: \textbf{Koal}itions-\textbf{A}nalyse (KOALA)) that estimates POEs
 and brings more value to opinion poll based election
-coverage. It is important to note that we quantify the contemporary political mood
+coverage. We quantify the contemporary political mood
 and the resulting event probabilities (``now-cast''), not taking into consideration
 potential shifts until election day (``fore-cast''). Approaches for predicting
 future election outcomes based on past information can, e.g., be found in
 \citet{graefe_2017} or \citet{norpoth_gschwend_2010}. A special focus is put on
-multi-party proportional representation electoral systems and the estimation 
-of probabilities for (joint) majorities. Probabilities are estimated by Monte Carlo 
-simulations of election outcomes from the Bayesian posterior distribution of party 
-shares conditional on current observed opinion poll data. Prior to the German general 
-elections 2013 and 2017, results based on (an earlier iteration of) our approach 
+multi-party proportional representation electoral systems and the estimation
+of probabilities for (joint) majorities. Probabilities are estimated by Monte Carlo
+simulations of election outcomes from the Bayesian posterior distribution of party
+shares conditional on current observed opinion poll data. Prior to the German general
+elections 2013 and 2017, results based on (an earlier iteration of) our approach
 already entered media reporting \citep[cf.][]{wahlistik_2013, gelitz_2017}.\\
 
 All methods discussed in this article are implemented in \texttt{R} \citep{r_2017}
@@ -192,7 +193,7 @@ coalition probabilities and is used to communicate the results for German federa
 and state elections to the general public. Additionally, we applied our method
 to the Austrian general election 2017. The process of fetching new polls,
 updating the website and sending out Twitter messages based on the newest results
-is automated and allows for an immediate transfer of the estimated POE 
+is automated and allows for an immediate transfer of the estimated POE
 to media outlets as well as the general public.
 
 \subsection{Data basis}\label{ssec:data-basis}
@@ -271,8 +272,8 @@ German federal elections. A summary and discussion are presented in Section
 \ref{sec:conclusion}.\\
 
 \section{Methods}\label{sec:methods}
-In this section, we describe our method for the estimation of POEs based on reported party shares. Section~\ref{ssec:bayes} gives a general introduction to the Multinomial-Dirichlet model. In Section~\ref{ssec:pooling} our approach for the aggregation of multiple polls from different polling agencies is described. As most agencies report rounded voter shares, we perform rounding
-error adjustment, briefly discussed in Section~\ref{ssec:rounding}.
+%% Helmut: Die folgende Uebersicht ist aus meiner Sicht nicht noetig
+% In this section, we describe our method for the estimation of POEs based on reported party shares. Section~\ref{ssec:bayes} gives a general introduction to the Multinomial-Dirichlet model. In Section~\ref{ssec:pooling} our approach for the aggregation of multiple polls from different polling agencies is described. As most agencies report rounded voter shares, we perform rounding error adjustment, briefly discussed in Section~\ref{ssec:rounding}.
 
 \subsection{Estimating event probabilities from reported voter shares} \label{ssec:bayes}
 To estimate the POE conditional on opinion poll results
@@ -289,14 +290,17 @@ Assuming that $(X_1, \ldots, X_P)$ has a Multinomial distribution
 \end{equation}
 
 where $n$ is the sample size of the opinion poll and $\theta_p, \ p=1,\ldots,P$
-indicates the probability of party $p$ being selected. Assuming a representative
-random sample, $\theta_p$ represents the percentage of voters for party $p$ in
-the general population (\textcolor{red}{CITATION Stichproben Buch}). Given one (pooled) survey,
+indicates the probability of party $p$ being selected. Assuming a
+simple random sample, i.e ignoring possible bias,
+$\theta_p$ represents the percentage of voters for party $p$ in
+the general population.
+% Helmut: Brauchen wir nicht (\textcolor{red}{CITATION Stichproben Buch}).
+ Given one (pooled) survey,
 the distribution of the observed vote counts $\mathbf{x}=(x_1,\ldots,x_P)$ is
 denoted by $f(\mathbf{x}|\boldsymbol{\theta})$.\\
 
 For the prior distribution of the true party shares $\boldsymbol{\theta}=\theta_1,\ldots, \theta_P$
-we chose a flat, uninformative prior distribution
+we chose an uninformative prior distribution
 (Jeffrey's prior; \citet{gelman_2013})
 
 \begin{equation}\label{eq:prior}
@@ -345,9 +349,9 @@ therefore use the uninformative prior \eqref{eq:prior}.
 
 \subsection{Aggregation of multiple polls (Pooling)} \label{ssec:pooling}
 In the presence of multiple published opinion polls, pooling is used to
-aggregate multiple polls in order to reduce sample uncertainty. To ensure a 
-reliable pooling regarding the current public opinion, we only use polls 
-published within the last 14 days and only use the most recent survey published by each polling agency.\\
+aggregate multiple polls in order to reduce sample uncertainty. To ensure a
+reliable pooling regarding the current public opinion, we only use polls
+published within a certain period of time (e.g. 14 days)  and only use the most recent survey published by each polling agency.\\
 
 Considering a single poll $i$, the observed numbers of votes $X_{ip}$ for each of
 $P$ parties follow a multinomial distribution with sample size $n_i$ and underlying,
@@ -440,15 +444,15 @@ resulting posterior.\\
 
 
 \section{Application} \label{sec:application}
-As previously mentioned, (an earlier iteration of) our method entered media reporting
+An earlier iteration of our method entered media reporting
 before the German federal elections 2013 and 2017 \citep[cf.][]{wahlistik_2013, gelitz_2017}.
-In the following, we will revise these two elections in order to underline the
+We will discuss these two elections in order to elaborate the
 differences between standard media coverage of election polls
 -- focused on the interpretation of the reported party shares --
 and our approach based on estimated POEs. Reported party shares as
 described in Section \ref{ssec:data-basis} were used as data basis.
 Polls from different agencies published within a time window of 14 days were
-aggregated (cf. Section \ref{ssec:pooling}). For the estimation of POEs 
+aggregated (cf. Section \ref{ssec:pooling}). For the estimation of POEs
 $n_{s} = 10\,000$ simulations were performed.
 
 
@@ -457,9 +461,8 @@ In the legislative period from 2009 to 2013, the German government was formed by
 a coalition of the conservatives (Union) and the liberals (FDP). Before the
 election on September 22nd, 2013, the question whether the coalition could
 sustain its majority was therefore of main interest.
-A key role played the FDP, which had to successfully pass into parliament,
-i.e., achieve at least the minimum voter share of $5\%$ for the coalition
-to even be possible. Figure \ref{fig:2013} summarizes the reported party
+A key role played the FDP, which must reach at least the minimum voter share of $5\%$ to get into parliament,
+so that the coalition is possible. Figure \ref{fig:2013} summarizes the reported party
 shares for the one year period prior to the election.
 
 \begin{figure}[H]\centering
@@ -541,13 +544,13 @@ POE of about $26\%$.
 \end{figure}
 
 Such density plots depict both the probability and the underlying
-uncertainty for specific events. Therefore they are well suited to communicate
+uncertainty for specific events. Therefore, they are well suited to communicate
 probability estimates as well as the uncertainty underlying opinion polls.
 To visualize the {\it development} of such probabilities
 for a specific event, e.g., a coalition majority, we recommend extending the
 visualization in Figure \ref{fig:seatDist} by using so-called
 \emph{ridgeline plots} \citep{wilke_2017} that depict the estimated densities.
-In Figure~\ref{fig:seatDist_time} this plot type and the development of majority
+In Figure~\ref{fig:seatDist_time} this plot type and the development of the majority
 probabilities is compared to the joint, redistributed shares of Union-FDP, which
 are usually reported in media.
 
@@ -572,7 +575,7 @@ Union-FDP majority.
 
 Comparing the redistributed voter shares and the seat majority probabilities
 in Figure~\ref{fig:seatDist_time} it is clear that the probabilities contain
-a lot more information than the voter shares. Especially, even small changes
+a lot more information than the voter shares. In particular, even small changes
 in the redistributed voter share can make an immense difference regarding the
 probability of the coalition to form a government.\\
 
@@ -646,8 +649,7 @@ share is close to $5\%$ or not (see Fig.~\ref{fig:2013_fdp}), respectively.
 
 
 \subsection{German federal election 2017} \label{subsec:2017}
-After the German federal election in 2013, none of the desired coalitions
-reached a seat majority and a "grand coalition" between Union and the social
+After the German federal election in 2013,a ``grand coalition'' between Union and the social
 democratic SPD formed the government from 2013 to 2017.
 For the following election on September 24th, 2017, the goal of both Union and SPD
 was to obtain enough votes to form a governance coalition outside the grand
@@ -684,12 +686,13 @@ a joint, redistributed share of about $40\%$ in October 2016
 and reached its maximum share of nearly $49.8\%$ about one month
 before election day.
 
-% man könnte überlegen, hier auf den ersten Satz zu verzichten und mit "By comparison" zu beginnen
-Again, interpreting only the observed redistributed voter shares
-is hard for the general public as no easily accessible quantification
-of uncertainty is given. By comparison, the ridgeline plot in Figure~\ref{fig:2017_cdufdp}
+% Again, interpreting only the observed redistributed voter shares
+% is hard for the general public as no easily accessible quantification
+% of uncertainty is given.
+%% Helmut: Finde ich gut!
+By comparison, the ridgeline plot in Figure~\ref{fig:2017_cdufdp}
 shows that parliament seat shares (or correspondingly voter shares)
-below $48\%$ correspond to negligibly small success probabilities
+below $48\%$ correspond to very small success probabilities
 of $<1\%$, based on pooled effective sample sizes of around $3000$.
 On the other hand, based on comparable sample sizes, reported shares of $49\%$
 and $49.5\%$ corresponded to probabilities of around $14\%$ and $25\%$,
@@ -802,10 +805,10 @@ Bottom: Probabilities to become third strongest party, based on $10\,000$ simula
 
 \section{Conclusion} \label{sec:conclusion}
 We present the KOALA (Coalition analysis) approach, i.e. a Bayesian,
-Monte Carlo based method to estimate POEs (probailities of events for
+Monte Carlo based method to estimate POEs (probabilities of events for
 specific election results) based on publicly available opinion polls.
 A pooling approach allows for the inclusion of information from multiple
-surveys and reduces sample uncertainty. As the examination of indivdiual polls
+surveys and reduces sample uncertainty. As the examination of individual polls
 from different pollster institutes showed that polling results in Germany are correlated,
 an effective sample size for the pooled sample is calculated
 to adjust for this issue. Rounding of the reported results is
@@ -820,12 +823,13 @@ can be easily obtained through the posteriori distribution.
 Note that we only perform now-casting of the POE analysing the current
 politic mood and no fore-casting with the target to predict the election results in before.\\
 
-% klingt mal wieder zu negativ ...
-Not covered by our method so far is structurell misreporting by the opinion polls, i.e. if the shares of certain parties are general under or overreported. While sampling uncertainty and rounding errors are covered in the method, and there is the hope that pooling reduces the effect of a structurell error of one polling agency, a general misreporting by the majority of the polling agencies would also affect our reporting. However, such a general error would also affect the traditional reporting.\\ 
-
-A special focus was the visual presentation of the results. Different methods are used to make the results accessible to the general public and also to avoid a misinterpretation because of similiarity to existing plots. We visualize the results on a publicly available website for chosen elections and provide the open-source \texttt{R} package \texttt{coalitions} that allows for a straightforward application of the method to any multi-party electoral system. In this manner, our long-term goal is to make proper uncertainty assessment in general opinion poll-based reporting the rule, rather than an exception.
 
 
+A special focus was the visual presentation of the results. Different methods are used to make the results accessible to the general public and also to avoid a misinterpretation because of similarity to existing plots. We visualize the results on a publicly available web site for chosen elections and provide the open-source \texttt{R} package \texttt{coalitions} that allows for a straightforward application of the method to any multi-party electoral system. In this manner, our long-term goal is to make proper uncertainty assessment in general opinion poll-based reporting the rule, rather than an exception.
+
+
+\subsection{Limitations}
+Since our approach is based on results of exit polls conducted by different providers, problems with well known sources of bias induced by non response, incorrect answers, non coverage etc. can occur. All providers perform  some correction methods, to reduce  these biases by weighting or other procedures, but they do not make their procedures completely transparent. Therefore, it is essential to analyse the results of different exit poll providers separately and in the pooled version, which can be easily done by our KOALA-procedure.      
 % % For one-column wide figures use
 % \begin{figure}
 % % Use the relevant command to insert your figure file.
