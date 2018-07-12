@@ -461,8 +461,9 @@ In the legislative period from 2009 to 2013, the German government was formed by
 a coalition of the conservatives (Union) and the liberals (FDP). Before the
 election on September 22nd, 2013, the question whether the coalition could
 sustain its majority was therefore of main interest.
-A key role played the FDP, which must reach at least the minimum voter share of $5\%$ to get into parliament,
-so that the coalition is possible. Figure \ref{fig:2013} summarizes the reported party
+A key role played the FDP, which had to reach at least the minimum voter share of
+$5\%$ to get into parliament and make a majority possible. 
+Figure \ref{fig:2013} summarizes the reported party
 shares for the one year period prior to the election.
 
 \begin{figure}[H]\centering
@@ -521,16 +522,30 @@ the FDP would pass the 5\% threshold.
 }
 \end{figure}
 
+To visualize the results for specific events
+we use density plots (see also Fig. \ref{fig:seatDist}).
+These are well suited to communicate both
+probability estimates and the uncertainty underlying opinion polls.
+To depict the {\it development} of such probabilities
+for a specific event, e.g., a coalition majority or a party passing the 5\% threshold,
+we recommend extending the
+visualization of one density by using so-called
+\emph{ridgeline plots} \citep{wilke_2017} that visualize the development of such densities.
+In Figure~\ref{fig:2013_fdp} this plot type and the development of the POEs
+is compared to the observed, redistributed shares of FDP, which
+are usually reported in media. \\
+
+To focus on the most relevant changes in the POEs, we propose
+the use of a skewed axis as shown in Figure~\ref{fig:2013_fdp}. In this axis
+the range of values around $50\%$ is stretched and the range of values near
+$0\%$ and $100\%$ is compressed. In this way, we put less weight on changes
+where an event is {\it still highly (im)probable} and emphasize more relevant
+changes after which an event gets more or less probable than $50\%$, respectively. Also,
+consistently using another axis for the estimated probabilities prevents
+confusion of POEs and voter shares.
+
 
 \paragraph{POE: Union-FDP coalition majority} \ \\
-
-Figure \ref{fig:seatDist} shows the simulated
-parliament seat shares for the coalition Union-FDP, based on the reported
-voter shares in Table \ref{tab_fdp}. The estimated density is clearly bimodal
-as the reported FDP share before redistribution equals exactly $5\%$ and
-therefore the FDP only enters the parliament in about $50\%$ of the simulations.
-In this case, a majority was observed in about one quarter of the simulations,
-leading to an estimated POE of $26\%$.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.45\textwidth]{figures/2013_forsa_cdufdp_lastPreelectionPoll.pdf}
@@ -543,16 +558,20 @@ POE of about $26\%$.
 }
 \end{figure}
 
-Such density plots depict both the probability and the underlying
-uncertainty for specific events. Therefore, they are well suited to communicate
-probability estimates as well as the uncertainty underlying opinion polls.
-To visualize the {\it development} of such probabilities
-for a specific event, e.g., a coalition majority, we recommend extending the
-visualization in Figure \ref{fig:seatDist} by using so-called
-\emph{ridgeline plots} \citep{wilke_2017} that depict the estimated densities.
-In Figure~\ref{fig:seatDist_time} this plot type and the development of the majority
-probabilities is compared to the joint, redistributed shares of Union-FDP, which
-are usually reported in media.
+Figure \ref{fig:seatDist} shows the simulated
+parliament seat shares for the coalition Union-FDP, based on the reported
+voter shares in Table \ref{tab_fdp}. The estimated density is clearly bimodal
+as the reported FDP share before redistribution equals exactly $5\%$ and
+therefore FDP only enters the parliament in about $50\%$ of the simulations.
+In this case, a majority was observed in about one quarter of the simulations,
+leading to an estimated POE of $26\%$.
+Comparing the redistributed voter shares and the seat majority probabilities
+in Figure~\ref{fig:seatDist_time}, it can again be seen that even small changes
+in the redistributed voter share can make an immense difference regarding the
+probability of the coalition to obtain a majority.
+Especially regarding the months preceding election day this lead to heavily
+fluctuating POE's based on the Forsa opinion polls. \\
+
 
 \begin{figure}[H]\centering
 \begin{tabular}{ll}
@@ -572,21 +591,6 @@ Union-FDP majority.
 \label{fig:seatDist_time}
 }
 \end{figure}
-
-Comparing the redistributed voter shares and the seat majority probabilities
-in Figure~\ref{fig:seatDist_time} it is clear that the probabilities contain
-a lot more information than the voter shares. In particular, even small changes
-in the redistributed voter share can make an immense difference regarding the
-probability of the coalition to form a government.\\
-
-To focus on the most relevant changes in the majority probabilities, we propose
-the use of a skewed axis as shown in Figure~\ref{fig:seatDist_time}. In this axis
-the range of values around $50\%$ is stretched and the range of values near
-$0\%$ and $100\%$ is compressed. In this way, we put less weight on changes
-where an event is {\it still highly (im)probable} and emphasize more relevant
-changes after which an event gets more or less probable than $50\%$. Also,
-consistently using another axis for the estimated probabilities prevents
-confusion of probabilities and voter shares.\\
 
 Finally, Figure \ref{fig:2013_cdufdp} visualizes the results for the potential
 coalition Union-FDP based on \emph{pooled} opinion polls (cf. Section \ref{ssec:pooling}).
@@ -628,20 +632,21 @@ While the overall development of probabilities has the same structure
 as the redistributed voter shares, i.e., there is an increase over time,
 there are two points that clearly get more weight when shifting
 the focus in reporting towards discussing {\it how probable} events are:
-First of all, the impact of small changes in voter shares is more pronounced
-in the probability development. As discussed in context of
-Figure~\ref{fig:2013_fdp}, the effect of changes in voter shares on
-a POE strongly depends on the base level of the voter shares.
-For example, a rise in voter shares from $45\%$ to $48\%$ in March 2013 only had a
-very small impact on the POE, as a seat majority was still very improbable.
-Instead, even very small changes near a voter share of $50\%$ heavily influence
-the event probabilities. Secondly, probabilities do not only take into account
-the joint party shares and the sample uncertainty,
+First of all, the impact of small changes in voter shares is again more pronounced
+in the probability development. 
+As discussed in the context of Figure~\ref{fig:2013_fdp}, the effect of changes in voter share on
+the POE strongly depends on the base level of the voter share.
+E.g., a rise in voter share from $45\%$ to $48\%$ in March 2013 only had
+very small impact on the corresponding POE as a seat majority was still very improbable.
+Instead, dealing with voter shares near $50\%$, even very small changes heavily influence
+the event probabilities.
+Secondly, probabilities do not only take into account
+joint party shares and sample uncertainty,
 but also implicitly cover the uncertainty regarding whether FDP passes the $5\%$
 threshold or not. Apart from the end of August 2013, the latter event
 is highly uncertain and thus overall majority probabilities of
 the coalition are comparatively small, even for pooled voter shares around $50\%$.
-The impact of the uncertainty regarding the FDP entering the parliament is
+The impact of the uncertainty regarding FDP entering the parliament is
 directly noticeable in the ridgeline plot (right panel in Fig.~\ref{fig:2013_cdufdp}),
 as the densities are bimodal or unimodal depending on whether the reported FDP
 share is close to $5\%$ or not (see Fig.~\ref{fig:2013_fdp}), respectively.
@@ -649,7 +654,7 @@ share is close to $5\%$ or not (see Fig.~\ref{fig:2013_fdp}), respectively.
 
 
 \subsection{German federal election 2017} \label{subsec:2017}
-After the German federal election in 2013,a ``grand coalition'' between Union and the social
+After the German federal election in 2013, a ``grand coalition'' between Union and the social
 democratic SPD formed the government from 2013 to 2017.
 For the following election on September 24th, 2017, the goal of both Union and SPD
 was to obtain enough votes to form a governance coalition outside the grand
@@ -686,23 +691,6 @@ a joint, redistributed share of about $40\%$ in October 2016
 and reached its maximum share of nearly $49.8\%$ about one month
 before election day.
 
-% Again, interpreting only the observed redistributed voter shares
-% is hard for the general public as no easily accessible quantification
-% of uncertainty is given.
-%% Helmut: Finde ich gut!
-By comparison, the ridgeline plot in Figure~\ref{fig:2017_cdufdp}
-shows that parliament seat shares (or correspondingly voter shares)
-below $48\%$ correspond to very small success probabilities
-of $<1\%$, based on pooled effective sample sizes of around $3000$.
-On the other hand, based on comparable sample sizes, reported shares of $49\%$
-and $49.5\%$ corresponded to probabilities of around $14\%$ and $25\%$,
-respectively.
-
-Overall, one month before election day the coalition had a good prospect
-reaching a seat majority based on a redistributed share of $49.8\%$ and
-a probability of nearly $40\%$. However, until two days before the election the pooled share and the probability dropped again to $47.4\%$ and $0.4\%$, respectively, making a success
-of the two parties highly improbable.
-
 \begin{figure}[H]\centering
 \begin{tabular}{ll}
 \includegraphics[height=.15\textwidth]{figures/2017_pooled_cdufdp_rawSharesRedist.pdf}
@@ -724,6 +712,23 @@ Union-FDP majority.
 }
 \end{figure}
 
+% Again, interpreting only the observed redistributed voter shares
+% is hard for the general public as no easily accessible quantification
+% of uncertainty is given.
+%% Helmut: Finde ich gut!
+By comparison, the ridgeline plot in Figure~\ref{fig:2017_cdufdp}
+shows that parliament seat shares (or correspondingly voter shares)
+below $48\%$ correspond to very small POEs
+of $<1\%$, based on pooled effective sample sizes of around $3000$.
+On the other hand, based on comparable sample sizes, reported shares of $49\%$
+and $49.5\%$ corresponded to probabilities of around $14\%$ and $25\%$,
+respectively.
+
+Overall, one month before election day the coalition had a good prospect
+reaching a seat majority based on a redistributed share of $49.8\%$ and
+a probability of nearly $40\%$. However, until two days before the election the pooled share and the probability dropped again to $47.4\%$ and $0.4\%$, respectively, making a success
+of the two parties highly improbable.
+
 % würde sie SPD-Linke_Grüne rausnehmen oder zusammen mit der Union-FDP erwähnen - z.B. als "POE: Coalitions beyond the grand coalition" - dann aber trotzdem kürzen (der Teil wirkt länglich)
 \paragraph{POE: SPD-Left-Greens coalition majority} \ \\
 Regarding the party share development of the SPD, the year before
@@ -743,7 +748,7 @@ The ridgeline plot in Figure~\ref{fig:2017_spdleftgreens}
 again nicely visualizes the uncertainty underlying the event of
 interest. This is not only limited to parties forming the potential coalition,
 but also includes information about all other causes of uncertainty in the data.
-For example, in November and December of 2016, the seat share distribution clearly
+E.g., in November and December of 2016, the seat share distribution clearly
 is bimodal as in a relevant share of simulations FDP does not pass
 the $5\%$ threshold and more votes are redistributed in these cases.
 
@@ -769,23 +774,14 @@ seat majority.
 
 % hier könnte man einfügen, dass es bei einer Wdh der großen Koalition, die drittstärkste Partei der "Oppositionsführer" wäre [die das recht hat, als erste Partei nach der Regierung zu reden]
 \paragraph{POE: AfD becoming third strongest party} \ \\
-In the pretext to the 2017 election, special interest was given to the question
-which party would be the third largest party in parliament.
+Prior to the 2017 election, special interest was on the question
+which party would become the third largest party in parliament.
 With reported voter shares of over $8\%$, the right-wing AfD had a very good
 prospect to become a member of the German parliament for the first time
 (see Fig.~\ref{fig:2017_afd}) and was polling close to other smaller parties.
 Using our KOALA approach, estimating the POE that the AfD becomes
-the third largest party in parliament is straight forward, adequately summarizing
+the third largest party in parliament is straightforward, adequately summarizing
 this event probability that simultaneously depends on all reported party shares.
-
-In the year before the general election in 2017, reported AFD party shares
-underwent strong fluctuations. In January 2017 the party had a $3.9\%$ lead
-over Left and Greens (corresponding to an estimated probability of becoming the
-third largest party in parliament of $100\%$). Subsequently, the AfD share
-dropped $1.9$ percentage points behind the Left in June
-(corresponding to a $1.2\%$ probability)
-and rose back to a $1.7$ percentage point lead (in voter shares) lead over the Left
-and FDP shortly before election day (corresponding to a $96.8\%$ event probability).
 
 \begin{figure}[H]\centering
 \begin{tabular}{l}
@@ -802,6 +798,15 @@ Bottom: Probabilities to become third strongest party, based on $10\,000$ simula
 }
 \end{figure}
 
+In the year before the general election in 2017, reported AfD party shares
+underwent strong fluctuations. In January 2017 the party had a $3.9\%$ lead
+over Left and Greens (corresponding to an estimated probability of becoming the
+third largest party in parliament of $100\%$). Subsequently, the AfD share
+dropped $1.9$ percentage points behind the Left in June
+(corresponding to a $1.2\%$ probability)
+and rose back to a $1.7$ percentage point lead (in voter shares) over the Left
+and FDP shortly before election day (corresponding to a $96.8\%$ event probability).
+
 
 \section{Conclusion} \label{sec:conclusion}
 We present the KOALA (Coalition analysis) approach, i.e. a Bayesian,
@@ -816,20 +821,22 @@ accounted for through the introduction of additional uncertainty in the simulati
 
 The estimated POEs are easy to communicate to the general public and prevent
 improper poll-based reporting as they include sample uncertainty in a natural way.
-Moreoever, the focus on the POE allows to easily capture complex situations
-like multiple parties close to a threshold, as the presented probability
-includes uncertainty in a natural way. Also, the POE not under focus at the beginning
-can be easily obtained through the posteriori distribution.
-Note that we only perform now-casting of the POE analysing the current
-politic mood and no fore-casting with the target to predict the election results in before.\\
+More particularly, the focus on such event probabilities allows for easily 
+capturing complex situations --
+like multiple parties having high uncertainty to enter the parliament --
+by naturally incorporating all party-specific uncertainties.
+Also, the POE not under focus at the beginning
+can be easily obtained through the posteriori distribution \textcolor{red}{(Alex: Was will dieser Satz sagen?)}. \\
+%Note that we only perform now-casting of the POE analyzing the current
+%politic mood and no fore-casting with the target to predict the election results in before.\\
 
-
-
-A special focus was the visual presentation of the results. Different methods are used to make the results accessible to the general public and also to avoid a misinterpretation because of similarity to existing plots. We visualize the results on a publicly available web site for chosen elections and provide the open-source \texttt{R} package \texttt{coalitions} that allows for a straightforward application of the method to any multi-party electoral system. In this manner, our long-term goal is to make proper uncertainty assessment in general opinion poll-based reporting the rule, rather than an exception.
+Special focus was on the visual presentation of the results. Different methods are used to make the results accessible to the general public.
+% and to avoid misinterpretation because of similarity to existing plots.
+We visualize the results on a publicly available website for chosen elections and provide the open-source \texttt{R} package \texttt{coalitions} that allows for a straightforward application of the method to any multi-party electoral system. In this manner, our long-term goal is to make proper uncertainty assessment in general opinion poll-based reporting the rule, rather than an exception.
 
 
 \subsection{Limitations}
-Since our approach is based on results of exit polls conducted by different providers, problems with well known sources of bias induced by non response, incorrect answers, non coverage etc. can occur. All providers perform  some correction methods, to reduce  these biases by weighting or other procedures, but they do not make their procedures completely transparent. Therefore, it is essential to analyse the results of different exit poll providers separately and in the pooled version, which can be easily done by our KOALA-procedure.      
+Since our approach is based on results of exit polls conducted by different pollster institutes, problems with well known sources of bias induced by non response, incorrect answers, non coverage etc. can occur. All institutes perform some correction methods to reduce these biases, using weighting or related procedures, but they do not make their procedures completely transparent. Therefore, it is essential to analyze the results of different exit poll providers separately as well as in a pooled version. This can be easily done based on our KOALA approach and the provided software implementation.
 % % For one-column wide figures use
 % \begin{figure}
 % % Use the relevant command to insert your figure file.
