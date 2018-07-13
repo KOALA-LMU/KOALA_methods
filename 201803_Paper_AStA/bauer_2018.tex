@@ -91,31 +91,27 @@
 
 \maketitle
 
-\begin{abstract} \red{150 to 250 words} \\
+\begin{abstract}\ \\
 Common election poll reporting is often misleading as sample uncertainty is
-insufficiently addressed or  not covered at all. Furthermore, main interest
+addressed insufficiently or  not covered at all. Furthermore, main interest
 usually lies beyond the simple party shares. For a more comprehensive
 opinion poll and election coverage, we propose shifting the focus
 towards the reporting of survey-based probabilities for specific events of interest.
 We present such an approach for multi-party electoral systems, focusing on
 probabilities of coalition majorities. A Monte Carlo approach based on a Bayesian
 Multinomial-Dirichlet model is used for estimation.
-% The method utilizes published
-% opinion polls conducted by established polling agencies and is accompanied by a
-% pooling approach that aggregates multiple current surveys to reduce sample
-% uncertainty, simultaneously accounting for dependencies between polling agencies.
 Probabilities are estimated, assuming the election was
 held today (``now-cast''), not accounting for potential shifts in the electorate
-until election day (``fore-cast''). Since our method is based on the posterior distribution
-of party shares, our method can be applied for a variety of questions related to the
-outcome of the election. We also introduce visualization techniques that
-facilitate a more adequate depiction of relevant quantities as well as
-respective uncertainties. The benefits of our approach are
+until election day (``fore-cast''). Since our method is based on the posterior
+distribution of party shares, the approach can be used to answer a variety of
+questions related to the outcome of an election. We also introduce visualization
+techniques that facilitate a more adequate depiction of relevant quantities as
+well as respective uncertainties. The benefits of our approach are
 discussed by application to the German federal elections in 2013 and 2017.
 An open source implementation of our methods is freely available in the
 \textbf{\texttt{R}} package \texttt{coalitions}.
 
-\keywords{\red{4 to 6 keywords} Election analysis \and Opinion polls \and Election reporting \and Multinomial-Dirichlet}
+\keywords{Election analysis \and Opinion polls \and Election reporting \and Multinomial-Dirichlet \and Bayes}
 % \PACS{PACS code1 \and PACS code2 \and more}
 % \subclass{MSC code1 \and MSC code2 \and more}
 \end{abstract}
@@ -134,18 +130,18 @@ if the voting system has some kind of proportional allocation of seats in
 parliament. Thus, multiple parties form
 a so-called \emph{coalition} to jointly obtain the necessary majority of seats
 in parliament. Media usually reports the results of opinion polls by focusing
-on the reported voter shares while ignoring sample uncertainty. This is misleading,
+on the reported party shares while ignoring sample uncertainty. This is misleading,
 especially if shares are used to infer the possibility of a majority for
 a specific coalition. For example, in the prelude to the 2017 German federal election,
 a coalition was oftentimes stated to ``lose'' its majority just because the reported joint
-voter share dropped below 50\% from one opinion poll to the next \citep[cf.][]{umfrage_2017}.
+voter share dropped below 50\% from one opinion poll to the next \citep[e.g.,][]{umfrage_2017}.
 Such interpretations are clearly inadequate as sample uncertainty
 (and often redistribution of votes) is not taken into account. This becomes especially
 problematic, when one or more parties are close to the country specific threshold
 of votes that has to be passed in order to enter the parliament. This was the case
 in the 2013 German federal election, where the reported share of the Free Democratic
-Party (FDP) were close to but over the 5\% threshold but the party in the end failed
-to pass the threshold. (cf. Section \ref{ssec:intro-ex-fdp}).\\
+Party (FDP) was slightly above the 5\% threshold but failed to enter the
+parliament on election night (cf. Section \ref{ssec:intro-ex-fdp}).\\
 
 % Additionally, the perception of
 % the observed voter shares to be definite values that hold for the
@@ -155,13 +151,13 @@ to pass the threshold. (cf. Section \ref{ssec:intro-ex-fdp}).\\
 % XXX
 
 Beyond ensuring proper reporting of sample uncertainties, in our opinion, the
-focus in election poll reporting should in general be shifted away from the
+focus of election poll reporting should in general be shifted away from the
 reported party shares. Instead, election coverage should focus on the most relevant
 question, i.e., how {\it probable} is a specific event or outcome, given
 the current political mood. As probabilities combine both, the reported shares and
 sample uncertainty in one number, they allow more precise as well as more adequate
-statements about specific events. Usually of interest before an election are the
-probabilities of events (\textbf{POE}) like:
+statements about specific events. Before an election, events such as the
+following are usually of interest:
 
 \begin{itemize}
   \item ``Will a party obtain enough votes to enter the parliament (pass the threshold)?''
@@ -171,15 +167,17 @@ probabilities of events (\textbf{POE}) like:
 
 
 In this article, we present our approach for election and coalition analysis
-(in German: \textbf{Koal}itions-\textbf{A}nalyse (KOALA)) that estimates POEs
-and brings more value to opinion poll based election
-coverage. We quantify the contemporary political mood
+(in German: \textbf{Koal}itions-\textbf{A}nalyse (KOALA)) that estimates probabilities
+for any such events, referred to as \emph{p}robability \emph{o}f \emph{e}vent (POE)
+in the following. In Section \ref{sec:application}, we will illustrate that the
+POE brings more value to opinion poll based election coverage.
+It is important to note that we quantify the contemporary political mood
 and the resulting event probabilities (``now-cast''), not taking into consideration
 potential shifts until election day (``fore-cast''). Approaches for predicting
 future election outcomes based on past information can, e.g., be found in
 \citet{graefe_2017} or \citet{norpoth_gschwend_2010}. A special focus is put on
 multi-party proportional representation electoral systems and the estimation
-of probabilities for (joint) majorities. Probabilities are estimated by Monte Carlo
+of probabilities for (joint) majorities. POEs are estimated by Monte Carlo
 simulations of election outcomes from the Bayesian posterior distribution of party
 shares conditional on current observed opinion poll data. Prior to the German general
 elections 2013 and 2017, results based on (an earlier iteration of) our approach
@@ -191,7 +189,7 @@ A \texttt{shiny}-based \citep{chang_2017} website
 \texttt{koala.stat.uni-\allowbreak muenchen.\allowbreak de} visualizes estimated
 coalition probabilities and is used to communicate the results for German federal
 and state elections to the general public. Additionally, we applied our method
-to the Austrian general election 2017. The process of fetching new polls,
+to the Austrian federal election 2017. The process of fetching new polls,
 updating the website and sending out Twitter messages based on the newest results
 is automated and allows for an immediate transfer of the estimated POE
 to media outlets as well as the general public.
@@ -213,11 +211,13 @@ election in 2017 for example, we used the data base available at
 
 \subsection{Motivating example}\label{ssec:intro-ex-fdp}
 In the last opinion poll conducted before the German federal election 2013 \citep{forsa_2013},
-special interest was on whether the conservative ``Union'' -- i.e., the union of
-the parties CDU (Christian Democratic Union) and CSU (Christian Social Union in Bavaria ) -- and the liberal FDP would together obtain enough votes to form the governing coalition (cf. Table \ref{tab_fdp}).
+it was of special interest whether the conservative ``Union'' -- i.e., the union of
+the parties CDU (Christian Democratic Union) and CSU (Christian Social Union in Bavaria ) --
+and the liberal FDP would together once again obtain enough votes to form the
+governing coalition (cf. Table \ref{tab_fdp}).
 
 \begin{table}[!ht]\centering
-\caption{Reported voter shares in the Forsa opinion poll for the German federal
+\caption{Reported party shares in the Forsa opinion poll for the German federal
 election, published September 20th, 2013 with $n=1995$ respondents.
 \label{tab_fdp}
 }
@@ -231,14 +231,21 @@ Union & SPD & Greens & FDP & The Left & Pirates & AfD & Others \\
 \end{tabular}
 \end{table}
 
-The German election system mandates a 5\% vote share threshold for parties to enter the parliament.
-Votes for parties below this threshold without at least three successful direct candidates are redistributed (proportionally) to parties above it. Table \ref{tab_fdp_redist} depicts the resulting redistributed voter shares given the poll in Table \ref{tab_fdp}. It illustrates, that Union-FDP with
-its reported joint 45\% voter share before redistribution, would obtain 50\% of parliament seats after redistribution. Thus, ignoring uncertainty it could be concluded that a majority for this coalition is possible, if voter shares would improve slightly for one of the two parties.
+The German election system mandates a 5\% vote share threshold for parties to
+enter the parliament. Votes for parties below this threshold and without at least
+three successful direct candidates are redistributed (proportionally) to parties
+above it. Table \ref{tab_fdp_redist} depicts the resulting redistributed party
+shares given the poll in Table \ref{tab_fdp}. It illustrates, that Union-FDP with
+its reported joint 45\% voter share before redistribution, would obtain 50\% of
+parliament seats after redistribution. Thus, ignoring uncertainty it could be
+concluded that a majority for this coalition is possible, if party shares would
+increase slightly for one of the two parties.
 
 \begin{table}[!ht]\centering
-\caption{Redistributed voter shares based on the Forsa opinion poll for the German federal election,
-published September 20th, 2013 with $n=1995$ respondents (cf. Table \ref{tab_fdp}).
-Party shares marked with ''--'' indicate parties that would not pass the 5\% threshold.
+\caption{Redistributed party shares based on the Forsa opinion poll for the German
+federal election, published September 20th, 2013 with $n=1995$ respondents
+(cf. Table \ref{tab_fdp}). Party shares marked with ''--'' indicate parties that
+would not pass the 5\% threshold (before redistribution).
 \label{tab_fdp_redist}
 }
 \medskip
@@ -252,7 +259,9 @@ Union & SPD & Greens & FDP & The Left & Pirates & AfD & Others \\
 \end{table}
 
 However, such a consideration completely ignores sample uncertainty and the
-probabilistic nature of the outcome. If the poll in Table \ref{tab_fdp} is representative for the election result, one would expect that the FDP enters the parliament (passes the 5\% threshold) with a
+probabilistic nature of the outcome. If the poll in Table \ref{tab_fdp} is
+representative for the electoral mood, one would expect that the FDP enters the
+parliament (passes the 5\% threshold) with a
 probability of about $50\%$. Thus, the (posterior) distribution of the joint voter
 share is bimodal and also depends on whether the other ``small'' parties close to
 the 5\% threshold enter the parliament. The example also illustrates that discussion
@@ -264,7 +273,7 @@ enough votes to obtain a majority of seats in the parliament?'') more directly, 
 adequately taking into account the inherent uncertainty.\\
 
 The remainder of the article is structured as follows: Section \ref{sec:methods}
-introduces the Bayesian method used to estimate event probabilities as well
+introduces the Bayesian method used to estimate POEs as well
 as some details on the aggregation of multiple opinion polls and the correction
 of rounding errors. Section \ref{sec:application} illustrates the
 application of the approach to opinion polls in advance of the  2013 and 2017
@@ -275,22 +284,22 @@ German federal elections. A summary and discussion are presented in Section
 %% Helmut: Die folgende Uebersicht ist aus meiner Sicht nicht noetig
 % In this section, we describe our method for the estimation of POEs based on reported party shares. Section~\ref{ssec:bayes} gives a general introduction to the Multinomial-Dirichlet model. In Section~\ref{ssec:pooling} our approach for the aggregation of multiple polls from different polling agencies is described. As most agencies report rounded voter shares, we perform rounding error adjustment, briefly discussed in Section~\ref{ssec:rounding}.
 
-\subsection{Estimating event probabilities from reported voter shares} \label{ssec:bayes}
-To estimate the POE conditional on opinion poll results
-we use the Bayesian framework to construct the \emph{posterior} distribution of
-the party shares based on distribution of the reported shares and an assumption
+\subsection{Estimating event probabilities from reported party shares} \label{ssec:bayes}
+To estimate the POE conditional on opinion poll results we use the Bayesian
+framework to construct the \emph{posterior} distribution of the party shares based
+on distribution of the reported shares and an assumption
 about their \emph{prior} distribution.\\
 
 Let $X_1,\ldots, X_P$ be the reported opinion poll count of respondents that would
 elect party $p, \ p=1,\ldots,P$ (vote count). For example, in Table \ref{tab_fdp}
 the reported vote count for the \emph{Union} is given by $X_1 = .40 \cdot 1995 = 798$.
-Assuming that $(X_1, \ldots, X_P)$ has a Multinomial distribution
+We assume that $(X_1, \ldots, X_P)$ has a Multinomial distribution
 \begin{equation}\label{eq:multinom}
 (X_1,\ldots, X_k) \sim Multinomial(n, \theta_1,\ldots, \theta_P),
 \end{equation}
 
 where $n$ is the sample size of the opinion poll and $\theta_p, \ p=1,\ldots,P$
-indicates the probability of party $p$ being selected. Assuming a
+indicates the probability of party $p$ being selected. Further assuming a
 simple random sample, i.e ignoring possible bias,
 $\theta_p$ represents the percentage of voters for party $p$ in
 the general population.
@@ -310,16 +319,16 @@ we chose an uninformative prior distribution
 \end{aligned}
 \end{equation}
 
-denoted $p(\boldsymbol{\theta}|\boldsymbol{\alpha})$.
+denoted by $p(\boldsymbol{\theta}|\boldsymbol{\alpha})$.
 As the Dirichlet distribution is a conjugate prior to the Multinomial distribution,
-the resulting posterior distribution of parameters $\boldsymbol{\theta}|\mathbf{x}$
+the resulting posterior distribution \eqref{eq:posterior-dens}  of parameters $\boldsymbol{\theta}|\mathbf{x}$
 
 \begin{align}
 f(\boldsymbol{\theta}|\mathbf{x})
-  & = \frac{f(\mathbf{x}, \boldsymbol{\theta})}{f(x)}
-    = \frac{f(\mathbf{x}|\boldsymbol{\theta})p(\boldsymbol{\theta}, \boldsymbol{\alpha})}{f(x)}\\
+  & = \frac{f(\mathbf{x}, \boldsymbol{\theta})}{f(\mathbf{x})}
+    = \frac{f(\mathbf{x}|\boldsymbol{\theta})p(\boldsymbol{\theta}, \boldsymbol{\alpha})}{f(\mathbf{x})}\label{eq:posterior-dens}\\
   & \propto f(\mathbf{x}|\boldsymbol{\theta})p(\boldsymbol{\theta}|\boldsymbol{\alpha})\\
-  & \propto \prod_{p=1}^{P}\theta_p^{x_p}\cdot \prod_{p=1}^{P}\theta_p^{\alpha_{j}-1} = \prod_{p=1}^{P}\theta_p^{x_p + \alpha_p-1},
+  & \propto \prod_{p=1}^{P}\theta_p^{x_p}\cdot \prod_{p=1}^{P}\theta_p^{\alpha_{p}-1} = \prod_{p=1}^{P}\theta_p^{x_p + \alpha_p-1},
 \end{align}
 
 is again a Dirichlet distribution with
@@ -333,11 +342,10 @@ election results from \eqref{eq:posterior} and calculating the percentage of
 simulations in which the event of interest occurred. This includes the
 probabilities for specific majorities derived from a complex, country-specific
 system of rules for the calculation of seats in the parliament
-(\textcolor{red}{Sainte-Lague-Schepper in Germany; CITATION}). E.g., given the Forsa poll
-introduced in Section \ref{ssec:intro-ex-fdp}, the coalition of Union-FDP
+(Sainte-Lague/Scheppers in Germany; \citet{grofman_2003}). For example, given the
+Forsa poll introduced in Section \ref{ssec:intro-ex-fdp}, the coalition of Union-FDP
 obtained a majority of seats in $2\,633$ of $10\,000$ simulations, which equals
-an estimated probability of $26\%$ (see Section \ref{sec:application} for
-more details).\\
+an POE of $26\%$ (see Section \ref{sec:application} for more details).\\
 
 If it is known that estimates of specific party shares are biased for some opinion
 polls/agencies, this information could be included in the model by using an
@@ -353,14 +361,9 @@ aggregate multiple polls in order to reduce sample uncertainty. To ensure a
 reliable pooling regarding the current public opinion, we only use polls
 published within a certain period of time (e.g. 14 days)  and only use the most recent survey published by each polling agency.\\
 
-Considering a single poll $i$, the observed numbers of votes $X_{ip}$ for each of
-$P$ parties follow a multinomial distribution with sample size $n_i$ and underlying,
+Considering a single poll $i$, the observed vote count $X_{ip}$ for each of
+$P$ parties follows a multinomial distribution with sample size $n_i$ and underlying,
 unknown party shares $\theta_p$ in the population.
-
-% \begin{equation}
-% X_{i1},\ldots, X_{ik} \sim Multinomial(n_i,\theta_1,\ldots,\theta_k).
-% \end{equation}
-
 Pooling over multiple such polls as independent random samples leads to another
 multinomial distribution for the summed number of votes $\sum_i X_{ip}$:
 % Based on the multinomial distribution of the vote counts $X_{ij}$ of party $j$ in poll $i$ with underlying true party share $\theta_j$, pooling over multiple polls representing independent random samples would lead to a multinomial distribution for the summed number of votes $\sum_i X_{ij}$:
@@ -369,12 +372,16 @@ multinomial distribution for the summed number of votes $\sum_i X_{ip}$:
   \sim Multinomial \left( \sum\limits_i n_i,\theta_1,\ldots,\theta_P\right).
 \end{equation}
 
-Further analyses, however, showed that polls from different (German) polling agencies are correlated
-and the independency assumption does not hold. Therefore, we adjust the resulting multinomial
-distribution by using an \textit{effective sample size} \citep{hanley_2003}, reflecting that the aggregation over multiple correlated polls does not contain information of a sample with $\sum_i n_i$ observations.\\
+Further analyses, however, showed that polls from different (German) polling
+agencies are correlated and the independence assumption does not hold. Therefore,
+we adjust the resulting multinomial distribution by using an
+\textit{effective sample size} \citep{hanley_2003}, reflecting that the aggregation
+over multiple correlated polls does not contain information of a sample with
+$\sum_i n_i$ observations.\\
 
-Quantification of pairwise correlation is done based on the variance of the party share difference between two polls for a specific party. The following equation holds for two independent
-random samples from poll $A$ and $B$:
+Quantification of pairwise correlation is done based on the variance of the party
+share difference between two polls for a specific party. The following equation
+holds for two independent random samples from poll $A$ and $B$:
 
 \begin{equation}
 \begin{aligned}
@@ -383,11 +390,18 @@ Var(X_A - X_B) &= Var(X_A) + Var(X_B) - 2 \cdot Cov(X_A, X_B) \\
 \end{aligned}
 \end{equation}
 
-We take $Var(X_{Aj})$ and $Var(X_{Bj})$ as the theoretical variances of the binomially distributed, reported voter numbers and estimate $Var(X_{Aj} - X_{Bj})$ based on the observed differences between the reported party shares. Having done so, it is possible to estimate the covariance $Cov(X_{Aj}, X_{Bj})$ and accordingly also the correlation. As the binomial variance is directly proportional to sample size, the effective sample size $n_{\text{eff}}$ can be defined as the ratio between the estimated variance of the pooled sample and the theoretical variance of a sample of size one:
+We take $Var(X_{Aj})$ and $Var(X_{Bj})$ as the theoretical variances of the
+binomially distributed, reported vote count and estimate $Var(X_{Aj} - X_{Bj})$
+based on the observed differences between the reported party shares. Having done so,
+it is possible to estimate the covariance $Cov(X_{Aj}, X_{Bj})$ and accordingly
+also the correlation. As the binomial variance is directly proportional to sample
+size, the effective sample size $n_{\text{eff}}$ can be defined as the ratio
+between the estimated variance of the pooled sample and the theoretical variance
+of a sample of size one:
 $$
-n_{\text{eff}} = \frac{Var(\text{pooled})}{Var(\text{sample of size 1})},
+n_{\text{eff}} = \frac{Var(\text{pooled})}{Var(\text{sample of size 1})}.
 $$
-with, in the case of two surveys,
+In the case of two surveys,
 $$
 Var(\text{pooled}) = Var(X_A + X_B) = Var(X_A) + Var(X_B) + 2 \cdot Cov(X_A,X_B)
 $$
@@ -395,21 +409,21 @@ and $Var(\text{sample of size 1})$ the theoretical variance of the pooled share.
 
 Considering the party-specific correlations between 20 surveys conducted by the
 two German polling agencies that provide updates most regularly, Emnid and Forsa,
-we on average end up with a medium high positive correlation, using mean party shares and
-sample sizes per institute for the theoretical variances. Comparisons of other
-agencies were not performed as too few published surveys that
-cover comparable time frames were available. For simplicity, we do
-not recalculate the correlation for each simulation, but rather set the correlation
-used in our calculations to $0.5$, i.e., a medium positive correlation.
-For convenience, the calculation of $n_{\text{eff}}$ is based on the party with
-most votes, as the specific party choice only marginally affects the results.\\
+we on average end up with a medium high positive correlation, using mean party
+shares and sample sizes per institute for the theoretical variances. Comparisons
+of other agencies were not performed as too few published surveys that
+cover comparable time frames were available. For simplicity, we do not recalculate
+the correlation for each simulation, but rather set the correlation used in our
+calculations to $0.5$, i.e., a medium positive correlation. For convenience, the
+calculation of $n_{\text{eff}}$ is based on the party with most votes, as the
+specific party choice only marginally affects the results.\\
 
 % Beispiel koennte wegfallen, wenn Platz gebraucht wird
 Considering for example two polls with $1\,500$ and $2\,000$ respondents,
 respectively, and a pooled share of $40\%$ for the strongest party, the method
 leads to an effective sample size of $n_{\text{eff}} = 2\,341$. Thus, the method
 reduces sample uncertainty compared to using a single poll, while being quite
-conservative compared to the assumption of independence between the polls and using
+conservative compared to the assumption of independence which would lead to
 an aggregate sample size of $1\,500 + 2\,000 = 3\,500$.\\
 
 As noted above, in practice we use a time window of 14 days, i.e., all surveys
@@ -424,33 +438,32 @@ between 15 and 28 days ago with halved weight (using the halved sample size).
 \subsection{Correction of rounding errors}\label{ssec:rounding}
 Polling agencies usually only publish rounded party shares and
 raw data is not available. Therefore, we adjust the reported data by adding
-uniformly distributed random noise to the observed voter shares $x_j$ in order
+uniformly distributed random noise to the observed party shares $\theta_p$ in order
 to avoid potential biases caused by the use of rounded numbers:
 
 \begin{equation}
 \begin{aligned}
-x_{p,adj} = \ &x_p + r_{\gamma,p}, \\
+\theta_{p,adj} = \ &\theta_p + r_{\gamma,p}, \\
 \text{with} \ \ \ \ \ &r_{\gamma,p} \sim U[-\gamma,\gamma].
 \end{aligned}
 \end{equation}
 
 The correction coefficient $\gamma$ is chosen according to rounding accuracy.
 E.g., for data rounded to $1\%$ steps we use $\gamma = 0.5\%$. After random noise
-was added the adjusted shares are rescaled to ensure a sum of $100\%$. Overall,
-instead of using rounded numbers and simulating $n_s$ values from the resulting
-posterior, we perform $n_s$ simulations where we first adjust the voter shares
-using individually drawn random noise and then simulate one observation from each
-resulting posterior.\\
+was added the adjusted shares are rescaled to ensure that all adjusted party shares
+$\theta_p,adj$ sum to $100\%$. Overall, instead of using rounded numbers and simulating
+$n_s$ values from the resulting posterior, we perform $n_s$ simulations where we
+first adjust the party shares using individually drawn $r_{\gamma,p}$ and
+then simulate one observation from each resulting posterior.\\
 
 
 \section{Application} \label{sec:application}
-An earlier iteration of our method entered media reporting
-before the German federal elections 2013 and 2017 \citep[cf.][]{wahlistik_2013, gelitz_2017}.
-We will discuss these two elections in order to elaborate the
-differences between standard media coverage of election polls
--- focused on the interpretation of the reported party shares --
-and our approach based on estimated POEs. Reported party shares as
-described in Section \ref{ssec:data-basis} were used as data basis.
+An earlier iteration of our method entered media reporting before the German
+federal elections 2013 and 2017 \citep[cf.][]{wahlistik_2013, gelitz_2017}.
+We will discuss these two elections in order to elaborate the differences between
+standard media coverage of election polls -- focused on the interpretation of the
+reported party shares -- and our approach based on estimated POEs. Reported party
+shares as described in Section \ref{ssec:data-basis} were used as data basis.
 Polls from different agencies published within a time window of 14 days were
 aggregated (cf. Section \ref{ssec:pooling}). For the estimation of POEs
 $n_{s} = 10\,000$ simulations were performed.
@@ -460,17 +473,16 @@ $n_{s} = 10\,000$ simulations were performed.
 In the legislative period from 2009 to 2013, the German government was formed by
 a coalition of the conservatives (Union) and the liberals (FDP). Before the
 election on September 22nd, 2013, the question whether the coalition could
-sustain its majority was therefore of main interest.
-A key role played the FDP, which had to reach at least the minimum voter share of
-$5\%$ to get into parliament and make a majority possible. 
-Figure \ref{fig:2013} summarizes the reported party
-shares for the one year period prior to the election.
+sustain its majority was therefore of main interest. The FDP played a key role,
+as the coalition could only be formed if the party had reached the minimum share
+of $5\%$ of the votes. Figure \ref{fig:2013} summarizes the reported party shares
+for the one year period prior to the election.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.6\textwidth]{figures/2013_pooled_rawShares.pdf}
-\caption{Course of the pooled party shares from October 2012 until election day on
+\caption{Pooled party shares from October 2012 until election day on
 September 22nd, 2013, based on a pooling time window of 14 days.
-As specific voter shares for AfD were only sparsely reported before the election in 2013
+As shares for the AfD were only sparsely reported before the election in 2013
 the party is contained in ''Others''.
 \label{fig:2013}
 }
@@ -481,26 +493,26 @@ the party is contained in ''Others''.
 
 The poll-based prospect of FDP to successfully pass into parliament is visualized
 in Figure~\ref{fig:2013_fdp}.
-As can be seen, the reported voter share of the party only exceeded the necessary share
-of $5\%$ over short periods of time and only once reached a maximum value
+As can be seen, the reported party share only exceeded the necessary hurdle
+of $5\%$ over short periods of time with a maximum value
 of $6\%$ (top left pane in Fig.~\ref{fig:2013_fdp}). Similarly, the probability
 for the party to pass the threshold rarely rose over $50\%$ (bottom left pane).
-However, starting at the end of August 2013 until election day, the pooled voter
-shares and the corresponding probabilities consistently were over $5\%$ and $50\%$,
-respectively, stating that -- shortly before election day -- a parliament entry
-of the FDP was more probable than a failure.\\
+However, starting at the end of August 2013 and until election day, the pooled
+share and the corresponding probabilities were consistently above $5\%$ and $50\%$,
+respectively. Thus, shortly before election day, a parliament entry
+of the FDP was more probable than a failure to do so.\\
 
-Comparing voter shares and probabilities, Figure~\ref{fig:2013_fdp} shows
+Comparing party shares and probabilities, Figure~\ref{fig:2013_fdp} shows
 that small changes in the overall share of a party can dramatically influence
-event probabilities, depending on the base level of the voter share and
+event probabilities, depending on the base level of the party share and
 -- in this example -- its closeness to the $5\%$ threshold.
 In this regard, probabilities make it easier to deduce {\it relevant} information
 from opinion polls as they incorporate both the closeness of the reported shares
-to the relevant threshold and sample uncertainty.
-E.g., the probability corresponding to voter shares of $4\%$ and $6\%$ correspond to
-very definite probabilities of near $0\%$ and $100\%$, respectively,
-and communicating such probabilities leads to a much clearer perception of
-the current public opinion compared to the reported FDP voter share and
+to the relevant threshold as well as the sample uncertainty.
+For example, party shares of $4\%$ and $6\%$
+correspond to very definite POEs of near $0\%$ and $100\%$,
+respectively and the reporting of such POEs leads to a much clearer perception
+of the current public opinion compared to the reported party share and
 survey sample size only.
 
 \begin{figure}[H]\centering
@@ -511,29 +523,28 @@ survey sample size only.
 \\
 \includegraphics[height=.15\textwidth]{figures/2013_pooled_fdp_passingProb.pdf}
 \end{tabular}
-\caption{Development of the prospect of FDP to pass the $5\%$ threshold before the
+\caption{Prospect of FDP to pass the $5\%$ threshold before the
 German federal election in September 2013 based on pooled opinion polls.
-Top left: Reported party shares before redistribution. Bottom Left: Probabilities
-to pass the $5\%$ threshold, based on $10\,000$ simulations. Right: Densities of
-simulated FDP vote shares based on $10\,000$ simulations over time. Areas under
-the density depicted colored blue indicate the percentage of simulations in which
-the FDP would pass the 5\% threshold.
+Top left: Reported party share before redistribution. Bottom Left: Now-cast
+of the POE that FDP will pass the $5\%$ threshold, based on $10\,000$ simulations.
+Right: Densities of the $10\,000$ simulated FDP shares. Areas under
+the density colored blue indicate the simulations in which the FDP passes the
+5\% threshold.
 \label{fig:2013_fdp}
 }
 \end{figure}
 
-To visualize the results for specific events
-we use density plots (see also Fig. \ref{fig:seatDist}).
-These are well suited to communicate both
-probability estimates and the uncertainty underlying opinion polls.
-To depict the {\it development} of such probabilities
-for a specific event, e.g., a coalition majority or a party passing the 5\% threshold,
-we recommend extending the
-visualization of one density by using so-called
-\emph{ridgeline plots} \citep{wilke_2017} that visualize the development of such densities.
-In Figure~\ref{fig:2013_fdp} this plot type and the development of the POEs
-is compared to the observed, redistributed shares of FDP, which
-are usually reported in media. \\
+For the visualization of POEs we suggest to plot the distribution of
+simulated shares via density plots and to highlight the area associated
+with simulations where the event of interest occurred
+(see also Fig. \ref{fig:seatDist}). This has the advantage that POEs are
+communicated clearly (and intuitively) while the distribution of simulated
+shares additionally highlights the underlying uncertainty and the range
+of possible outcomes. Another advantage is that such visualizations can easily
+be extended to depict the development of POEs over time using so-called
+\emph{ridgeline plots} \citep{wilke_2017}. In Figure~\ref{fig:2013_fdp} this
+plot type and the development of the POEs is compared to the observed,
+redistributed shares of FDP husually reported in media. \\
 
 To focus on the most relevant changes in the POEs, we propose
 the use of a skewed axis as shown in Figure~\ref{fig:2013_fdp}. In this axis
@@ -547,6 +558,13 @@ confusion of POEs and voter shares.
 
 \paragraph{POE: Union-FDP coalition majority} \ \\
 
+Figure \ref{fig:seatDist} shows the simulated parliament seat shares for the
+coalition Union-FDP, based on the reported party shares in Table \ref{tab_fdp}.
+The estimated density is clearly bimodal as the reported FDP share before
+redistribution equals exactly $5\%$ and therefore FDP only enters the parliament
+in about $50\%$ of the simulations. In this case, a majority was observed in about
+one quarter of the simulations, leading to an estimated POE of $26\%$.
+
 \begin{figure}[H]\centering
 \includegraphics[width=0.45\textwidth]{figures/2013_forsa_cdufdp_lastPreelectionPoll.pdf}
 \caption{Density of $10\,000$ simulated parliament seat shares for the coalition
@@ -558,19 +576,12 @@ POE of about $26\%$.
 }
 \end{figure}
 
-Figure \ref{fig:seatDist} shows the simulated
-parliament seat shares for the coalition Union-FDP, based on the reported
-voter shares in Table \ref{tab_fdp}. The estimated density is clearly bimodal
-as the reported FDP share before redistribution equals exactly $5\%$ and
-therefore FDP only enters the parliament in about $50\%$ of the simulations.
-In this case, a majority was observed in about one quarter of the simulations,
-leading to an estimated POE of $26\%$.
-Comparing the redistributed voter shares and the seat majority probabilities
-in Figure~\ref{fig:seatDist_time}, it can again be seen that even small changes
+
+Comparing the redistributed party shares and the seat majority probabilities
+in Figure~\ref{fig:seatDist_time}, it is again evident that even small changes
 in the redistributed voter share can make an immense difference regarding the
-probability of the coalition to obtain a majority.
-Especially regarding the months preceding election day this lead to heavily
-fluctuating POE's based on the Forsa opinion polls. \\
+POE. Especially in the months preceding election day this lead to heavily
+fluctuating POEs based on the Forsa opinion polls. \\
 
 
 \begin{figure}[H]\centering
@@ -581,13 +592,14 @@ fluctuating POE's based on the Forsa opinion polls. \\
 \\
 \includegraphics[height=.15\textwidth]{figures/2013_forsa_cdufdp_prob.pdf}
 \end{tabular}
-\caption{Development of the POE that the coalition Union-FDP has a government majority before the German federal election in September 2013 based on Forsa opinion polls.
+\caption{Development of the POE now-cast that the coalition Union-FDP would obtain
+a government majority before the German federal election in September 2013 based
+on Forsa opinion polls.
 Top left: Reported joint voter shares for Union-FDP after redistribution.
-Bottom left: Probabilities to reach a majority of seats in parliament, based on
-$10\,000$ simulations each from the posterior.
+Bottom left: Probabilities to reach a majority of seats in the parliament, each
+based on $10\,000$ simulations from the posterior.
 Right: Densities of simulated parliament seat shares based on $10\,000$ simulations each.
-The area under the density colored blue indicates simulations with a
-Union-FDP majority.
+The area under the density colored blue indicates simulations with a Union-FDP majority.
 \label{fig:seatDist_time}
 }
 \end{figure}
@@ -596,14 +608,13 @@ Finally, Figure \ref{fig:2013_cdufdp} visualizes the results for the potential
 coalition Union-FDP based on \emph{pooled} opinion polls (cf. Section \ref{ssec:pooling}).
 The redistributed, joint voter share was around $43\%$ in October 2012,
 and rose steadily over time, reaching its maximum of ca. $51\%$ about one month
-before election day.
-Only taking this development of the redistributed voter shares into
-consideration, one would conclude that -- apart from a short
+before election day. Only taking this development of the redistributed voter
+shares into consideration, one would conclude that -- apart from a short
 time window in August/September of 2013 -- a majority of the Union-FDP
 coalition would be slightly missed.
-In the best case, sample uncertainty would be reported, making
-a majority for the coalition {\it (highly) improbable}. A more
-precise and adequate quantification of the uncertainty however is usually not given.
+In the best case, uncertainty would be reported w.r.t. the observed party shares,
+without, however, quantifying the uncertainty for the occurrence of the event of
+interest and without providing intuition regarding the POE.
 
 \begin{figure}[H]\centering
 \begin{tabular}{ll}
@@ -625,31 +636,30 @@ simulations with a seat majority for Union-FDP.
 }
 \end{figure}
 
-Considering the estimated seat majority probabilities together with
-the simulated seat share densities instead draws a more comprehensive picture
-of the situation.
-While the overall development of probabilities has the same structure
-as the redistributed voter shares, i.e., there is an increase over time,
-there are two points that clearly get more weight when shifting
-the focus in reporting towards discussing {\it how probable} events are:
+The estimated seat majority probabilities together with
+the densities of simulated seat shares, on the other hand,  draws a more
+comprehensive picture of the situation. While the overall development of
+probabilities has the same structure as the redistributed voter shares, i.e.,
+there is an increase over time, there are two points that clearly get more weight
+when shifting the focus in reporting towards discussing {\it how probable} events are:
 First of all, the impact of small changes in voter shares is again more pronounced
-in the probability development. 
-As discussed in the context of Figure~\ref{fig:2013_fdp}, the effect of changes in voter share on
-the POE strongly depends on the base level of the voter share.
-E.g., a rise in voter share from $45\%$ to $48\%$ in March 2013 only had
-very small impact on the corresponding POE as a seat majority was still very improbable.
-Instead, dealing with voter shares near $50\%$, even very small changes heavily influence
-the event probabilities.
-Secondly, probabilities do not only take into account
-joint party shares and sample uncertainty,
+in the probability development.
+As discussed in the context of Figure~\ref{fig:2013_fdp}, the effect of changes
+in party shares on the POE strongly depends on the base level of the shares.
+For example, a rise in voter share from $45\%$ to $48\%$ in March 2013 only had
+very small impact on the corresponding POE as a seat majority was still very
+improbable. Instead, dealing with voter shares near $50\%$, even very small changes
+heavily influence the event probabilities. Secondly, probabilities do not only
+take into account joint party shares and sample uncertainty,
 but also implicitly cover the uncertainty regarding whether FDP passes the $5\%$
 threshold or not. Apart from the end of August 2013, the latter event
-is highly uncertain and thus overall majority probabilities of
+is highly uncertain and thus probabilities for a majority of
 the coalition are comparatively small, even for pooled voter shares around $50\%$.
-The impact of the uncertainty regarding FDP entering the parliament is
-directly noticeable in the ridgeline plot (right panel in Fig.~\ref{fig:2013_cdufdp}),
-as the densities are bimodal or unimodal depending on whether the reported FDP
-share is close to $5\%$ or not (see Fig.~\ref{fig:2013_fdp}), respectively.
+The impact of the uncertainty regarding FDP share and consequently whether the
+FDP enters the parliament is directly noticeable in the ridgeline plot
+(right panel in Fig.~\ref{fig:2013_cdufdp}), as the densities are bimodal or
+unimodal depending on whether the reported FDP share is close to $5\%$ or not
+(see Fig.~\ref{fig:2013_fdp}), respectively.
 
 
 
@@ -657,7 +667,7 @@ share is close to $5\%$ or not (see Fig.~\ref{fig:2013_fdp}), respectively.
 After the German federal election in 2013, a ``grand coalition'' between Union and the social
 democratic SPD formed the government from 2013 to 2017.
 For the following election on September 24th, 2017, the goal of both Union and SPD
-was to obtain enough votes to form a governance coalition outside the grand
+was to obtain enough votes to form a coalition outside the grand
 coalition. Therefore, multiple potential coalitions were of interest before the
 election. In the following paragraphs, we will focus on the most prominently
 discussed coalitions, i.e., the Union-led coalition Union-FDP, and the
@@ -665,14 +675,14 @@ SPD-led coalition of SPD, the Left party (Die LINKE) and the Green party, which
 -- based on the joint voter share -- was the strongest alternative to a Union-led
 government and was not clearly denied by the potential member parties until several weeks
 before election day.
-Also, after the rise of the right-wing party AfD major interest was
-in whether this party, which slightly missed the $5\%$ threshold in 2013,
+A question of major interest was also whether the right-wing party AfD, which
+slightly missed the $5\%$ threshold in 2013 but gained support before the 2017 election,
 would become the third strongest party in parliament after Union and SPD.
 The pooled party shares before the 2017 election are shown in Figure~\ref{fig:2017}.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.6\textwidth]{figures/2017_pooled_rawShares.pdf}
-\caption{Development of the pooled raw voter shares from October 2016 until
+\caption{Development of the pooled party shares from October 2016 until
 election day on September 24, 2017, based on a pooling time window of 14 days.
 \label{fig:2017}
 }
@@ -717,17 +727,16 @@ Union-FDP majority.
 % of uncertainty is given.
 %% Helmut: Finde ich gut!
 By comparison, the ridgeline plot in Figure~\ref{fig:2017_cdufdp}
-shows that parliament seat shares (or correspondingly voter shares)
-below $48\%$ correspond to very small POEs
-of $<1\%$, based on pooled effective sample sizes of around $3000$.
-On the other hand, based on comparable sample sizes, reported shares of $49\%$
+shows that parliament redistributed party shares below $48\%$ correspond to very
+small POEs of $<1\%$, based on pooled effective sample sizes of around $3000$.
+On the other hand, based on comparable sample sizes, shares of $49\%$
 and $49.5\%$ corresponded to probabilities of around $14\%$ and $25\%$,
 respectively.
-
 Overall, one month before election day the coalition had a good prospect
 reaching a seat majority based on a redistributed share of $49.8\%$ and
-a probability of nearly $40\%$. However, until two days before the election the pooled share and the probability dropped again to $47.4\%$ and $0.4\%$, respectively, making a success
-of the two parties highly improbable.
+a POE of nearly $40\%$. However, until two days before the election the pooled
+share and the probability dropped to $47.4\%$ and $0.4\%$, respectively, making
+a success of the two parties highly improbable.
 
 % würde sie SPD-Linke_Grüne rausnehmen oder zusammen mit der Union-FDP erwähnen - z.B. als "POE: Coalitions beyond the grand coalition" - dann aber trotzdem kürzen (der Teil wirkt länglich)
 \paragraph{POE: SPD-Left-Greens coalition majority} \ \\
@@ -748,9 +757,10 @@ The ridgeline plot in Figure~\ref{fig:2017_spdleftgreens}
 again nicely visualizes the uncertainty underlying the event of
 interest. This is not only limited to parties forming the potential coalition,
 but also includes information about all other causes of uncertainty in the data.
-E.g., in November and December of 2016, the seat share distribution clearly
-is bimodal as in a relevant share of simulations FDP does not pass
-the $5\%$ threshold and more votes are redistributed in these cases.
+In November and December of 2016, for example, the seat share distribution
+is clearly bimodal because in a relevant share of simulations the FDP does not
+pass the $5\%$ threshold and thus more votes are redistributed to other parties
+(including the SPD) in these cases.
 
 \begin{figure}[H]\centering
 \begin{tabular}{ll}
@@ -763,11 +773,10 @@ the $5\%$ threshold and more votes are redistributed in these cases.
 \caption{Development of the prospect that the coalition SPD-Left-Greens will
 obtain a majority of parliament seats before the German
 general election in September 2017, based on pooled opinion polls.
-Top left: Observed reported joint voter shares after redistribution.
+Top left: Reported joint voter shares after redistribution.
 Bottom left: Probabilities to obtain a seat majority based on $10\,000$ simulations each.
 Right: Densities of simulated parliament seat shares based on $10\,000$ simulations each.
-The area under the density colored blue indicates simulations with a
-seat majority.
+The area under the density colored blue indicates simulations with a seat majority.
 \label{fig:2017_spdleftgreens}
 }
 \end{figure}
@@ -800,16 +809,16 @@ Bottom: Probabilities to become third strongest party, based on $10\,000$ simula
 
 In the year before the general election in 2017, reported AfD party shares
 underwent strong fluctuations. In January 2017 the party had a $3.9\%$ lead
-over Left and Greens (corresponding to an estimated probability of becoming the
-third largest party in parliament of $100\%$). Subsequently, the AfD share
-dropped $1.9$ percentage points behind the Left in June
+over the Left and the Greens (corresponding to an estimated POE of
+becoming the third largest party in parliament of $100\%$). Subsequently, the
+AfD share dropped $1.9$ percentage points behind the Left in June
 (corresponding to a $1.2\%$ probability)
 and rose back to a $1.7$ percentage point lead (in voter shares) over the Left
-and FDP shortly before election day (corresponding to a $96.8\%$ event probability).
+and the FDP shortly before election day (corresponding to a POE of $96.8\%$).
 
 
 \section{Conclusion} \label{sec:conclusion}
-We present the KOALA (Coalition analysis) approach, i.e. a Bayesian,
+We presented the KOALA (Coalition analysis) approach, a Bayesian,
 Monte Carlo based method to estimate POEs (probabilities of events for
 specific election results) based on publicly available opinion polls.
 A pooling approach allows for the inclusion of information from multiple
@@ -821,7 +830,7 @@ accounted for through the introduction of additional uncertainty in the simulati
 
 The estimated POEs are easy to communicate to the general public and prevent
 improper poll-based reporting as they include sample uncertainty in a natural way.
-More particularly, the focus on such event probabilities allows for easily 
+More particularly, the focus on such event probabilities allows for easily
 capturing complex situations --
 like multiple parties having high uncertainty to enter the parliament --
 by naturally incorporating all party-specific uncertainties.
