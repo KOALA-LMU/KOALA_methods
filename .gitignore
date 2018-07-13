@@ -218,6 +218,7 @@ TSWLatexianTemp*
 
 # R
 *.Rhistory
+*.RData
 
 # expex forward references with \gathertags
 *-tags.tex
