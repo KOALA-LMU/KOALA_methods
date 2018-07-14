@@ -817,35 +817,49 @@ and rose back to a $1.7$ percentage point lead (in voter shares) over the Left
 and the FDP shortly before election day (corresponding to a POE of $96.8\%$).
 
 
-\section{Conclusion} \label{sec:conclusion}
-We presented the KOALA (Coalition analysis) approach, a Bayesian,
-Monte Carlo based method to estimate POEs (probabilities of events for
-specific election results) based on publicly available opinion polls.
-A pooling approach allows for the inclusion of information from multiple
-surveys and reduces sample uncertainty. As the examination of individual polls
-from different pollster institutes showed that polling results in Germany are correlated,
-an effective sample size for the pooled sample is calculated
-to adjust for this issue. Rounding of the reported results is
-accounted for through the introduction of additional uncertainty in the simulation. \\
+\section{Discussion} \label{sec:conclusion}
+In this article we introduce a Bayesian approach to now-cast probabilities of
+election outcome related events (POEs) based on publicly available opinion poll data
+(cf. Section \ref{sec:methods}).
+Sample uncertainty is reduced by combining polls from multiple polling agencies,
+while taking into account the correlation between polls
+(cf. Section \ref{ssec:pooling}). Rounding errors of
+reported party shares are also accounted for (\ref{ssec:rounding}).
+The estimated POEs are easy to communicate to the general public and provide
+a new paradigm for election coverage and reporting of opinion polls.
+More specifically, the focus on event probabilities allows to capture
+changes in the current political mood and their effect on events of interest more
+intuitively and comprehensively while taking into account the potentially complex
+range of possible outcomes due to uncertainty inherent in the
+reported party shares. The added value of POE based reporting was illustrated by
+application to the 2013 and 2017 German federal elections.
+Various visualization techniques were used to make the result accessible to the
+general public. POEs are continuously updated and
+made available on a dedicated website. The methods for pre-processing and
+calculation of POEs are available in the
+open-source \texttt{R} package \texttt{coalitions} that allows for a straightforward
+application of the method to any multi-party electoral system.\\
 
-The estimated POEs are easy to communicate to the general public and prevent
-improper poll-based reporting as they include sample uncertainty in a natural way.
-More particularly, the focus on such event probabilities allows for easily
-capturing complex situations --
-like multiple parties having high uncertainty to enter the parliament --
-by naturally incorporating all party-specific uncertainties.
-Also, the POE not under focus at the beginning
-can be easily obtained through the posteriori distribution \textcolor{red}{(Alex: Was will dieser Satz sagen?)}. \\
-%Note that we only perform now-casting of the POE analyzing the current
-%politic mood and no fore-casting with the target to predict the election results in before.\\
-
-Special focus was on the visual presentation of the results. Different methods are used to make the results accessible to the general public.
-% and to avoid misinterpretation because of similarity to existing plots.
-We visualize the results on a publicly available website for chosen elections and provide the open-source \texttt{R} package \texttt{coalitions} that allows for a straightforward application of the method to any multi-party electoral system. In this manner, our long-term goal is to make proper uncertainty assessment in general opinion poll-based reporting the rule, rather than an exception.
+Our approach is based on results of opinion polls conducted by different
+polling agencies. Consequently, problems with well known sources of bias induced
+by non response, incorrect answers, non coverage etc. can occur. All institutes
+perform some correction methods to reduce these biases, using weighting or related
+procedures, but they do not make their procedures completely transparent.
+Currently we perform no additional assessment or correction for potential biases
+of individual polling agencies. We also do not perform forecasts or use
+any other information outside of reported party shares (and sample size).\\
 
 
-\subsection{Limitations}
-Since our approach is based on results of exit polls conducted by different pollster institutes, problems with well known sources of bias induced by non response, incorrect answers, non coverage etc. can occur. All institutes perform some correction methods to reduce these biases, using weighting or related procedures, but they do not make their procedures completely transparent. Therefore, it is essential to analyze the results of different exit poll providers separately as well as in a pooled version. This can be easily done based on our KOALA approach and the provided software implementation.
+Our long-term goal is to make probability based reporting of opinion poll based
+election coverage available to the general public. One limitation in this regard
+is the availability of properly structured data and its accessibility through
+a application programming interface (API). The creation of such a data base
+would greatly enhance the development of our and other methods for the analysis
+of opinion polls. Future iterations of our algorithms could also focus on
+enhancing  the computation speed of the Monte Carlo based calculation of
+POEs, making updates available to the general public even more quickly,
+ideally in real time when new opinion polls are published.
+
 % % For one-column wide figures use
 % \begin{figure}
 % % Use the relevant command to insert your figure file.
