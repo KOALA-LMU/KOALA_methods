@@ -57,11 +57,18 @@ get_maj_prob <- function(dat, coal_column) {
   sh <- shares %>% filter(date == dat)
   100 * sum(sh[,coal_column] > 50) / nrow(sh)
 }
+# function to extract the probability of a party passing the 5% hurdle
+get_pass_prob <- function(dat, party_column) {
+  sh <- shares %>% filter(as.Date(date) == as.Date(dat))
+  100 * sum(sh[,party_column] >= 5) / nrow(sh)
+}
 # function call
 dates <- unique(shares$date)
 plot_dat <- data.frame("date" = dates,
+                       "fdp_share_raw" = sapply(dates, function(dat) surveys %>% unnest() %>% filter(date == as.Date(dat) & party == "fdp") %>% pull(percent)),
                        "cdufdp_share_redist" = sapply(dates, function(dat) get_redistributed_partyShares_oneDate(dat, c("cdu","fdp")) %>% pull(percent) %>% sum()),
-                       "cdufdp_majority_prob" = sapply(dates, function(dat) { get_maj_prob(dat, "coal_percent") }))
+                       "cdufdp_majority_prob" = sapply(dates, function(dat) { get_maj_prob(dat, "coal_percent") }),
+                       "fdp_passing_prob" = sapply(dates, function(dat) get_pass_prob(dat, "fdp_rawPercent")))
 
 
 ### Save prepared data
