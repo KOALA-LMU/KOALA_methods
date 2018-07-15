@@ -305,7 +305,7 @@ $\theta_p$ represents the true percentage of voters for party $p$ in
 the general population.
 % Helmut: Brauchen wir nicht (\textcolor{red}{CITATION Stichproben Buch}).
  Given one (pooled) survey,
-the distribution of the observed vote counts $\mathbf{x}^\T=(x_1,\ldots,x_P)$ is
+the distribution of the observed vote counts $\mathbf{x}=(x_1,\ldots,x_P)^\T$ is
 denoted by $f(\mathbf{x}|\boldsymbol{\theta})$.\\
 
 For the prior distribution of the true party shares $\boldsymbol{\theta}=(\theta_1,\ldots, \theta_P)^\T$
@@ -451,7 +451,7 @@ to avoid potential biases caused by the use of rounded numbers:
 The correction coefficient $\gamma$ is chosen according to rounding accuracy.
 E.g., for data rounded to $1\%$ steps we use $\gamma = 0.5\%$. After random noise
 was added the adjusted shares are rescaled to ensure that all adjusted party shares
-$\theta_p,adj$ sum to $100\%$. Overall, instead of using rounded numbers and simulating
+$\tilde{\theta}_{p,adj}$ sum to $100\%$. Overall, instead of using rounded numbers and simulating
 $n_s$ values from the resulting posterior, we perform $n_s$ simulations where we
 first adjust the party shares using individually drawn $r_{\gamma,p}$ and
 then simulate one observation from each resulting posterior.\\
@@ -600,18 +600,18 @@ obtains a parliament seat majority.
 
 Comparing the redistributed party shares and the POEs
 in Figure~\ref{fig:seatDist_time}, it is again evident that even small changes
-in the redistributed party share can make an immense difference regarding the
+in the joint redistributed voter share can make an immense difference regarding the
 POEs. Especially in the months preceding the election this leads to heavily
 fluctuating POEs based on the Forsa opinion polls.
-Furthermore, the development of the redistributed party shares and the corresponding POEs
+Furthermore, the development of the joint voter shares and the corresponding POEs
 nicely highlights another advantage of using such probabilities. The POEs do not
-only take into account joint party shares and sample uncertainty, but also
+only take into account the voter shares and sample uncertainty, but also
 implicitly cover the uncertainty regarding whether FDP passess the $5\%$ threshold
 or not. Between the middle of June and the middle of July the POE drops from 
 nearly $70\%$ to under $30\%$, even though the joint voter share of Union-FDP
 only changes marginally. Taking into account the development of reported FDP
 party shares in Figure~\ref{fig:2013_fdp}, it becomes clear that this
-drop is caused by a growing uncertainty of the FDP passing into parliament.
+drop is caused by a growing uncertainty of FDP passing into parliament.
 As the FDP share drops to $5\%$ at the end of June also the POE for the
 Union-FDP seat majority declines heavily. Accordingly, the densities in the
 ridgeline plot in Figure~\ref{fig:seatDist_time} are unimodal or bimodal if the FDP
@@ -689,8 +689,8 @@ SPD-led coalition of SPD, the Left party (Die LINKE) and the Green party, which
 -- based on the joint voter share -- was the strongest alternative to a Union-led
 government and was not clearly denied by the potential member parties until several weeks
 before election day.
-A question of major interest was also whether the right-wing party AfD, which
-slightly missed the $5\%$ threshold in 2013 but gained support before the 2017 election,
+A question of major interest also was whether the right-wing party AfD, which
+slightly missed the $5\%$ threshold in 2013, but gained support before the 2017 election,
 would become the third strongest party in parliament after Union and SPD.
 The pooled party shares before the 2017 election are shown in Figure~\ref{fig:2017}.
 
@@ -706,7 +706,7 @@ election day on September 24, 2017, based on a pooling time window of 14 days.
 \paragraph{POE: Union-FDP coalition majority} \ \\
 Compared to the German federal election in 2013, the situation for a
 coalition between Union and FDP before the election in 2017
-was quite different as FDP voter shares were
+was quite different as FDP party shares were
 clearly above the $5\%$ threshold (see Fig.~\ref{fig:2017}) most of the time.
 However, as the share of Union was lower than in 2013,
 the joint redistributed voter share was mostly below $50\%$.
@@ -740,15 +740,15 @@ obtains a parliament seat majority.
 % of uncertainty is given.
 %% Helmut: Finde ich gut!
 By comparison, the ridgeline plot in Figure~\ref{fig:2017_cdufdp}
-shows that parliament redistributed party shares below $48\%$ correspond to very
-small POEs of $<1\%$, based on pooled effective sample sizes of around $3000$.
+shows that joint voter shares below $48\%$ correspond to very
+small POEs of $<1\%$, based on pooled effective sample sizes of around $3\,000$.
 On the other hand, based on comparable sample sizes, shares of $49\%$
 and $49.5\%$ corresponded to probabilities of around $14\%$ and $25\%$,
 respectively.
 Overall, one month before election day the coalition had a good prospect
 reaching a seat majority based on a redistributed share of $49.8\%$ and
 a POE of nearly $40\%$. However, until two days before the election the pooled
-share and the probability dropped to $47.4\%$ and $0.4\%$, respectively, making
+share and the POE dropped to $47.4\%$ and $0.4\%$, respectively, making
 a success of the two parties highly improbable.
 
 % würde sie SPD-Linke_Grüne rausnehmen oder zusammen mit der Union-FDP erwähnen - z.B. als "POE: Coalitions beyond the grand coalition" - dann aber trotzdem kürzen (der Teil wirkt länglich)
@@ -761,17 +761,17 @@ Accordingly, the coalition between SPD, the Left and the Greens had
 their best joint poll results between February and May 2017 as is shown in
 Figure~\ref{fig:2017_spdleftgreens}.
 The maximum share was reached in April with a redistributed voter
-share of $\sim 50\%$, which corresponded to a probability of obtaining the
+share of $\sim 50\%$, which corresponded to a POE of obtaining the
 parliament seat majority of $\sim 48\%$.
-Starting in April, the probability again dropped to negligibly small values.
-Shortly before election day, the joint share
-reached a value of around $41\%$ and event probabilities of practically zero.
+Starting in April, the POE again dropped to negligibly small values.
+Shortly before election day, the joint voter share
+reached a value of around $41\%$, leading to POEs of practically zero.
 The ridgeline plot in Figure~\ref{fig:2017_spdleftgreens}
 again nicely visualizes the uncertainty underlying the event of
 interest. This is not only limited to parties forming the potential coalition,
 but also includes information about all other causes of uncertainty in the data.
 In November and December of 2016, for example, the seat share distribution
-is clearly bimodal because in a relevant share of simulations the FDP does not
+is clearly bimodal as in a relevant share of simulations the FDP does not
 pass the $5\%$ threshold and thus more votes are redistributed to other parties
 (including the SPD) in these cases.
 
@@ -799,7 +799,7 @@ obtains a parliament seat majority.
 \paragraph{POE: AfD becoming third strongest party} \ \\
 Prior to the 2017 election, special interest was on the question
 which party would become the third largest party in parliament.
-With reported voter shares of over $8\%$, the right-wing AfD had a very good
+With reported party shares of over $8\%$, the right-wing AfD had a very good
 prospect to become a member of the German parliament for the first time
 (see Fig.~\ref{fig:2017_afd}) and was polling close to other smaller parties.
 Using our KOALA approach, estimating the POE that the AfD becomes
