@@ -116,7 +116,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
 \begin{minipage}[T]{.95\textwidth}  % tweaks the width, makes a new \textwidth
 \begin{block}{\footnotesize Motivation}
   \begin{center}\centering
-  \grayHeader{Election poll-based reporting}
+  \grayHeader{Election poll reporting}
   \end{center}
 
   % Upper columns with general description -----
@@ -126,9 +126,9 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \colHeader{What's the status quo?}
   Typical election poll reporting: \\[1cm]
   \begin{tabular}{p{9cm}p{25cm}}
-  \includegraphics[height=5.75cm]{figures/motivation_survey_highlighted}
+  \includegraphics[height=5cm]{figures/motivation_survey_highlighted}
   &
-  \vspace{-5.3cm}
+  \vspace{-4.8cm}
   \begin{itemize}
     \item is based on observed mean voter shares
     \item sets the focus on individual party achievements
@@ -170,9 +170,9 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \colHeader{What do we propose?}
   Proposed type of reporting: \\[1cm]
   \begin{tabular}{p{9cm}p{25cm}}
-  \includegraphics[height=5.75cm]{figures/motivation_density_highlighted}
+  \includegraphics[height=5cm]{figures/motivation_density_highlighted}
   &
-  \vspace{-5.3cm}
+  \vspace{-4.8cm}
   \begin{itemize}
     \item focuses on specific events (e.g. potential majorities)
     \item naturally imparts sample uncertainty using probabilities
@@ -198,7 +198,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \multirow{2}{*}{\ \ \darkgray{to} \ } &
   \multirow{2}{*}[-1ex]{\includegraphics[height=3ex]{figures/motivation_pictoDens_col}} &
   \darkgray{\footnotesize Uncertainty-based} \\
-   & observed party shares & & & event probabilities \\
+   & observed party shares & & & probabilities of events (POEs) \\
   \end{tabular}
   \end{column}
 
@@ -275,7 +275,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \end{column}
 
   \begin{column}{.29\textwidth}
-  Foundations of KOALA-based reporting:
+  Foundations of KOALA-based reporting of POEs:
   \vspace{1.5ex}
   \begin{itemize}
     \item \darkgray{Use event \textbf{probabilities}} \fnlightgray{instead of voter shares} \\[0.2cm] \fnlightgray{Probabilities comprise sample uncertainty in a natural way and are less at risk to be misinterpreted}
@@ -327,9 +327,8 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
 
 
 % Methodology ---------------------------------------
-\begin{block}{\footnotesize Event probability estimation}
-\bfBlue{Estimating event probabilities}
-\\ \textcolor{red}{TODO: Den POE-Begriff einfuehrn}
+\begin{block}{\footnotesize Methods}
+\bfBlue{Estimating POEs}
 % \\[0.5cm]
 \\[0.05cm]
 \textcolor{LMUlightgray}{\hrule{}}
@@ -357,9 +356,9 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \begin{minipage}{\textwidth}
   \darkgray{\textbf{Multinomial-Dirichlet model}}
 %with uninformative prior
-for the true party shares $\theta_j$ {\footnotesize (Gelman et al., 2013)}:
+for the true party shares $\theta_p$ {\footnotesize (Gelman et al., 2013)}:
 $$
-(\theta_1,\ldots,\theta_k)^T \sim Dirichlet(\alpha_1,\ldots,\alpha_k), \ \ \text{with} \ \ \alpha_1 = \ldots = \alpha_k = \frac{1}{2}
+(\theta_1,\ldots,\theta_P)^T \sim Dirichlet(\alpha_1,\ldots,\alpha_P), \ \ \text{with} \ \ \alpha_1 = \ldots = \alpha_P = \frac{1}{2}
 $$
 % $$
 % \begin{aligned}
@@ -368,12 +367,11 @@ $$
 % \end{aligned}
 % $$
 Given one survey, we obtain a \darkgray{\textbf{Dirichlet posterior}}
-with $\alpha_j = x_j + \frac{1}{2}$ for each party $j=1,\ldots,k$ and its observed
-vote counts $x_j$.
+with $\alpha_p = x_p + \frac{1}{2}$ for each party $p=1,\ldots,P$ and its observed
+vote count $x_p$.
 \\[0.5cm]
-Using \darkgray{\textbf{Monte Carlo simulations}} of election outcomes, we obtain
-obtain specific event probabilities by calculating the relative frequency of their
-occurrence.
+Using \darkgray{\textbf{Monte Carlo simulations}} of election outcomes, we obtain 
+specific POEs by calculating the events relative frequency of occurrence.
 % As vote shares are usually rounded before publication,
 % we adjust the available data by adding random noise to $x_j$ before
 % calculating the Bayesian posterior.
@@ -386,12 +384,13 @@ occurrence.
 
 \vspace{1ex}
 \textcolor{LMUlightgray}{\hrule{}}
-\vspace{5ex}
+\vspace{3ex}
 
 % In the presence of multiple published opinion polls, pooling is used to summarize the observed results in order to reduce sample uncertainty. To assure a reliable pooling regarding the current public opinion, we only use polls published within the past 14 days and only use the most recent survey published by each polling agency.
-\bfBlue{Pooling multiple surveys} \\[0.5cm]
-We pool the most recent surveys within the past 14 days (one per polling agency) to reduce
-sample uncertainty. We adjust the uncertainty of the \darkgray{multinomially distributed}
+\bfBlue{Pooling multiple polls} \\[0.5cm]
+We aggregate the latest polls within a specific time window 
+(e.g. 14 days) to reduce
+sample uncertainty. We adjust the uncertainty of the multinomially distributed
 summed number of votes per party by using an \darkgray{\textbf{effective sample size}} {\footnotesize (Hanley et al., 2003)}.
 % \\[0.5cm]
 \\[0.05cm]
@@ -419,15 +418,15 @@ summed number of votes per party by using an \darkgray{\textbf{effective sample 
 As polls from different polling agencies are correlated, \darkgray{\textbf{party-specific correlations}} were
 estimated based on 20 surveys of polling agencies Emnid and Forsa, using
 $$
-Cov(X_{Aj}, X_{Bj}) = \frac{1}{2} \cdot \left(Var(X_{Aj}) + Var(X_{Bj}) - Var(X_{Aj} - X_{Bj}) \right),
+Cov(X_{Ap}, X_{Bp}) = \frac{1}{2} \cdot \left(Var(X_{Ap}) + Var(X_{Bp}) - Var(X_{Ap} - X_{Bp}) \right),
 $$
 \darkgray{\footnotesize with \\}
 \begin{minipage}{\textwidth}
 \hspace{0.5in}
 \begin{itemize}
-  \item \darkgray{\footnotesize $X_{Sj}$ the observed votes for party $j$ in survey $S$,}
-  \item \darkgray{\footnotesize $Var(X_{Aj})$, $Var(X_{Bj})$ the theoretical variances of binomial distributions,}
-  \item \darkgray{\footnotesize $Var(X_{Aj} - X_{Bj})$ estimated from the party share differences.}
+  \item \darkgray{\footnotesize $X_{Ap},X_{Bp}$ the observed vote counts for party $p$ in surveys $A$ and $B$,}
+  \item \darkgray{\footnotesize $Var(X_{Ap})$, $Var(X_{Bp})$ the theoretical variances of binomial distributions,}
+  \item \darkgray{\footnotesize $Var(X_{Ap} - X_{Bp})$ estimated from the party share differences.}
 \end{itemize}
 \end{minipage}
 \\[0.8cm]
@@ -502,7 +501,18 @@ $$
 
   \begin{column}{.6\textwidth}
   \ \\
-  \textbf{Density plots} are used to depict one simulated seat distribution
+  \darkgray{\textbf{Density plots}} are used to \darkgray{\textbf{visualize POEs}}, highlighting the area
+  associated with simulations where the event of interest occurred. \\
+  Furthermore, such plots also show
+  \begin{minipage}{\textwidth}
+  \hspace{0.5in}
+  \begin{itemize}
+    \item the uncertainty underlying the event of interest
+    \item the range of possible outcomes
+  \end{itemize}
+  \end{minipage}
+  \\[20px]
+  in a natural and intuitive way.
   \end{column}
 \end{columns}
 \vspace{1ex}
@@ -521,7 +531,9 @@ $$
 
   \begin{column}{.6\textwidth}
   \ \\
-  \textbf{Ridgeline plots} {\footnotesize (Wilke, 2017)} are used to depict the simulated seat distribution development over time
+  \darkgray{\textbf{Ridgeline plots}} {\footnotesize (Wilke, 2017)} are used to depict the
+  \darkgray{\textbf{development of POEs}}, again visualizing the uncertainty 
+  underlying the event of interest in a \\ natural way.
   \end{column}
 \end{columns}
 \vspace{1ex}
@@ -555,15 +567,11 @@ $$
 \textcolor{LMUlightgray}{\hrule{}}
 \vspace{3ex}
 
-\darkgray{\textbf{Major building blocks}}
-\begin{minipage}{\textwidth}
-\hspace{0.5in}
-\begin{itemize}
-  \item The accompanying R package \bfBlue{\href{https://adibender.github.io/coalitions/}{\texttt{coalitions}}}
-  \item An automated fetch-and-update process for the website
-  \item An automated bot tweeting new results
-\end{itemize}
-\end{minipage}
+The \darkgray{\textbf{R package coalitions}} {\footnotesize (Bender and Bauer, 2018)}
+includes all methods and allows for their application to any multi-party electoral system.
+\\[1cm]
+Our \darkgray{\textbf{dedicated website and Twitter channel}} makes current POEs
+for selected elections accessible to the general public.
 
 % \bfBlue{Future goals} \\
 % Making the approach known to reporters,
@@ -650,8 +658,8 @@ $$
 \end{columns}
 
 
-% Literature ---------------------------------------
-\vspace{2ex}
+% References ---------------------------------------
+\vspace{12px}
 \begin{beamercolorbox}[center,wd=\textwidth]{postercolumn}
 \begin{minipage}[T]{.95\textwidth}  % tweaks the width, makes a new \textwidth
 \begin{block}{\footnotesize References}
@@ -660,7 +668,6 @@ $$
 Bender, A. and Bauer, A. (2018). coalitions: Coalition probabilities in multi-party democracies.
 \textit{Journal of Open Source Software}, \textbf{3(23)}, 606,
 \href{https://doi.org/10.21105/joss.00606}{\texttt{https://doi.org/10.21105/joss.00606}}. \\
-Unser AStA-Paper no ois Technical Report? \\
 Gelman, A. et al. (2013). \textit{Bayesian Data Analysis, 3rd edition}. Boca Raton, FL: CRC press. \\
 Hanley, J. A. et al. (2003). Statistical analysis of correlated data using gen-
 eralized estimating equations: an orientation. \textit{American journal of epidemiology},
