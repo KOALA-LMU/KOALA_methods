@@ -211,6 +211,6 @@ gg <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
   theme_bw(base_size = 24) +
   theme(axis.title.x = element_blank(),
         plot.margin = unit(c(0, 37, 5.5, 0), units = "pt"))
-pdf("../figures/2013_forsa_fdp_PassingProb.pdf", width = 9, height = 4)
+pdf("../figures/2013_forsa_fdp_passingProb.pdf", width = 9, height = 4)
 gg
 dev.off()
