@@ -13,21 +13,21 @@
 
 \usepackage{mdframed}
 \newmdenv[%
-  backgroundcolor=koalawhitegray4,
+  backgroundcolor=koalawhitegray3,
   linecolor=goodgreen,
   linewidth=3pt,
   topline=false,
   rightline=false,
   bottomline=false]{mdleftgreen}
 \newmdenv[%
-  backgroundcolor=koalawhitegray4,
+  backgroundcolor=koalawhitegray3,
   linecolor=badred,
   linewidth=3pt,
   topline=false,
   rightline=false,
   bottomline=false]{mdleftred}
 \newmdenv[%
-  backgroundcolor=koalawhitegray4,
+  backgroundcolor=white,
   linecolor=koaladarkestblue,
   linewidth=3pt,
   topline=false,
@@ -118,6 +118,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \begin{center}\centering
   \grayHeader{Election poll reporting}
   \end{center}
+  \vspace{-25px}
 
   % Upper columns with general description -----
   \begin{columns}[t]
@@ -176,7 +177,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \begin{itemize}
     \item focuses on specific events (e.g. potential majorities)
     \item naturally imparts sample uncertainty using probabilities
-    \item prevents misunderstandings by using this holistic approach
+    \item prevents misunderstandings by using a holistic approach
   \end{itemize}
   \end{tabular}
   \\[10px]
@@ -191,14 +192,14 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \end{mdleftblue}
   \vspace{60px}
 
-  We aim to \textbf{shift the focus} from \\[1.3ex]
+  We aim to \darkgray{\textbf{shift the focus}} from \\[1.3ex]
   \begin{tabular}{clccl}
   \multirow{2}{*}[-0.95ex]{\includegraphics[height=3ex]{figures/motivation_pictoBar_col}} &
   \darkgray{\footnotesize Incomprehensive} &
   \multirow{2}{*}{\ \ \darkgray{to} \ } &
   \multirow{2}{*}[-1ex]{\includegraphics[height=3ex]{figures/motivation_pictoDens_col}} &
   \darkgray{\footnotesize Uncertainty-based} \\
-   & observed party shares & & & probabilities of events (POEs) \\
+   & reported party shares & & & probabilities of events (POEs) \\
   \end{tabular}
   \end{column}
 
@@ -275,11 +276,11 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \end{column}
 
   \begin{column}{.29\textwidth}
-  Foundations of KOALA-based reporting of POEs:
+  Foundations of POE-based reporting:
   \vspace{1.5ex}
   \begin{itemize}
     \item \darkgray{Use event \textbf{probabilities}} \fnlightgray{instead of voter shares} \\[0.2cm] \fnlightgray{Probabilities comprise sample uncertainty in a natural way and are less at risk to be misinterpreted}
-    \item \darkgray{Use \textbf{event} probabilities} \fnlightgray{instead of voter shares} \\[0.2cm] \fnlightgray{Focusing on the main events allows the reader to easily grasp the relevant information}
+    \item \darkgray{Use \textbf{event} probabilities} \fnlightgray{instead of voter shares} \\[0.2cm] \fnlightgray{Focusing on the main events allows for easily grasping the relevant information}
   \end{itemize}
   \vspace{-1.7ex}
   \textcolor{koalablue}{$$ \underbrace{\resizebox{\hsize}{!}{ }}_{ } $$}
@@ -384,7 +385,7 @@ specific POEs by calculating the events relative frequency of occurrence.
 
 \vspace{1ex}
 \textcolor{LMUlightgray}{\hrule{}}
-\vspace{3ex}
+\vspace{40px}
 
 % In the presence of multiple published opinion polls, pooling is used to summarize the observed results in order to reduce sample uncertainty. To assure a reliable pooling regarding the current public opinion, we only use polls published within the past 14 days and only use the most recent survey published by each polling agency.
 \bfBlue{Pooling multiple polls} \\[0.5cm]
@@ -490,8 +491,9 @@ $$
 \vspace{1ex}
 \begin{columns}[t]
   \begin{column}{.35\textwidth}
+  \vspace{35px}
   \begin{center}\centering
-  \includegraphics[height=130px]{figures/vis_seatDist}
+  \includegraphics[width=300px]{figures/vis_seatDist}
   \end{center}
   \end{column}
 
@@ -503,7 +505,7 @@ $$
   \ \\
   \darkgray{\textbf{Density plots}} are used to \darkgray{\textbf{visualize POEs}}, highlighting the area
   associated with simulations where the event of interest occurred. \\
-  Furthermore, such plots also show
+  Moreover, such plots highlight
   \begin{minipage}{\textwidth}
   \hspace{0.5in}
   \begin{itemize}
@@ -521,7 +523,7 @@ $$
 \begin{columns}[t]
   \begin{column}{.35\textwidth}
   \begin{center}\centering
-  \includegraphics[height=270px]{figures/vis_seatDist_time}
+  \includegraphics[width=300px]{figures/vis_seatDist_time}
   \end{center}
   \end{column}
 
@@ -530,15 +532,15 @@ $$
   \hspace{1.5ex}
 
   \begin{column}{.6\textwidth}
-  \ \\
-  \darkgray{\textbf{Ridgeline plots}} {\footnotesize (Wilke, 2017)} are used to depict the
-  \darkgray{\textbf{development of POEs}}, again visualizing the uncertainty 
+  \ \\[70px]
+  \darkgray{\textbf{Ridgeline plots}} {\footnotesize (Wilke, 2017)} are used to depict \\
+  the \darkgray{\textbf{development of POEs}}, again visualizing the uncertainty 
   underlying the event of interest in a \\ natural way.
   \end{column}
 \end{columns}
 \vspace{1ex}
 \textcolor{LMUlightgray}{\hrule{}}
-\vspace{6ex}
+\vspace{48px}
 \bfBlue{Implementation}
 \\[0.05cm]
 \textcolor{LMUlightgray}{\hrule{}}
@@ -569,9 +571,11 @@ $$
 
 The \darkgray{\textbf{R package coalitions}} {\footnotesize (Bender and Bauer, 2018)}
 includes all methods and allows for their application to any multi-party electoral system.
-\\[1cm]
+\\[0.75cm]
 Our \darkgray{\textbf{dedicated website and Twitter channel}} makes current POEs
 for selected elections accessible to the general public.
+
+\textcolor{LMUlightgray}{\hrule{}}
 
 % \bfBlue{Future goals} \\
 % Making the approach known to reporters,
@@ -664,7 +668,7 @@ for selected elections accessible to the general public.
 \begin{minipage}[T]{.95\textwidth}  % tweaks the width, makes a new \textwidth
 \begin{block}{\footnotesize References}
 {\footnotesize
-\textcolor{red}{s KOALA-Paper} \\
+\textcolor{red}{KOALA-Paper noch einf\"ugen} \\
 Bender, A. and Bauer, A. (2018). coalitions: Coalition probabilities in multi-party democracies.
 \textit{Journal of Open Source Software}, \textbf{3(23)}, 606,
 \href{https://doi.org/10.21105/joss.00606}{\texttt{https://doi.org/10.21105/joss.00606}}. \\

@@ -29,7 +29,7 @@ ggplot(dat3b, aes(x = party, weight = share, fill = party)) +
   geom_bar() +
   scale_fill_manual(values = as.character(dat3b$col)) +
   scale_y_continuous("Share in %") +
-  theme_bw(base_size = 43) +
+  theme_bw(base_size = 47) +
   theme(legend.position = "none",
         axis.title.x = element_blank(),
         axis.text.x = element_blank(),
@@ -86,9 +86,9 @@ ggplot(dat2b, aes(x = x)) +
   geom_ribbon(data = dens_dat[dens_dat$x <= 50,], aes(x = x, ymax = y), ymin = 0, fill = "#d1d0ce") +
   geom_ribbon(data = dens_dat[dens_dat$x >= 50,], aes(x = x, ymax = y), ymin = 0, fill = "#27719C") +
   # geom_line(data = dens_dat, aes(x = x, y = y)) +
-  theme_bw(base_size = 43) +
+  theme_bw(base_size = 47) +
   # scale_x_continuous(name = "Joint party share in %") +
-  scale_x_continuous(breaks = c(30,40,50,60), labels = c(46,48,50,52)) +
+  scale_x_continuous(breaks = c(30,40,50,60), labels = paste0(c(46,48,50,52),"%")) +
   scale_y_continuous(name = "Density") +
   theme(axis.text.y = element_blank(),
         axis.ticks.y = element_blank(),
