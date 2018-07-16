@@ -91,7 +91,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \graphicspath{{figures/}}
 
-\title{\huge{KOALA: Estimating coalition probabilities}\\[0.5ex]\LARGE{in multi-party electoral systems}}
+\title{\huge{KOALA: A new paradigm for election coverage}\\[0.5ex]\LARGE{in multi-party electoral systems}}
 \author{Alexander Bauer$^{1}$, Andreas Bender$^{1}$, Andr\'e Klima$^{1}$, Helmut K\"{u}chenhoff$^{1}$}
 \institute[LMU Munich]{\textit{$^{1}$ Statistical Consulting Unit StaBLab, Department of Statistics, LMU Munich,
 Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
@@ -131,7 +131,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   &
   \vspace{-4.8cm}
   \begin{itemize}
-    \item is based on observed mean voter shares
+    \item is based on reported party shares
     \item sets the focus on individual party achievements
     \item imparts sample uncertainty only insufficiently
   \end{itemize}
@@ -152,12 +152,12 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \setlength{\fboxrule}{3pt} % Border thickness
   \fcolorbox{koalawhitegray}{koalawhitegray2}{
   \begin{minipage}{0.9\textwidth}
-  \vspace{2.5ex}
+  \vspace{28px}
   \begin{center}\centering
   \bfBlue{Real-world Example} \\
   {\footnotesize \lightgray{Reporting on}} \darkgray{Union} {\footnotesize \lightgray{and}} \darkgray{FDP} {\footnotesize \lightgray{to jointly obtain a majority before the German federal election 2013}}
   \end{center}
-  \vspace{2ex}
+  \vspace{32px}
   \end{minipage}
   }
   }
@@ -190,7 +190,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \\[17px]
   \end{minipage}
   \end{mdleftblue}
-  \vspace{60px}
+  \vspace{50px}
 
   We aim to \darkgray{\textbf{shift the focus}} from \\[1.3ex]
   \begin{tabular}{clccl}
@@ -211,7 +211,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
 
   % Lower columns with a specific example ----
   {
-  \vspace{-4pt}
+  \vspace{-25px}
   \hspace{-24.34pt}
   \setlength{\fboxrule}{3pt} % Border thickness
   \fcolorbox{koalawhitegray}{koalawhitegray3}{
@@ -242,7 +242,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \ \\ \vspace{-2ex}
   \begin{mdleftred}
   \begin{minipage}{\textwidth}
-  \lightgray{\footnotesize Media headline:}
+  \lightgray{\footnotesize Typical media headline:}
   \\
   \begin{center}\centering
   \vspace{-2ex}
@@ -250,7 +250,7 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \vspace{-.2ex}
   \end{center}
   \lightgray{\tiny Source: FAZ.net (2017). Umfrage zur Bundestagswahl: Schwarz-Gelb verliert \\[-2ex]
-  die Mehrheit.http://archive.is/SuXVt. Accessed 26 April 2018.}
+  die Mehrheit. http://archive.is/I76o3. Accessed 16 July 2018.}
   \end{minipage}
   \end{mdleftred}
   \end{column}
@@ -261,12 +261,12 @@ Germany} \\[2ex] \texttt{Alexander.Bauer@stat.uni-muenchen.de}}
   \end{column}
 
   \begin{column}{.26\textwidth}
-  Flaws of this type of reporting:
+  Major flaws of this type of reporting:
   \vspace{1.5ex}
   \begin{itemize}
     \item \darkgray{Misleading conclusions are drawn} \\[0.2cm] \fnlightgray{A mean share of 50\% only means that it's} \fndarkgray{slightly more probable} \fnlightgray{to miss a majority}
     \item \darkgray{Sample uncertainty is ignored} \\[0.2cm] \fnlightgray{E.g., with a mean voter share of 5\%, FDP will only enter the parliament with $\approx$50\%}
-    \item \darkgray{Redistribution of votes is ignored} \\[0.2cm] \fnlightgray{FAZ.net bases the conclusion on the observed voter share and not on the redistributed 50\% share}
+    % \item \darkgray{Redistribution of votes is ignored} \\[0.2cm] \fnlightgray{FAZ.net bases the conclusion on the reported party share and not on the redistributed 50\% share}
   \end{itemize}
   \end{column}
 
@@ -534,8 +534,8 @@ $$
   \begin{column}{.6\textwidth}
   \ \\[70px]
   \darkgray{\textbf{Ridgeline plots}} {\footnotesize (Wilke, 2017)} are used to depict \\
-  the \darkgray{\textbf{development of POEs}}, again visualizing the uncertainty 
-  underlying the event of interest in a \\ natural way.
+  the \darkgray{\textbf{development of POEs}} over time, again visualizing the uncertainty 
+  underlying the event of interest in a natural way.
   \end{column}
 \end{columns}
 \vspace{1ex}
@@ -673,8 +673,8 @@ Bender, A. and Bauer, A. (2018). coalitions: Coalition probabilities in multi-pa
 \textit{Journal of Open Source Software}, \textbf{3(23)}, 606,
 \href{https://doi.org/10.21105/joss.00606}{\texttt{https://doi.org/10.21105/joss.00606}}. \\
 Gelman, A. et al. (2013). \textit{Bayesian Data Analysis, 3rd edition}. Boca Raton, FL: CRC press. \\
-Hanley, J. A. et al. (2003). Statistical analysis of correlated data using gen-
-eralized estimating equations: an orientation. \textit{American journal of epidemiology},
+Hanley, J. A. et al. (2003). Statistical analysis of correlated data using generalized
+estimating equations: an orientation. \textit{American journal of epidemiology},
 \textbf{157(4)}, 364--375. \\
 Wilke C.O. (2017). \textit{ggridges: Ridgeline Plots in 'ggplot2'}. R package version
 0.4.1. URL \href{https://CRAN.R-project.org/package=ggridges}{https://CRAN.R-project.org/package=ggridges}
