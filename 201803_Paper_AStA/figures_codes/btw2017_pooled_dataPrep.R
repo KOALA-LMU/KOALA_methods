@@ -9,7 +9,7 @@ library(purrr)
 # Create data -------------------------------------------------------------
 ### Scrape data from before the German federal election 2017
 surveys <- coalitions:::.pollster_df %>%
-  mutate(surveys = map(address, scrape_wahlrecht), surveys = map(.x = surveys, collapse_parties)) %>%
+  mutate(surveys = map(address, scrape_wahlrecht), surveys = map(.x = surveys, collapse_parties)) %>% 
   select(-one_of("address"))
 date_range <- as.Date(c("2016-09-25","2017-09-24"))
 surveys <- surveys %>% unnest() %>% filter(date >= date_range[1] - 14 & date <= date_range[2]) %>%
@@ -30,25 +30,21 @@ sim_oneDate <- function(dat) {
   print(dat)
   pool_dat <- pool %>% filter(date == as.Date(dat)) %>% unnest()
   dirichlet.draws <- coalitions::draw_from_posterior(survey = pool_dat, nsim = nsim)
-  seat.distributions <- coalitions::get_seats(dirichlet.draws, survey = pool_dat,
+  seat.distributions <- coalitions::get_seats(dirichlet.draws, survey = pool_dat, 
                                               distrib.fun = coalitions::sls, n_seats = 598)
   get_seatShares_coal <- function(i, parties) { sum(seat.distributions$seats[seat.distributions$sim == i & seat.distributions$party %in% parties]) / 598 * 100 }
-
-  return(
-    data.frame(
-      "coal_percent_cdufdp" = sapply(1:nsim, function(i) { get_seatShares_coal(i, c("cdu","fdp")) }),
-      "coal_percent_spdleftgreens" = sapply(1:nsim, function(i) { get_seatShares_coal(i, c("spd","left","greens")) }),
-      "fdp_rawPercent" = 100 * dirichlet.draws$fdp,
-      "afd_rawPercent" = 100 * dirichlet.draws$afd,
-      "left_rawPercent" = 100 * dirichlet.draws$left,
-      "greens_rawPercent" = 100 * dirichlet.draws$greens,
-        "date" = as.POSIXct(as.Date(dat))))
+  
+  return(data.frame("coal_percent_cdufdp" = sapply(1:nsim, function(i) { get_seatShares_coal(i, c("cdu","fdp")) }),
+                    "coal_percent_spdleftgreens" = sapply(1:nsim, function(i) { get_seatShares_coal(i, c("spd","left","greens")) }),
+                    "fdp_rawPercent" = 100 * dirichlet.draws$fdp,
+                    "afd_rawPercent" = 100 * dirichlet.draws$afd,
+                    "left_rawPercent" = 100 * dirichlet.draws$left,
+                    "greens_rawPercent" = 100 * dirichlet.draws$greens,
+                    "date" = as.POSIXct(as.Date(dat))))
 }
 
 set.seed(2018)
-library(parallel)
-ncores = 20
-shares_list <- mclapply(pool$date, function(dat) sim_oneDate(dat), mc.cores=ncores)
+shares_list <- lapply(pool$date, function(dat) sim_oneDate(dat))
 shares <- bind_rows(shares_list)
 
 
