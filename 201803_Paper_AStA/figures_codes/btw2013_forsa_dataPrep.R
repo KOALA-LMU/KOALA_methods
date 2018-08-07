@@ -10,7 +10,7 @@ library(purrr)
 ### Scrape data from before the German federal election 2013
 address_forsa2013 <- "http://www.wahlrecht.de/umfragen/forsa/2013.htm"
 surveys <- coalitions:::.pollster_df %>% filter(pollster == "forsa") %>% mutate(address = address_forsa2013) %>%
-  mutate(surveys = map(address, scrape_wahlrecht), surveys = map(.x = surveys, collapse_parties)) %>% 
+  mutate(surveys = map(address, scrape_wahlrecht), surveys = map(.x = surveys, collapse_parties)) %>%
   select(-one_of("address"))
 surveys <- surveys %>% unnest() %>% filter(date >= "2013-01-01" & date <= "2013-09-22")
 
@@ -23,7 +23,7 @@ sim_oneDate <- function(dat) {
     filter(row_number() == 1) %>% # for the case when two surveys of one institute are published on the same day
     unnest()
   dirichlet.draws <- coalitions::draw_from_posterior(survey = survey, nsim = nsim)
-  seat.distributions <- coalitions::get_seats(dirichlet.draws, survey = survey, 
+  seat.distributions <- coalitions::get_seats(dirichlet.draws, survey = survey,
                                               distrib.fun = coalitions::sls, n_seats = 598)
   seat.shares <- sapply(1:nsim, function(i) {
     sum(seat.distributions$seats[seat.distributions$sim == i & seat.distributions$party %in% c("cdu","fdp")]) / 598 * 100
@@ -72,4 +72,5 @@ plot_dat <- data.frame("date" = dates,
 
 
 ### Save prepared data
+dir.create("data_prepared")
 save(list = ls(), file = "data_prepared/btw2013_forsa_data.RData")
