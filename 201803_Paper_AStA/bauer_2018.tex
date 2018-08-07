@@ -15,8 +15,8 @@
 \RequirePackage{fix-cm}
 %
 %\documentclass{svjour3}                     % onecolumn (standard format)
-\documentclass[smallcondensed]{svjour3}     % onecolumn (ditto)
-%\documentclass[smallextended]{svjour3}      % onecolumn (second format)
+% \documentclass[smallcondensed]{svjour3}     % onecolumn (ditto)
+\documentclass[smallextended]{svjour3}      % onecolumn (second format)
 %\documentclass[twocolumn]{svjour3}          % twocolumn
 %
 \smartqed  % flush right qed marks, e.g. at end of proof
@@ -126,7 +126,7 @@ the number of overall respondents and -- often less prominent -- information
 about sample uncertainty.\\
 
 One party often does not obtain enough votes for a governance majority on its own,
-if the voting system has some kind of proportional allocation of seats in
+if the voting system based on proportional allocation of seats in
 parliament. Thus, multiple parties form
 a so-called \emph{coalition} to jointly obtain the necessary majority of seats
 in parliament. Media usually reports the results of opinion polls by focusing
@@ -191,7 +191,7 @@ coalition probabilities and is used to communicate the results for German federa
 and state elections to the general public. Additionally, we applied our method
 to the Austrian federal election 2017. The process of fetching new polls,
 updating the website and sending out Twitter messages based on the newest results
-is automated and allows for an immediate transfer of the estimated POE
+is automated and allows for an immediate transfer of the estimated POEs
 to media outlets as well as the general public.
 
 \subsection{Data basis}\label{ssec:data-basis}
@@ -479,8 +479,8 @@ of $5\%$ of the votes. Figure \ref{fig:2013} summarizes the reported party share
 for the one year period prior to the election.
 
 \begin{figure}[H]\centering
-\includegraphics[width=0.6\textwidth]{figures/2013_forsa_rawShares.pdf}
-\caption{Reported party shares based on Forsa opinion polls 
+\includegraphics[width=.8\textwidth]{2013_forsa_rawShares.pdf}
+\caption{Reported party shares based on Forsa opinion polls
 from October 2012 until election day on September 22nd, 2013.
 Shares for the AfD were only explicitly reported starting in April 2013.
 Before that time, the party is contained in ``Others''.
@@ -518,13 +518,7 @@ of the current public opinion compared to the reported party share and
 survey sample size only. \\
 
 \begin{figure}[H]\centering
-\begin{tabular}{ll}
-\includegraphics[height=.2\textwidth]{figures/2013_forsa_fdp_rawShares.pdf}
-&
-\multirow{2}{*}[18.3ex]{\includegraphics[height=40ex]{figures/2013_forsa_fdp_ridgeline.pdf}}
-\\
-\includegraphics[height=.2\textwidth]{figures/2013_forsa_fdp_passingProb.pdf}
-\end{tabular}
+\includegraphics[width=1\textwidth]{fdp_2013_threshold.pdf}
 \caption{Prospect of FDP to pass the $5\%$ threshold before the
 German federal election in September 2013 based on Forsa opinion polls.
 Top left: Reported party share before redistribution. Bottom Left: Now-cast
@@ -545,11 +539,12 @@ shares additionally highlights the underlying uncertainty and the range
 of possible outcomes. Another advantage is that such visualizations can easily
 be extended to depict the development of POEs over time using so-called
 \emph{ridgeline plots} \citep{wilke_2017}. In Figure~\ref{fig:2013_fdp} this
-plot type and the development of the POEs is compared to the observed 
+plot type and the development of the POEs is compared to the observed
 FDP party shares usually reported in media. \\
 
 To focus on the most relevant changes in the POEs, we propose
-the use of a skewed axis as shown in Figure~\ref{fig:2013_fdp}. In this axis
+the use of a skewed axis as shown in the bottom left of Figure~\ref{fig:2013_fdp}.
+On this axis
 the range of values around $50\%$ is stretched and the range of values near
 $0\%$ and $100\%$ is compressed. In this way, we put less weight on changes
 where an event is {\it still highly (im)probable} and emphasize more relevant
@@ -564,11 +559,11 @@ Figure \ref{fig:seatDist} shows the simulated parliament seat shares for the
 coalition Union-FDP, based on the reported party shares in Table \ref{tab_fdp}.
 The estimated density is clearly bimodal as the reported FDP share before
 redistribution equals exactly $5\%$ and therefore FDP only enters the parliament
-in about $50\%$ of the simulations. In this case, a majority was observed in about
-one quarter of the simulations, leading to an estimated POE of $26\%$. \\
+in about $50\%$ of the simulations. In this case, the estimated POE was $26\%$,
+thus a majority was observed in about one quarter of the simulations. \\
 
 \begin{figure}[H]\centering
-\includegraphics[width=0.45\textwidth]{figures/2013_forsa_cdufdp_lastPreelectionPoll.pdf}
+\includegraphics[width=0.6\textwidth]{2013_forsa_cdufdp_lastPreelectionPoll.pdf}
 \caption{Density of $10\,000$ simulated parliament seat shares for the coalition
 Union-FDP before the German federal election in September 2013 based on the Forsa
 opinion poll in Table \ref{tab_fdp}. The area under the density colored blue
@@ -579,13 +574,7 @@ POE of about $26\%$.
 \end{figure}
 
 \begin{figure}[H]\centering
-\begin{tabular}{ll}
-\includegraphics[height=.2\textwidth]{figures/2013_forsa_cdufdp_rawSharesRedist.pdf}
-&
-\multirow{2}{*}[18.3ex]{\includegraphics[height=40ex]{figures/2013_forsa_cdufdp_ridgeline.pdf}}
-\\
-\includegraphics[height=.2\textwidth]{figures/2013_forsa_cdufdp_prob.pdf}
-\end{tabular}
+\includegraphics[width=1\textwidth]{cdufdp_2013_joint.pdf}
 \caption{Prospect of the coalition Union-FDP to obtain a government majority before the
 German federal election in September 2013 based on Forsa opinion polls.
 Top left: Reported joint voter shares after redistribution.
@@ -607,7 +596,7 @@ Furthermore, the development of the joint voter shares and the corresponding POE
 nicely highlights another advantage of using such probabilities. The POEs do not
 only take into account the voter shares and sample uncertainty, but also
 implicitly cover the uncertainty regarding whether FDP passess the $5\%$ threshold
-or not. Between the middle of June and the middle of July the POE drops from 
+or not. Between the middle of June and the middle of July the POE drops from
 nearly $70\%$ to under $30\%$, even though the joint voter share of Union-FDP
 only changes marginally. Taking into account the development of reported FDP
 party shares in Figure~\ref{fig:2013_fdp}, it becomes clear that this
@@ -628,14 +617,14 @@ share is clearly above/below or close to the $5\%$ threshold, respectively. \\
 % In the best case, uncertainty would be reported w.r.t. the observed party shares,
 % without, however, quantifying the uncertainty for the occurrence of the event of
 % interest and without providing intuition regarding the POE.
-% 
+%
 % \begin{figure}[H]\centering
 % \begin{tabular}{ll}
-% \includegraphics[height=.2\textwidth]{figures/2013_pooled_cdufdp_rawSharesRedist.pdf}
+% \includegraphics[height=.2\textwidth]{2013_pooled_cdufdp_rawSharesRedist.pdf}
 % &
-% \multirow{2}{*}[18.3ex]{\includegraphics[height=40ex]{figures/2013_pooled_cdufdp_ridgeline.pdf}}
+% \multirow{2}{*}[18.3ex]{\includegraphics[height=40ex]{2013_pooled_cdufdp_ridgeline.pdf}}
 % \\
-% \includegraphics[height=.2\textwidth]{figures/2013_pooled_cdufdp_prob.pdf}
+% \includegraphics[height=.2\textwidth]{2013_pooled_cdufdp_prob.pdf}
 % \end{tabular}
 % \caption{Prospect of the coalition Union-FDP to obtain a government majority before the
 % German federal election in September 2013 based on pooled opinion polls.
@@ -648,7 +637,7 @@ share is clearly above/below or close to the $5\%$ threshold, respectively. \\
 % \label{fig:2013_cdufdp}
 % }
 % \end{figure}
-% 
+%
 % The estimated seat majority probabilities together with
 % the densities of simulated seat shares, on the other hand,  draws a more
 % comprehensive picture of the situation. While the overall development of
@@ -689,13 +678,13 @@ SPD-led coalition of SPD, the Left party (Die LINKE) and the Green party, which
 -- based on the joint voter share -- was the strongest alternative to a Union-led
 government and was not clearly denied by the potential member parties until several weeks
 before election day.
-A question of major interest also was whether the right-wing party AfD, which
+A question of major interest was also whether the right-wing party AfD, which
 slightly missed the $5\%$ threshold in 2013, but gained support before the 2017 election,
 would become the third strongest party in parliament after Union and SPD.
 The pooled party shares before the 2017 election are shown in Figure~\ref{fig:2017}.
 
 \begin{figure}[H]\centering
-\includegraphics[width=0.6\textwidth]{figures/2017_pooled_rawShares.pdf}
+\includegraphics[width=.8\textwidth]{2017_pooled_rawShares.pdf}
 \caption{Development of the pooled party shares from October 2016 until
 election day on September 24, 2017, based on a pooling time window of 14 days.
 \label{fig:2017}
@@ -716,13 +705,7 @@ and reached its maximum share of nearly $49.8\%$ about one month
 before election day.
 
 \begin{figure}[H]\centering
-\begin{tabular}{ll}
-\includegraphics[height=.2\textwidth]{figures/2017_pooled_cdufdp_rawSharesRedist.pdf}
-&
-\multirow{2}{*}[18.3ex]{\includegraphics[height=40ex]{figures/2017_pooled_cdufdp_ridgeline.pdf}}
-\\
-\includegraphics[height=.2\textwidth]{figures/2017_pooled_cdufdp_prob.pdf}
-\end{tabular}
+\includegraphics[width=1\textwidth]{cdufdp_2017_joint.pdf}
 \caption{Prospect of the coalition Union-FDP to obtain a government majority before the
 German federal election in September 2017 based on pooled opinion polls.
 Top left: Reported joint voter shares after redistribution.
@@ -776,13 +759,7 @@ pass the $5\%$ threshold and thus more votes are redistributed to other parties
 (including the SPD) in these cases.
 
 \begin{figure}[H]\centering
-\begin{tabular}{ll}
-\includegraphics[height=.2\textwidth]{figures/2017_pooled_spdleftgreens_rawSharesRedist.pdf}
-&
-\multirow{2}{*}[18.3ex]{\includegraphics[height=40ex]{figures/2017_pooled_spdleftgreens_ridgeline.pdf}}
-\\
-\includegraphics[height=.2\textwidth]{figures/2017_pooled_spdleftgreens_prob.pdf}
-\end{tabular}
+\includegraphics[width=1\textwidth]{spd_2017_joint.pdf}
 \caption{Prospect of the coalition SPD-Left-Greens to obtain a government majority before the
 German federal election in September 2017 based on pooled opinion polls.
 Top left: Reported joint voter shares after redistribution.
@@ -808,9 +785,9 @@ this event probability that simultaneously depends on all reported party shares.
 
 \begin{figure}[H]\centering
 \begin{tabular}{l}
-\includegraphics[height=.2\textwidth]{figures/2017_pooled_afd_rawShares.pdf}
+\includegraphics[height=.3\textwidth]{2017_pooled_afd_rawShares.pdf}
 \\
-\includegraphics[height=.2\textwidth]{figures/2017_pooled_afd_thirdPartyProb.pdf}
+\includegraphics[height=.3\textwidth]{2017_pooled_afd_thirdPartyProb.pdf}
 \end{tabular}
 \caption{Development of the prospect that AfD becomes the third largest party
 in parliament before the German federal election in September 2017 based on pooled
@@ -876,68 +853,109 @@ enhancing  the computation speed of the Monte Carlo based calculation of
 POEs, making updates available to the general public even more quickly,
 ideally in real time when new opinion polls are published.
 
-% % For one-column wide figures use
-% \begin{figure}
-% % Use the relevant command to insert your figure file.
-% % For example, with the graphicx package use
-%   \includegraphics{figures/seatDist_ridgeline.pdf}
-% % figure caption is below the figure
-% \caption{Please write your figure caption here}
-% \label{fig:1}       % Give a unique label
-% \end{figure}
-% %
-% % For two-column wide figures use
-% \begin{figure*}
-% % Use the relevant command to insert your figure file.
-% % For example, with the graphicx package use
-%   \includegraphics[width=0.75\textwidth]{figures/seatDist_ridgeline.pdf}
-% % figure caption is below the figure
-% \caption{Please write your figure caption here}
-% \label{fig:2}       % Give a unique label
-% \end{figure*}
-%
-% % For tables use
-% \begin{table}
-% % table caption is above the table
-% \caption{Please write your table caption here}
-% \label{tab:1}       % Give a unique label
-% % For LaTeX tables use
-% \begin{tabular}{lll}
-% \hline\noalign{\smallskip}
-% first & second & third  \\
-% \noalign{\smallskip}\hline\noalign{\smallskip}
-% number & number & number \\
-% number & number & number \\
-% \noalign{\smallskip}\hline
-% \end{tabular}
-% \end{table}
 
-
-%\begin{acknowledgements}
-%If you'd like to thank anyone, place your comments here
-%and remove the percent signs.
-%\end{acknowledgements}
 
 % BibTeX users please use one of
 % \bibliographystyle{spbasic}      % basic style, author-year citations
-%\bibliographystyle{spmpsci}      % mathematics and physical sciences
-%\bibliographystyle{spphys}       % APS-like style for physics
-\bibliography{bauer_2018}   % name your BibTeX data base
+% %\bibliographystyle{spmpsci}      % mathematics and physical sciences
+% %\bibliographystyle{spphys}       % APS-like style for physics
+% \bibliography{bauer_2018}   % name your BibTeX data base
 
-% Non-BibTeX users please use
-% \begin{thebibliography}{}
-%
-% and use \bibitem to create references. Consult the Instructions
-% for authors for reference list style.
-%
-% \bibitem{RefJ}
-% % Format for Journal Reference
-% Author, Article title, Journal, Volume, page numbers (year)
-% % Format for books
-% \bibitem{RefB}
-% Author, Book title, page numbers. Publisher, place (year)
-% % etc
-% \end{thebibliography}
+\begin{thebibliography}{13}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bender and Bauer(2018)]{bender_bauer_2018}
+{\rm Bender, A. {\rm and} Bauer, A.} (2018).
+\newblock coalitions: Coalition probabilities in multi-party democracies.
+\newblock \emph{The Journal of Open Source Software}, {\bf 3}\penalty0 (23).
+\newblock \doi{10.21105/joss.00606}.
+\newblock URL \url{http://joss.theoj.org/papers/10.21105/joss.00606}.
+
+\bibitem[Chang et~al.(2017)Chang, Cheng, Allaire, Xie, and
+  McPherson]{chang_2017}
+{\rm Chang, W., Cheng, J., Allaire, J., Xie, Y., {\rm and} McPherson, J.}
+  (2017).
+\newblock \emph{shiny: Web Application Framework for R}.
+\newblock URL \url{https://CRAN.R-project.org/package=shiny}.
+\newblock R package version 1.0.5.
+
+\bibitem[FAZ.net(2017)]{umfrage_2017}
+{\rm FAZ.net} (2017).
+\newblock Umfrage zur {B}undestagswahl: {S}chwarz-{G}elb verliert die
+  {M}ehrheit.
+\newblock \url{http://archive.is/SuXVt}.
+\newblock Accessed 15 February 2018.
+
+\bibitem[Forsa(2013)]{forsa_2013}
+{\rm Forsa} (2013).
+\newblock Wenn am n\"{a}chsten {S}onntag {B}undestagswahl w\"{a}re...
+\newblock \url{http://archive.is/f9vse}.
+\newblock Accessed 15 February 2018.
+
+\bibitem[Gelitz(2017)]{gelitz_2017}
+{\rm Gelitz, C.} (2017).
+\newblock K\"{o}nnen die aktuellen {U}mfragen noch falsch\-liegen?
+\newblock \url{http://archive.is/JydHd}.
+\newblock Accessed 15 February 2018.
+
+\bibitem[Gelman et~al.(2013)Gelman, Carlin, Stern, Dunson, Vehtari, and
+  Rubin]{gelman_2013}
+{\rm Gelman, A., Carlin, J.~B., Stern, H.~S., Dunson, D.~B., Vehtari, A., {\rm
+  and} Rubin, D.~B.} (2013).
+\newblock \emph{Bayesian data analysis}, volume~3.
+\newblock CRC press Boca Raton, FL.
+
+\bibitem[Graefe(2017)]{graefe_2017}
+{\rm Graefe, A.} (2017).
+\newblock The pollyvote’s long-term forecast for the 2017 german federal
+  election.
+\newblock \emph{PS: Political Science \& Politics}, {\bf 50}\penalty0 (3),
+  \penalty0 693--696.
+
+\bibitem[Grofman and Lijphart(2003)]{grofman_2003}
+{\rm Grofman, B. {\rm and} Lijphart, A.} (2003).
+\newblock \emph{Electoral {Laws} and {Their} {Political} {Consequences}}.
+\newblock Algora Publishing.
+\newblock ISBN 978-0-87586-267-5.
+\newblock Google-Books-ID: o1dqas0m8kIC.
+
+\bibitem[Hanley et~al.(2003)Hanley, Negassa, and Forrester]{hanley_2003}
+{\rm Hanley, J.~A., Negassa, A., {\rm and} Forrester, J.~E.} (2003).
+\newblock Statistical analysis of correlated data using generalized estimating
+  equations: an orientation.
+\newblock \emph{American journal of epidemiology}, {\bf 157}\penalty0 (4),
+  \penalty0 364--375.
+
+\bibitem[Norpoth and Gschwend(2010)]{norpoth_gschwend_2010}
+{\rm Norpoth, H. {\rm and} Gschwend, T.} (2010).
+\newblock The chancellor model: Forecasting german elections.
+\newblock \emph{International Journal of Forecasting}, {\bf 26}\penalty0 (1),
+  \penalty0 42--53.
+
+\bibitem[{R Core Team}(2017)]{r_2017}
+{\rm {R Core Team}} (2017).
+\newblock \emph{R: A Language and Environment for Statistical Computing}.
+\newblock R Foundation for Statistical Computing, Vienna, Austria.
+\newblock URL \url{https://www.R-project.org/}.
+
+\bibitem[Wilke(2017)]{wilke_2017}
+{\rm Wilke, C.~O.} (2017).
+\newblock \emph{ggridges: Ridgeline Plots in 'ggplot2'}.
+\newblock URL \url{https://CRAN.R-project.org/package=ggridges}.
+\newblock R package version 0.4.1.
+
+\bibitem[{ZEIT ONLINE}(2013)]{wahlistik_2013}
+{\rm {ZEIT ONLINE}} (2013).
+\newblock Serie:~{W}ahlistik.
+\newblock \url{http://archive.is/1SU1I}.
+\newblock Accessed 15 February 2018.
+
+\end{thebibliography}
+
 
 \end{document}
 % end of file template.tex
