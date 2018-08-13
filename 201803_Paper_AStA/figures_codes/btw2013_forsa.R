@@ -8,6 +8,8 @@ library(ggplot2)
 library(ggridges)
 source("helpers.R")
 theme_set(theme_bw())
+library(patchwork)
+
 
 load("data_prepared/btw2013_forsa_data.RData")
 
@@ -39,14 +41,14 @@ for (dat in unique(plot_dat_raw$date)) {
 }
 
 # plot
-lk <- coalishin::lookup_parties %>% filter(id_election == "btw")
+lk <- lookup_parties %>% filter(id_election == "btw")
 partycols <- lk$col
 names(partycols) <- lk$id_party
 partycols["fdp"] <- lk %>% filter(id_party == "fdp") %>% pull(colDark)
 
 gg <- coalishin::plot_rawSurvey_byTime(plot_dat_raw, institute = "forsa", election = "btw", hline = NULL)
-pdf("../figures/2013_forsa_rawShares.pdf", width = 8, height = 3.5)
-gg + 
+pdf("../2013_forsa_rawShares.pdf", width = 8, height = 3.5)
+gg +
   scale_y_continuous(name = "Reported party share",
                      limits = c(0,55),
                      breaks = seq(0,55,by = 5),
@@ -82,7 +84,7 @@ gg_shares <- ggplot(shares_short,
         axis.ticks.y = element_blank(),
         axis.text.y = element_blank())
 
-pdf("../figures/2013_forsa_cdufdp_lastPreelectionPoll.pdf", width = 8, height = 4)
+pdf("../2013_forsa_cdufdp_lastPreelectionPoll.pdf", width = 8, height = 4)
 gg_shares
 # brand_plot(gg_shares, xmin = 53, xmax = 57.75, ymin = shares_short$date[1] + 0.65)
 dev.off()
@@ -90,7 +92,7 @@ dev.off()
 
 # 2) Ridgeline plots ------------------------------------------------------
 ### plot the CDU/FDP coalition
-gg_shares <- ggplot(shares,
+gg_cdufdp_ridge <- ggplot(shares,
        aes(x = coal_percent, y = date, group = date, # basic aesthetics
            fill = ifelse(..x..>50, "yes", "no"), # "cut-off" gradient
            frame = date, cumulative = TRUE)) + # aesthetics for animation
@@ -104,17 +106,64 @@ gg_shares <- ggplot(shares,
                      minor_breaks = NULL,
                      labels = c("Jan 2013","","","Apr 2013","","","Jul 2013","","","Election day")) +
   xlab("Share of parliament seats") + ylab("") +
-  theme_bw(base_size = 29) +
-  theme(legend.position = "bottom",
-        plot.margin = unit(c(0,5.5,5.5,5.5), units = "pt"))
+  # theme_bw(base_size = 29) +
+  theme(
+    legend.position = "right",
+    plot.margin = unit(c(0,5.5,5.5,5.5), units = "pt"),
+    axis.text    = element_text(size = rel(1.3)),
+    axis.title   = element_text(size = rel(1.4)),
+    legend.title = element_text(size = rel(1.4)),
+    legend.text = element_text(size = rel(1.3)))
 
-pdf("../figures/2013_forsa_cdufdp_ridgeline.pdf", width = 10, height = 10)
-gg_shares
-dev.off()
+# 3) Line plot of CDU-FDP probabilities -----------------------------------
+### 1) Redistributed party shares
+gg_cdufdp_share <- ggplot(plot_dat, aes(x = date, y = cdufdp_share_redist)) +
+  geom_hline(yintercept = 50, lty = 2, lwd = 1, col = "gray") +
+  geom_line(lwd = 1.3, col = "gray30") +
+  scale_y_continuous(name = "Joint voter share",
+                     limits = c(0,55),
+                     breaks = seq(0,55,by = 5),
+                     minor_breaks = NULL,
+                     labels = c("0%","","10%","","20%","","30%","","40%","","50%","")) +
+  scale_x_datetime(breaks = as.POSIXct(paste0(rep(2013,10), "-", c("01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",9),"22"))),
+                   minor_breaks = NULL,
+                   labels = c("Jan 2013","","","Apr 2013","","","Jul 2013","","","Election day")) +
+  # theme_bw(base_size = 24) +
+  theme(
+    axis.title.x = element_blank(),
+    plot.margin = unit(c(0, 37, 5.5, 20.5), units = "pt"),
+    axis.text    = element_text(size = rel(1.2)),
+    axis.title   = element_text(size = rel(1.3)))
 
 
+# 2) Majority probabilities
+plot_dat$probs_skewed <- 100 * coalishin:::transform_cps(plot_dat$cdufdp_majority_prob / 100)
+gg_cdufdp_prob <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
+  geom_line(lwd = 1.3, col = "gray30") +
+  scale_y_continuous(limits = c(0,100), breaks = skewed_ticks,
+                     labels = axis_labels, name = "POE",
+                     minor_breaks = NULL) +
+  scale_x_datetime(breaks = as.POSIXct(paste0(rep(2013,10), "-", c("01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",9),"22"))),
+                   minor_breaks = NULL,
+                   labels = c("Jan 2013","","","Apr 2013","","","Jul 2013","","","Election day")) +
+  # theme_bw(base_size = 24) +
+  theme(
+    axis.title.x = element_blank(),
+    plot.margin = unit(c(0, 37, 5.5, 20.5), units = "pt"),
+    axis.text    = element_text(size = rel(1.2)),
+    axis.title   = element_text(size = rel(1.3)))
+
+
+p_cdufdp <- ((gg_cdufdp_share + gg_cdufdp_prob + plot_layout(ncol=1)) -
+  gg_cdufdp_ridge) + plot_layout(ncol = 2, widths = c(2, 3))
+
+ggsave("../cdufdp_2013_joint.pdf", p_cdufdp, width=12, height=5)
+
+
+
+# FDP passing hurdle-------------------------------------------------------
 ### plot only FDP
-gg_shares <- ggplot(shares,
+gg_shares_ridge_fdp <- ggplot(shares,
                     aes(x = fdp_rawPercent, y = date, group = date, # basic aesthetics
                         fill = ifelse(..x..>5, "yes", "no"), # "cut-off" gradient
                         frame = date, cumulative = TRUE)) + # aesthetics for animation
@@ -128,59 +177,17 @@ gg_shares <- ggplot(shares,
                      minor_breaks = NULL,
                      labels = c("Jan 2013","","","Apr 2013","","","Jul 2013","","","Election day")) +
   xlab("Share of parliament seats") + ylab("") +
-  theme_bw(base_size = 29) +
-  theme(legend.position = "bottom",
-        plot.margin = unit(c(0,5.5,5.5,5.5), units = "pt"))
+  # theme_bw(base_size = 29) +
+  theme(
+    legend.position = "right",
+    plot.margin = unit(c(0,5.5,5.5,5.5), units = "pt"),
+    axis.text    = element_text(size = rel(1.3)),
+    axis.title   = element_text(size = rel(1.4)),
+    legend.title = element_text(size = rel(1.4)),
+    legend.text = element_text(size = rel(1.3)))
 
-pdf("../figures/2013_forsa_fdp_ridgeline.pdf", width = 10, height = 10)
-gg_shares
-dev.off()
-
-
-
-
-# 3) Line plot of CDU-FDP probabilities -----------------------------------
-### 1) Redistributed party shares
-gg <- ggplot(plot_dat, aes(x = date, y = cdufdp_share_redist)) +
-  geom_hline(yintercept = 50, lty = 2, lwd = 1, col = "gray") +
-  geom_line(lwd = 1.3, col = "gray30") +
-  scale_y_continuous(name = "Joint voter share",
-                     limits = c(0,55),
-                     breaks = seq(0,55,by = 5),
-                     minor_breaks = NULL,
-                     labels = c("0%","","10%","","20%","","30%","","40%","","50%","")) +
-  scale_x_datetime(breaks = as.POSIXct(paste0(rep(2013,10), "-", c("01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",9),"22"))),
-                   minor_breaks = NULL,
-                   labels = c("Jan 2013","","","Apr 2013","","","Jul 2013","","","Election day")) +
-  theme_bw(base_size = 24) +
-  theme(axis.title.x = element_blank(),
-        plot.margin = unit(c(0, 37, 5.5, 11.9), units = "pt"))
-pdf("../figures/2013_forsa_cdufdp_rawSharesRedist.pdf", width = 9, height = 4)
-gg
-dev.off()
-
-# 2) Majority probabilities
-plot_dat$probs_skewed <- 100 * coalishin:::transform_cps(plot_dat$cdufdp_majority_prob / 100)
-gg <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
-  geom_line(lwd = 1.3, col = "gray30") +
-  scale_y_continuous(limits = c(0,100), breaks = skewed_ticks,
-                     labels = axis_labels, name = "POE",
-                     minor_breaks = NULL) +
-  scale_x_datetime(breaks = as.POSIXct(paste0(rep(2013,10), "-", c("01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",9),"22"))),
-                   minor_breaks = NULL,
-                   labels = c("Jan 2013","","","Apr 2013","","","Jul 2013","","","Election day")) +
-  theme_bw(base_size = 24) +
-  theme(axis.title.x = element_blank(),
-        plot.margin = unit(c(0, 37, 5.5, 3), units = "pt"))
-pdf("../figures/2013_forsa_cdufdp_prob.pdf", width = 9, height = 4)
-gg
-dev.off()
-
-
-
-# FDP passing hurdle-------------------------------------------------------
 ### 1) Reported party shares
-gg <- ggplot(plot_dat, aes(x = date, y = fdp_share_raw)) +
+gg_fdp_raw_shares <- ggplot(plot_dat, aes(x = date, y = fdp_share_raw)) +
   geom_hline(yintercept = 5, lty = 2, lwd = 1, col = "gray") +
   geom_line(lwd = 1.3) +
   scale_y_continuous(limits = c(0,10), name = "Reported party share",
@@ -190,17 +197,19 @@ gg <- ggplot(plot_dat, aes(x = date, y = fdp_share_raw)) +
   scale_x_datetime(breaks = as.POSIXct(paste0(c(rep(2012,3),rep(2013,10)), "-", c("10","11","12","01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",12),"22"))),
                    minor_breaks = NULL,
                    labels = c("Oct 2012","","","Jan 2013","","","Apr 2013","","","Jul 2013","","","Election day")) +
-  theme_bw(base_size = 24) +
-  theme(axis.title.x = element_blank(),
-        plot.margin = unit(c(0, 37, 5.5, 20.5), units = "pt"))
-pdf("../figures/2013_forsa_fdp_rawShares.pdf", width = 9, height = 4)
-gg
-dev.off()
+  # theme_bw(base_size = 24) +
+  theme(
+    axis.title.x = element_blank(),
+    plot.margin = unit(c(0, 37, 5.5, 20.5), units = "pt"),
+    axis.text    = element_text(size = rel(1.2)),
+    axis.title   = element_text(size = rel(1.3)))
+
+ggsave("gg_fdp")
 
 
 ### 2) Majority probabilities
 plot_dat$probs_skewed <- 100 * coalishin:::transform_cps(plot_dat$fdp_passing_prob / 100)
-gg <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
+gg_fdp_pass_prob <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
   geom_line(lwd = 1.3) +
   scale_y_continuous(limits = c(0,100), breaks = skewed_ticks,
                      labels = axis_labels, name = "POE",
@@ -208,9 +217,14 @@ gg <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
   scale_x_datetime(breaks = as.POSIXct(paste0(c(rep(2012,3),rep(2013,10)), "-", c("10","11","12","01","02","03","04","05","06","07","08","09","09"), "-", c(rep("01",12),"22"))),
                    minor_breaks = NULL,
                    labels = c("Oct 2012","","","Jan 2013","","","Apr 2013","","","Jul 2013","","","Election day")) +
-  theme_bw(base_size = 24) +
-  theme(axis.title.x = element_blank(),
-        plot.margin = unit(c(0, 37, 5.5, 0), units = "pt"))
-pdf("../figures/2013_forsa_fdp_passingProb.pdf", width = 9, height = 4)
-gg
-dev.off()
+  # theme_bw(base_size = 24) +
+  theme(
+    axis.title.x = element_blank(),
+    plot.margin  = unit(c(0, 37, 5.5, 0), units = "pt"),
+    axis.text    = element_text(size = rel(1.2)),
+    axis.title   = element_text(size = rel(1.3)))
+
+p_fdp_2013_threshold <- ((gg_fdp_raw_shares + gg_fdp_pass_prob + plot_layout(ncol=1)) -
+  gg_shares_ridge_fdp)  + plot_layout(ncol = 2, widths=c(2, 3))
+
+ggsave("../fdp_2013_threshold.pdf", p_fdp_2013_threshold, width=12, height=5)
