@@ -4,11 +4,12 @@ library(dplyr); library(tidyr); library(magrittr)
 n_votes <- 1000
 nsim <- 10000
 
-stimmen <- data.frame("A" = seq(50, 46, by = -0.5),
+stimmen <- data.frame("A" = seq(46, 42, by = -0.5),
                       "E" = seq(3,  7,  by = 0.5),
                       "B" = 22,
                       "C" = 13,
                       "D" = 12,
+                      "others" = 6,
                       "pollster" = "mockup",
                       "date" = seq.Date(as.Date("2018-10-15"), as.Date("2018-10-24"), length.out = 9),
                       "start" = "2018-10-15",
