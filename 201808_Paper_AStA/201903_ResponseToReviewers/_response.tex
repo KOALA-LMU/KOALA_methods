@@ -1,0 +1,97 @@
+\documentclass{scrartcl}
+
+\usepackage{hyperref}
+\usepackage[usenames,dvipsnames]{xcolor}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\blue}[1]{\textcolor{MidnightBlue}{\underline{\textcolor{MidnightBlue}{#1}}}}
+
+\setlength\parindent{0pt}
+
+\begin{document}
+
+\begin{center}
+\large General comments to the Reviewers and the Associated Editors
+\end{center}
+
+\vspace{5ex}
+
+Dear Editors:
+\\[2ex]
+Thank you for the opportunity to revise our manuscript entitled ``KOALA: A new paradigm for election coverage''. We highly appreciate the time and effort that was put into revising our work. We carefully considered the comments and constructive suggestions made by the two reviewers, which led to numerous corrections and overall to a substantial improvement of the paper.
+\\[3ex]
+
+Apart from smaller revisions we worked on the following major changes:
+\begin{enumerate}
+  \item ...
+\end{enumerate}
+
+\vspace{4ex}
+
+We hope that these revisions improve the paper such that you and the reviewers now deem it worthy of publication in AStA. On the following pages, we offer detailed responses to the reviewers' comments. Our responses are marked with \blue{blue text}.
+
+
+%------- First reviewer
+\pagebreak
+\begin{center}
+\large Response to Reviewer \#1
+\end{center}
+\vspace{5ex}
+
+The authors develop a Bayesian method of aggregating polls for deriving posterior vote shares and coalition probabilities in multi-party elections (now-casts). These methods are made available as an R-package and are applied to the German and Austrian federal election.
+\\ \\
+The manuscript is clearly written and innovative graphical representation of the topic. However, I see a need for some revisions and additional discussions:
+
+\section*{Comments}
+\begin{enumerate}
+  \item I would recommend that the author's discuss the potential sources of correlation between the agencys. There could be two potential issues regarding the 
+  distributional assumptions made.
+  \begin{itemize}
+    \item The first one is a common agency bias additional to the individual agency bias. By consulting wahlrecht.de one very often observers that all agencys have an estimate just before the election above or under the final outcome. One example is the CDU/CSU in 2005, where all agencys estimated a share above 40\% when the true outcome was 35.2\%. If you implicitly assume that this is not caused by sudden shifts in voter's share just before the election by taking poll outcomes from the last 14 days before election, this is something to keep in mind.
+    \item The second one is the fact that the poll agencys do not just publish their recorded poll share but apply several weighting and correction factors such that the multinomial distribution assumption might not be in line with reality. You already mention that these weighting factors may cause some bias, but I would also emphasize that these procedures might lead to lower or higher variance than computed by the multinomial distribution.
+  \end{itemize}
+  However, I think that these issues are suitably captured by the effective sample size correction, but should be shortly discussed.
+  \\ \\
+  \blue{Answer} ...
+
+  \item You mention in the introduction that you applied your method to the austrian election, but do not mention them in the application section anymore. Please also make a (short) analysis of the austrian election in section 3.
+  \\ \\
+  \blue{Answer} ...
+
+  \item I would also like to see a table of the last estimates of some POEs with 90 or 95\% posterior intervals and the true outcomes in the application section.
+  \\ \\
+  \blue{Answer} ...
+\end{enumerate}
+
+
+%----------- Second reviewer
+\pagebreak
+\begin{center}
+\large Response to Reviewer \#2
+\end{center}
+\vspace{5ex}
+
+The authors provide an interesting contribution to the estimation of probabilities of events (POE) in the context of now-casts of coalitions in parliaments. Their approach bases on the regularly published results of polling institutes. The methodology uses a Bayesian framework with the Multinomial distribution and a non-informative Dirichlet distribution as a prior. Also rounding to integer percentages is considered. The core of the procedure is a simulation of voting results of the basis of repeated draws from the posterior distribution of party shares. The procedure can be realized by an R-package. As a by-product the manuscript presents also some attractive ways to display the POEs. The use of these techniques is demonstrated by four examples from the last general election of the German Bundestag.
+\\ \\
+The proposed technique is well suited to improve the practice of now-casts. The manuscript is clearly written. The figures are illustrative.
+\\ \\
+There are only some minor details to be mentioned.
+
+\section*{Comments}
+\begin{enumerate}
+  \item The authors mention possible deviations from the assumed Multinomial distribution.
+  \begin{itemize}
+    \item One example is a possible correlation of the count numbers from the different polling institutes. This is reflected by the authors by the so-called effective sample size when data from different polling institutes are pooled. One way to check such correlation might be to compare the now-casts with the realized voting results. Therefore it might be also fruitful to display the prediction error of the polling institutes.
+    \item Another source of deviation from the Multinomial distribution might arise from the sampling procedures of surveys. Here the so-called design defect refers to the increase of the variance with respect to the binomial variance.
+    \item Also the weighting procedures are prone to increase the variance of the population estimates.
+  \end{itemize}
+  So there are good reasons to suspect the Multinomial distribution even in the case of case numbers from a single polling institute. Admittedly, the polling
+institutes do not publish such details. However, one should be cautious with the Multinomial distribution assumption. One way to demonstrate a possible under-estimation of the variance is to display the realized voting results together with its posterior distribution.
+  \\ \\
+  \blue{Answer} ...
+
+  \item page 3, paragraphs 2 and 3: Austria is  mentioned two times but no example from Austria is displayed. From my point of view the German examples are sufficient. Hence, one could skip the references to Austria.
+  \\ \\
+  \blue{Answer} ...
+\end{enumerate}
+
+\end{document}
