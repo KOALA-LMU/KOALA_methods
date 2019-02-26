@@ -1,0 +1,1 @@
+This folder contains files, which were used for calculating coalition probabilities for some only partly covered elections.
