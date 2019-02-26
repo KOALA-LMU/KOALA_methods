@@ -67,7 +67,7 @@ sudo su - -c "R -e \"devtools::install_github('tidyverse/googledrive')\""
 3.5) coalitions und coalishin installieren.
 Wichtig: Das repository 'coalishin' auf GitHub ist privat, deshalb braucht man ein Access Token. Ein persönliches Access Token kann man sich holen, wenn man sich auf GitHub.com anmeldet -> Settings -> ganz unten auf 'personal access tokens'.
 sudo su - -c "R -e \"devtools::install_github('adibender/coalitions')\""
-sudo su - -c "R -e \"devtools::install_github('adibender/coalishin/package', auth_token = 'INSERT_YOUR_TOKEN')\""
+sudo su - -c "R -e \"devtools::install_github('adibender/coalishin', auth_token = 'INSERT_YOUR_TOKEN')\""
 3.5.1) Für coalishin ist es vorher noch notwendig, für das Paket 'udunits2' gewisse dependencies per Hand am System zu installieren:
 sudo apt-get install libudunits2-dev
 
