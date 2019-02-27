@@ -38,9 +38,9 @@ partycols <- lk$col
 names(partycols) <- lk$id_party
 partycols["fdp"] <- lk %>% filter(id_party == "fdp") %>% pull(colDark)
 
-gg <- coalishin::plot_pooledSurvey_byTime(plot_dat_raw, election = "btw", plot_intervals = FALSE, partycols = partycols,
+gg <- coalishin::plot_pooledSurvey_byTime(plot_dat_raw, election = "btw", plot_variation = FALSE, partycols = partycols,
                                           hline = NULL)
-pdf("../2017_pooled_rawShares.pdf", width = 8, height = 3.5)
+pdf("../figures/2017_pooled_rawShares.pdf", width = 8, height = 3.5)
 gg +
   scale_y_continuous(name = "Reported party share",
                      limits = c(0,55),
@@ -124,7 +124,7 @@ gg_cdufdp_ridge <- ggplot(shares,
 p_cdufdp <- ((gg_cdufdp_raw + gg_cdufdp_prob + plot_layout(ncol=1)) -
   gg_cdufdp_ridge)  + plot_layout(ncol = 2, widths=c(2, 3))
 
-ggsave("../cdufdp_2017_joint.pdf", p_cdufdp, width=13, height=6)
+ggsave("../figures/cdufdp_2017_joint.pdf", p_cdufdp, width=13, height=6)
 
 
 
@@ -242,7 +242,7 @@ gg_spd_ridge <- ggplot(shares,
 p_spd <- ((gg_spd_raw + gg_spd_prob + plot_layout(ncol=1)) -
   gg_spd_ridge)  + plot_layout(ncol = 2, widths=c(2, 3))
 
-ggsave("../spd_2017_joint.pdf", p_spd, width=13, height=6)
+ggsave("../figures/spd_2017_joint.pdf", p_spd, width=13, height=6)
 
 
 # AfD third biggest party -------------------------------------------------
@@ -255,9 +255,9 @@ partycols <- lk$col
 names(partycols) <- lk$id_party
 partycols["fdp"] <- lk %>% filter(id_party == "fdp") %>% pull(colDark)
 partycols <- partycols[names(partycols) %in% parties]
-gg <- coalishin::plot_pooledSurvey_byTime(plot_dat_raw, election = "btw", plot_intervals = FALSE, partycols = partycols,
+gg <- coalishin::plot_pooledSurvey_byTime(plot_dat_raw, election = "btw", plot_variation = FALSE, partycols = partycols,
                                           hline = NULL)
-pdf("../2017_pooled_afd_rawShares.pdf", width = 9, height = 3)
+pdf("../figures/2017_pooled_afd_rawShares.pdf", width = 9, height = 3)
 gg +
   scale_y_continuous(name = "Reported party share",
                      limits = c(0,15),
@@ -289,6 +289,6 @@ gg <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
   theme_bw(base_size = 20) +
   theme(axis.title.x = element_blank(),
         plot.margin = unit(c(0, 145, 5.5, 3), units = "pt"))
-pdf("../2017_pooled_afd_thirdPartyProb.pdf", width = 9, height = 3)
+pdf("../figures/2017_pooled_afd_thirdPartyProb.pdf", width = 9, height = 3)
 gg
 dev.off()

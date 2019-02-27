@@ -47,7 +47,7 @@ names(partycols) <- lk$id_party
 partycols["fdp"] <- lk %>% filter(id_party == "fdp") %>% pull(colDark)
 
 gg <- coalishin::plot_rawSurvey_byTime(plot_dat_raw, institute = "forsa", election = "btw", hline = NULL)
-pdf("../2013_forsa_rawShares.pdf", width = 8, height = 3.5)
+pdf("../figures/2013_forsa_rawShares.pdf", width = 8, height = 3.5)
 gg +
   scale_y_continuous(name = "Reported party share",
                      limits = c(0,55),
@@ -84,7 +84,7 @@ gg_shares <- ggplot(shares_short,
         axis.ticks.y = element_blank(),
         axis.text.y = element_blank())
 
-pdf("../2013_forsa_cdufdp_lastPreelectionPoll.pdf", width = 8, height = 4)
+pdf("../figures/2013_forsa_cdufdp_lastPreelectionPoll.pdf", width = 8, height = 4)
 gg_shares
 # brand_plot(gg_shares, xmin = 53, xmax = 57.75, ymin = shares_short$date[1] + 0.65)
 dev.off()
@@ -157,7 +157,7 @@ gg_cdufdp_prob <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
 p_cdufdp <- ((gg_cdufdp_share + gg_cdufdp_prob + plot_layout(ncol=1)) -
   gg_cdufdp_ridge) + plot_layout(ncol = 2, widths = c(2, 3))
 
-ggsave("../cdufdp_2013_joint.pdf", p_cdufdp, width=12, height=5)
+ggsave("../figures/cdufdp_2013_joint.pdf", p_cdufdp, width=12, height=5)
 
 
 
@@ -204,8 +204,6 @@ gg_fdp_raw_shares <- ggplot(plot_dat, aes(x = date, y = fdp_share_raw)) +
     axis.text    = element_text(size = rel(1.2)),
     axis.title   = element_text(size = rel(1.3)))
 
-ggsave("gg_fdp")
-
 
 ### 2) Majority probabilities
 plot_dat$probs_skewed <- 100 * coalishin:::transform_cps(plot_dat$fdp_passing_prob / 100)
@@ -227,4 +225,4 @@ gg_fdp_pass_prob <- ggplot(plot_dat, aes(x = date, y = probs_skewed)) +
 p_fdp_2013_threshold <- ((gg_fdp_raw_shares + gg_fdp_pass_prob + plot_layout(ncol=1)) -
   gg_shares_ridge_fdp)  + plot_layout(ncol = 2, widths=c(2, 3))
 
-ggsave("../fdp_2013_threshold.pdf", p_fdp_2013_threshold, width=12, height=5)
+ggsave("../figures/fdp_2013_threshold.pdf", p_fdp_2013_threshold, width=12, height=5)

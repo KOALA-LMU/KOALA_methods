@@ -39,7 +39,7 @@ names(partycols) <- lk$id_party
 partycols <- partycols[names(partycols) != "afd"]
 partycols["fdp"] <- lk %>% filter(id_party == "fdp") %>% pull(colDark)
 
-gg <- coalishin::plot_pooledSurvey_byTime(plot_dat_raw, election = "btw", partycols = partycols, plot_intervals = FALSE,
+gg <- coalishin::plot_pooledSurvey_byTime(plot_dat_raw, election = "btw", partycols = partycols, plot_variation = FALSE,
                                           hline = NULL)
 pdf("../figures/2013_pooled_rawShares.pdf", width = 8, height = 3.5)
 gg + 
