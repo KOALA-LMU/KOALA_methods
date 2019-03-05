@@ -188,9 +188,8 @@ and are available in the open-source package \texttt{coalitions} \citep{bender_b
 A \texttt{shiny}-based \citep{chang_2017} website
 \texttt{koala.stat.uni-\allowbreak muenchen.\allowbreak de} visualizes estimated
 coalition probabilities and is used to communicate the results for German federal
-and state elections to the general public.
-%Additionally, we applied our method to the Austrian federal election 2017.
-The process of fetching new polls,
+and state elections to the general public. Additionally, we applied our method
+to the Austrian federal election 2017. The process of fetching new polls,
 updating the website and sending out Twitter messages based on the newest results
 is automated and allows for an immediate transfer of the estimated POEs
 to media outlets as well as the general public.
@@ -205,9 +204,9 @@ by major German polling agencies (i.e., Allensbach, Emnid, Forsa, Forschungsgrup
 GMS, Infratest dimap and INSA), starting one year before each election.
 Opinion poll data from these polling agencies is collected by and made publicly available
 on \texttt{www.wahlrecht.de}. Application of our approach to other countries
-requires systematic access to respective polling data.
-%For the Austrian general election in 2017 for example, we used the data base available at
-%\texttt{https://neuwal.com/wahlumfragen/}.
+requires systematic access to respective polling data. For the Austrian general
+election in 2017 for example, we used the data base available at
+\texttt{https://neuwal.com/wahlumfragen/}.
 
 
 \subsection{Motivating example}\label{ssec:intro-ex-fdp}
@@ -351,7 +350,7 @@ an POE of $26\%$ (see Section \ref{sec:application} for more details).\\
 If it is known that estimates of specific party shares are biased for some opinion
 polls/agencies, this information could be included in the model by using an
 informative prior distribution. The prior parameters $\alpha_p$ would then
-be adjusted to have higher or lower values, respectively.\label{p:inform_prior}
+be adjusted to have higher or lower values, respectively.
 However, such biases of polling agencies are hard to quantify as the true party
 share in the electorate is only known on election days. For our analyses, we
 therefore use the uninformative prior \eqref{eq:prior}.
@@ -459,43 +458,24 @@ then simulate one observation from each resulting posterior.
 
 
 \subsection{Potential sources of bias}\label{ssec:bias}
-Multiple sources of bias exist that can negatively affect the results.
-These sources are mainly
-based on (a) the assumpion that the underlying opinion polls estimate the
-true party shares without systematic bias, and (b) the assumption of a
-Multinomial distribution for the reported voter numbers.\\
+Multiple sources of bias are present that can potentially negatively affect the POE calculations.
 
-Regarding systematic biases of specific polling agencies, one can differentiate between a
-\emph{house bias} and an \emph{industry bias} \citep[see e.g.][]{pickup_2011}.
-A house bias quantifies systematic errors made by an individual polling agency,
-e.g. if an agency steadily overestimates the share of a specific party.
-An industry bias describes a bias of the whole polling industry, i.e.
-a systematic error that does not disappear when averaging over all polling agencies.
-Even if -- as noted on page \pageref{p:inform_prior} -- such biases could be dealt with in our
-approach by using an appropriate informative prior, both these types of bias are hard to quantify as
-the true party share in the electorate is only known on election days.
-Moreover, a direct comparison of the last pre-election polls
-with the final election outcome would not be appropriate as a relevant proportion of voters
-tends to make their decision only shortly before election day.
-Analyzing the 2018 Bavarian state election, \citet{usbw_2018} conducted a telephone survey
-in the two weeks running up
-to the election, i.e. the interval under study of most pre-election polls.
-In this survey, $\sim 19\%$ of respondents stated to still be undecided (while $\sim 20\%$ refused to answer).
-Accordingly, drawing such a comparison would result in an adequate estimate of the \emph{for-casting} error,
-but not of the \emph{now-casting} error on which we focus.\\
 
-The Multinomial distribution of voter counts can become flawed based on
-the survey design of polling agencies.
-Among other things, this comprises specific sampling designs and post-sampling weightings that are
-applied to ensure representativity.
-As polling agencies usually do not publish their survey design and weighting schemes, proper bias
-quantification is again unfeasible.
-However, polling agencies tend to publish the sampling error that underlies the
-reported party shares \citep[see e.g.][]{fgw_2019}.
-Since the sampling errors reported by the major German polling agencies match the uncertainty
-induced by our corresponding Multinomial distribution, we do not make further adjustments to our approach.
+As POE calculations are based on opinion poll data, a there are Multitude of biases: Industriebias und house bias (see \citep{pickup_2011}).
+- Industriebias is generell schwer zu beziffern, da die wahre Stimmungslage nur alle paar Jahre einmal zu den Wahlen erhoben werden
+- hinzu kommt noch, dass sich sehr viele Wähler erst sehr kurzfristig vor einer Wahl entscheiden (see e.g. \citep{usbw_2018})
 
- 
+- house bias: Selbe Problematik wia beim Industriebias.
+- wie auf Seite XYZ (Ende vom Punkt 2.1) erläutert kannt ma theoretisch Vorinformation über Haus-Biases in de verwendeten Prioris eifliaßn lossn
+
+- eine genauere Evaluation des Industrie- und Hausbias' nemma hier ned vor, da der Fokus dieses Papers wie gesagt auf now-casting und ned auf for-casting liegt. Geneigte Leser verweisen wir aber auf XYZ
+
+- Neben der Einführung eines Bias kann unsere Methode auch anderen negativen Einflüssen unterliegen, wie einer Abweichung der Daten von einer Multinomialverteilung.
+- Dies kann verschiedene Gründe haben, so u.a. das pro pollster individuell angewandte sampling design oder die individuellen Gewichtungen für die Repräsentativität
+- Dieses Problem besteht durchaus. Da die Gewichtungen üblicherweise nicht veröffentlicht werden besteht allerdings das Problem, dass eine genauere Quantifizierung des Fehlers nicht möglich ist.
+- Die von den von uns herangezogenen pollster lassen in ihren Veröffentlichungen stark vermuten, dass nach der Anwendung all ihrer Gewichtungen etc. weiterhin die Unsicherheit eines Binomialmodells gilt (see e.g. \citep{fgw_2019}). In diesem Sinne bleiben wir aktuell auch bei der verwendeten Multinomialverteilung.
+
+
 \section{Application} \label{sec:application}
 An earlier iteration of our method entered media reporting before the German
 federal elections 2013 and 2017 \citep[cf.][]{wahlistik_2013, gelitz_2017}.
@@ -974,7 +954,7 @@ ideally in real time when new opinion polls are published.
 \newblock \emph{American journal of epidemiology}, {\bf 157}\penalty0 (4),
   \penalty0 364--375.
 
-\bibitem[K\"uchenhoff et~al.(2018)]{usbw_2018}
+\bibitem[USBW18(2018)]{usbw_2018}
 {\rm K\"uchenhoff, H., Thurner, P.~W., Klima, A., Mauerer, I., Knieper, T., Haupt, H., Mang, S., Schnurbus, J., Walter-Rogg, M., {\rm and} Heinrich, T.} (2018).
 \newblock \emph{Universit\"atsstudie zur Bayernwahl USBW 18 (M\"unchen -- Passau -- Regensburg). Erste Ergebnisse -- Oktober 2018.}
 
