@@ -471,29 +471,30 @@ A house bias quantifies systematic errors made by an individual polling agency,
 e.g. if an agency steadily overestimates the share of a specific party.
 An industry bias describes a bias of the whole polling industry, i.e.
 a systematic error that does not disappear when averaging over all polling agencies.
-Even if -- as noted on page \pageref{p:inform_prior} -- such biases could be dealt with in our
-approach by using an appropriate informative prior, both these types of bias are hard to quantify as
-the true party share in the electorate is only known on election days.
+Even if -- as noted in Section \ref{p:inform_prior} -- such biases could be dealt with in our
+approach by using an appropriate informative prior, both types of bias are difficult to quantify as
+the true party shares in the electorate are only known on election days.
 Moreover, a direct comparison of the last pre-election polls
-with the final election outcome would not be appropriate as a relevant proportion of voters
-tends to make their decision only shortly before election day.
+with the final election outcome would not necessarily be appropriate as a relevant proportion of voters
+tends to make their decision only shortly before or even on election day.
 Analyzing the 2018 Bavarian state election, \citet{usbw_2018} conducted a telephone survey
 in the two weeks running up
 to the election, i.e. the interval under study of most pre-election polls.
 In this survey, $\sim 19\%$ of respondents stated to still be undecided (while $\sim 20\%$ refused to answer).
-Accordingly, drawing such a comparison would result in an adequate estimate of the \emph{for-casting} error,
-but not of the \emph{now-casting} error on which we focus.\\
+Accordingly, comparing election results with polls before the election would result in an adequate estimate of 
+the error of \emph{for-casts}, but not automatically of the error of \emph{now-casts} on which we focus.\\
 
-The Multinomial distribution of voter counts can become flawed based on
-the survey design of polling agencies.
-Among other things, this comprises specific sampling designs and post-sampling weightings that are
-applied to ensure representativity.
-As polling agencies usually do not publish their survey design and weighting schemes, proper bias
-quantification is again unfeasible.
-However, polling agencies tend to publish the sampling error that underlies the
+The assumed Multinomial distribution of voter counts can become inadequate based on
+the exact survey design of polling agencies, which comprises specific sampling designs and post-sampling weightings.
+This might lead to a higher or lower variance than achieved with the assumed Multinomial distribution and the sample size stated by the polling agency.
+Within our framework, this could be dealt with by adjusting the effective sample size.
+However, as polling agencies usually do not publish the unadjusted results, their survey design and weighting schemes, a proper quantification is again unfeasible.
+Polling agencies instead tend to publish sampling errors that underlie the
 reported party shares \citep[see e.g.][]{fgw_2019}.
-Since the sampling errors reported by the major German polling agencies match the uncertainty
-induced by our corresponding Multinomial distribution, we do not make further adjustments to our approach.
+Since the sampling errors reported by major German polling agencies are rather similar to the uncertainty
+induced by our corresponding Multinomial distribution, 
+we do not adjust the sample size of the individual polling agencies in our approach,
+but use the values reported by them.
 
  
 \section{Application} \label{sec:application}
