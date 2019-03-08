@@ -90,39 +90,30 @@
   andothers = {{et\,al\adddot}}, % bei mehreren Autoren 'et al.' anzeigen, ansonsten wäre es 'u.a.'
 }
 
-% Do something at the beginning of a section
-% \AtBeginSection[]
-% {
-%   \begin{frame}[allowframebreaks]
-% \frametitle{\large\bfseries Contents\\\vspace{-0.3cm}\hspace{0cm}{\rule{\textwidth}{0.5mm}}}\normalfont
-% 
-% \vspace{0.6cm}
-% \hspace{0.5cm}\parbox[t]{.9\textwidth}{
-%   \begin{minipage}[c][0.5\textheight]{\textwidth}
-%   \tableofcontents[  currentsection,
-%   sectionstyle=show/shaded,
-%   subsectionstyle=show/show/hide]
-% %  \vspace{2cm}
-%   \end{minipage}
-%     }
-% \end{frame}
-% }
-
-% Do something at the beginning of a subsection
-% \AtBeginSubsection[]
-% {
-%   \frame{
-% \frametitle{\large\bfseries \insertsection\\\vspace{-0.3cm}\hspace{0cm}{\rule{\textwidth}{0.5mm}}}\normalfont
-% %\hfill
-% \vspace{2.8cm}
-% \centering
-% %\parbox[t]{.95\textwidth}{
-% %  \begin{minipage}[c][0.5\textheight]{\textwidth}
-%   \Large\bfseries\textcolor{MidnightBlue}{\insertsubsection}\normalfont\hspace{0.5cm}
-% %  \end{minipage}
-% %    }
-%   }
-% }
+% Show code in slides
+\usepackage{listings}
+\lstset{ 
+  language=R,                     % the language of the code
+  basicstyle=\scriptsize\ttfamily, % the size of the fonts that are used for the code
+  numbers=none,                   % where to put the line-numbers (z.B. 'numbers=left')
+  numberstyle=\footnotesize\color{Blue},  % the style that is used for the line-numbers
+  stepnumber=1,                   % the step between two line-numbers. If it's 1, each line will be numbered
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{gray!3},  % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  frame=single,                   % adds a frame around the code (z.B. 'frame=single')
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+  xleftmargin=0cm,
+  tabsize=2,                      % sets default tabsize to 2 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  keywordstyle=\color{Black},      % keyword style (z.B. 'RoyalBlue')
+  commentstyle=\color{Green},   % comment style
+  stringstyle=\color{Green}      % string literal style
+}
 
 % gifs
 \epstopdfDeclareGraphicsRule{.gif}{png}{.png}{convert gif:#1 png:\OutputFile}
@@ -149,6 +140,7 @@
 % ----- Newcommands
 % Colors
 \newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\redbf}[1]{\textbf{\textcolor{red}{#1}}}
 \newcommand{\blue}[1]{\textcolor{MidnightBlue}{#1}}
 \newcommand{\bluebf}[1]{\textbf{\textcolor{MidnightBlue}{#1}}}
 \newcommand{\darkgray}[1]{\textcolor{darkgray}{#1}}

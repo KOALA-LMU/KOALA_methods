@@ -12,7 +12,7 @@ survey <- scrape_wahlrecht("http://www.wahlrecht.de/umfragen/forsa/2013.htm") %>
 gg_survey(survey, annotate_bars = FALSE) +
   ylab("Voter share in %") +
   ggtitle("Forsa opinion poll, 20.09.2013") +
-  theme_bw(base_size = 20) +
+  theme_bw(base_size = 19) +
   theme(legend.position = "none",
         axis.title.x = element_blank(),
         plot.title = element_text(hjust = 0.5)) +
