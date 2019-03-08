@@ -11,6 +11,8 @@
 
 \setlength\parindent{0pt}
 
+\usepackage{todonotes}
+
 \begin{document}
 
 \begin{center}
@@ -21,13 +23,14 @@
 
 Dear Editors:
 \\[2ex]
-Thank you for the opportunity to revise our manuscript entitled ``KOALA: A new paradigm for election coverage''. We highly appreciate the time and effort that was put into revising our work. We carefully considered the comments and constructive suggestions made by the two reviewers, which led to
-%numerous corrections and overall to 
+Thank you for the opportunity to revise our manuscript entitled ``KOALA: A new paradigm for election coverage''. We highly appreciate the time and effort that was put into reviewing our work. We carefully considered the comments and constructive suggestions made by the two reviewers, which led to
+%numerous corrections and overall to
 a substantial improvement of the paper.\\
 
 Apart from smaller revisions we introduced the new subchapter 2.4. Therein we describe our reasoning behind the handling of house and industry biases as well as survey design -- comprising the sampling design and the post-sampling weighting scheme -- related issues regarding our model assumption and the quality of estimates.\\
 
-We hope that these revisions improve the paper such that you and the reviewers now deem it worthy of publication in AStA. On the following pages, we offer detailed responses to the reviewers' comments. Our responses are marked with the tag \blue{Answer}.
+We hope that the reviewers comments and questions have now been adressed
+satisfactory. On the following pages, we offer detailed responses to the reviewers' comments. Our responses are marked with the tag \blue{Answer}.
 
 
 %------- First reviewer
@@ -46,7 +49,7 @@ The manuscript is clearly written and innovative graphical representation of the
 \section*{Comments}
 \begin{enumerate}
   \item \emph{
-I would recommend that the author's discuss the potential sources of correlation between the agencys. There could be two potential issues regarding the 
+I would recommend that the author's discuss the potential sources of correlation between the agencys. There could be two potential issues regarding the
   distributional assumptions made.
   \begin{itemize}
     \item The first one is a common agency bias additional to the individual agency bias. By consulting wahlrecht.de one very often observes that all agencys have an estimate just before the election above or under the final outcome. One example is the CDU/CSU in 2005, where all agencys estimated a share above 40\% when the true outcome was 35.2\%. If you implicitly assume that this is not caused by sudden shifts in voter's share just before the election by taking poll outcomes from the last 14 days before election, this is something to keep in mind.
@@ -55,40 +58,40 @@ I would recommend that the author's discuss the potential sources of correlation
   However, I think that these issues are suitably captured by the effective sample size correction, but should be shortly discussed.
 }
   \\ \\
-  \blue{Answer} Thank you for the detailed feedback! We have to admit that this is something we did not discuss
-thoroughly enough. We now added the new subchapter 2.4 to describe our reasoning behind the handling of house and industry biases as well as survey design -- comprising the sampling design and the post-sampling weighting scheme -- related issues regarding our model assumption and the quality of estimates.
-In both cases of bias its quantification for \emph{now-casts} is problematic using the available information.
-A recent study shows that a relevant share of voters is still undecided in the immediate pre-election period.
-Differences between the final election outcome and now-casts can also be partially caused
-by these voters as well as by short-term shifts in party prefence.
-The inclusion of such a comparison between now-casts and election results would require thorough discussion
-and quantification of these aspects. Furthermore, we fear that such a comparison would blur the line between now-casts and for-casts. Therefore, we decided against adding such a comparison to the manuscript.\\
-Regarding the use of the Multinomial distribution, the new subchapter also clarifies our reasoning in more detail.
-We fully agree that the issues regarding the specific sampling and weighting scheme might lead to the
-variance of our assumed distribution to be inadequate.
-Using the effective sample size approach would also allow for a correction in this manner.
-However, we decided to use the results of the individual polling agencies as stated by them.
-Under the premise, as the reported errors of the major German polling agencies are rather similar to the uncertainty
-induced by our Multinomial approach an adjustment of the variance does not seem necessary.
-In our pooled sample, we do use the effective sample size approach.
+  \blue{Answer}
+We thank the reviewer for this detailed feedback! The issue of agency bias and
+model assumptions were indeed addressed insufficiently. In the revision, we added
+the new subchapter 2.4 were we discuss issues of house and industry biases as well as survey design, related issues regarding our model assumptions, and the quality of estimates.
+
+\todo[inline]{Add direct quote of section 2.4. here + additional comments if
+necessary}
 
   \item \emph{
 You mention in the introduction that you applied your method to the austrian election, but do not mention them in the application section anymore. Please also make a (short) analysis of the austrian election in section 3.
 }
   \\ \\
-  \blue{Answer} We fully agree that including the Austria reference without further mentioning it in the application section was unfortunate. After another thorough evaluation we however came to the conclusion that further discussing the Austrian election would do more harm to the accessibility of the application section than it would introduce novel insights.\
+  \blue{Answer} We fully agree that including the Austria reference without
+  further mentioning it in the application section was unfortunate.
+  As also suggested by another reviewer, we decided to abstain from further discussing the Austrian election for the reasons outlined below:\\
 
-Focusing only on the 2013 and 2017 German elections has some advantages:
-We only once have to introduce the political landscape of one specific country.
-Thereby, it is clearly easier to keep the focus in the application section completely on the content.
-Moreover, the two German elections already offer all interesting political constellations we aim to discuss. The Austrian election also showed some similar developments to the German elections, but actually had a quite unique situation in the months running up to the election, as three parties had large voter shares and three parties were close to the 4\% hurdle (which is required to pass into parliament in Austria):
+\begin{itemize}
+  \item The application section is already quite extensive.
+  \item Focusing only on the 2013 and 2017 German elections, we only once have
+  to introduce the political landscape of one specific country. Thereby, it is easier to keep the focus in the application section completely on the content,
+  which also reduces the cognitive overhead from the reader's perspective.
+  \item All relevant topics w.r.t. to methodology and application are already
+  covered using the examples of the German elections and discussing the Austrian
+  election would add no additional understanding.
+  \item In the months before the election, three parties had large voter shares
+  and three parties were close to the 4\% in Austria.
+  \begin{center}
+  \includegraphics[width=0.6\textwidth]{figures/austria}
+  \end{center}
+  This situation resulted in only two-party coalitions having relevant (and very stable) probabilities to achieve joint majorities. A discussion of more complex three-party coalitions based on the development in Austria would not be fruitful as these generally had only very small POEs.
+  The relevant role of a hurdle for the coalition POEs is already discussed
+  extensively for the 2013 German election.
+\end{itemize}
 
-\begin{center}
-\includegraphics[width=0.6\textwidth]{figures/austria}
-\end{center}
-
-This situation resulted in only two-party coalitions having relevant (and very stable) probabilities to achieve joint majorities. A discussion of more complex three-party coalitions based on the development in Austria would not be fruitful as these generally had only very small POEs.
-The relevant role of a ($5\%$-)hurdle for the POEs is already discussed extensively for the 2013 German election.
 Taking all this into account we now completely removed the Austria references from the paper.
 
   \item \emph{
@@ -154,32 +157,24 @@ The authors mention possible deviations from the assumed Multinomial distributio
 institutes do not publish such details. However, one should be cautious with the Multinomial distribution assumption. One way to demonstrate a possible under-estimation of the variance is to display the realized voting results together with its posterior distribution.
 }
   \\ \\
-  \blue{Answer part 1} As both reviewers made a similar point we allow ourselves to simply repeat the answer to the comment of reviewer \#1 as first part of the answer: \\
-Thank you for the detailed feedback! We have to admit that this is something we did not discuss
-thoroughly enough. We now added the new subchapter 2.4 to describe our reasoning behind the handling of house and industry biases as well as survey design -- comprising the sampling design and the post-sampling weighting scheme -- related issues regarding our model assumption and the quality of estimates.
-In both cases of bias its quantification for \emph{now-casts} is problematic using the available information.
-A recent study shows that a relevant share of voters is still undecided in the immediate pre-election period.
-Differences between the final election outcome and now-casts can also be partially caused
-by these voters as well as by short-term shifts in party prefence.
-The inclusion of such a comparison between now-casts and election results would require thorough discussion
-and quantification of these aspects. Furthermore, we fear that such a comparison would blur the line between now-casts and for-casts. Therefore, we decided against adding such a comparison to the manuscript.\\
-Regarding the use of the Multinomial distribution, the new subchapter also clarifies our reasoning in more detail.
-We fully agree that the issues regarding the specific sampling and weighting scheme might lead to the
-variance of our assumed distribution to be inadequate.
-Using the effective sample size approach would also allow for a correction in this manner.
-However, we decided to use the results of the individual polling agencies as stated by them.
-Under the premise, as the reported errors of the major German polling agencies are rather similar to the uncertainty
-induced by our Multinomial approach an adjustment of the variance does not seem necessary.
-In our pooled sample, we do use the effective sample size approach.
+  \blue{Answer part 1}
+Thank you for the detailed feedback! To adress these issues we included a
+new Section 2.4 to discuss the handling of house and
+industry biases as well as survey design, related issues regarding our model assumptions and the quality of estimates.\\
 
-\blue{Answer part 2} Additionally, you propose the evaluation of the approach based on final election outcomes. Again, we refer to the detailed answer we gave to the third comment of reviewer \#1 as both of you made comparable comments. There, we outline why we did not include such a quantification of the for-casting error in the paper and shortly evaluate the method for the 2013 and the 2017 German federal elections.
+\todo[inline]{Add direct quote of Section 2.4 here}
+
+\blue{Answer part 2} Additionally, you propose the evaluation of the approach based on final election outcomes.
+
+\todo[inline]{Repost answer here}
 
   \item \emph{
 page 3, paragraphs 2 and 3: Austria is  mentioned two times but no example from Austria is displayed. From my point of view the German examples are sufficient. Hence, one could skip the references to Austria.
 }
   \\ \\
-  \blue{Answer} Yes, mentioning Austria as an application example where our model was applied without showing results was unfortunate. We removed it from the paper.
-  
+  \blue{Answer} Yes, mentioning Austria as an application example where our model was applied without showing results was unfortunate. We removed
+  the reference to the Austrian election from the paper.
+
   \item \emph{
 page 6, line 10: Something is wrong with the first citation in the bracket.
 }
