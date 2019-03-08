@@ -52,6 +52,7 @@
 \newcommand{\T}{\mathrm{\scriptscriptstyle T}}
 \newcommand{\red}[1]{\textcolor{red}{#1}}
 
+\usepackage{todonotes}
 
 
 \begin{document}
@@ -459,44 +460,49 @@ then simulate one observation from each resulting posterior.
 
 
 \subsection{Potential sources of bias}\label{ssec:bias}
-Multiple sources of bias exist that can negatively affect the results.
-These sources are mainly
-based on (a) the assumpion that the underlying opinion polls estimate the
-true party shares without systematic bias, and (b) the assumption of a
-Multinomial distribution for the reported voter numbers.\\
+Our method makes several assumptions and deviations from these assumptions
+can introduce different biases into the now-cast. In particular,
+biases can result from
+(a) the assumption that the underlying opinion polls estimate the
+true party shares without systematic bias, and
+(b) the assumption of a Multinomial distribution for the reported voter
+numbers.\\
 
-Regarding systematic biases of specific polling agencies, one can differentiate between a
-\emph{house bias} and an \emph{industry bias} \citep[see e.g.][]{pickup_2011}.
+Regarding systematic biases of specific polling agencies, one can differentiate
+between a \emph{house bias} (or \emph{agency bias}) and an
+\emph{industry bias} \citep[see e.g.][]{pickup_2011}.
 A house bias quantifies systematic errors made by an individual polling agency,
-e.g. if an agency steadily overestimates the share of a specific party.
-An industry bias describes a bias of the whole polling industry, i.e.
-a systematic error that does not disappear when averaging over all polling agencies.
-Even if -- as noted in Section \ref{p:inform_prior} -- such biases could be dealt with in our
-approach by using an appropriate informative prior, both types of bias are difficult to quantify as
-the true party shares in the electorate are only known on election days.
-Moreover, a direct comparison of the last pre-election polls
-with the final election outcome would not necessarily be appropriate as a relevant proportion of voters
-tends to make their decision only shortly before or even on election day.
-Analyzing the 2018 Bavarian state election, \citet{usbw_2018} conducted a telephone survey
-in the two weeks running up
-to the election, i.e. the interval under study of most pre-election polls.
-In this survey, $\sim 19\%$ of respondents stated to still be undecided (while $\sim 20\%$ refused to answer).
-Accordingly, comparing election results with polls before the election would result in an adequate estimate of 
-the error of \emph{for-casts}, but not automatically of the error of \emph{now-casts} on which we focus.\\
+e.g., if an agency repeatedly overestimates the share of a specific party.
+The industry bias refers to  a systematic error that persists after averaging
+over all polling agencies.
+Although in general -- as alluded to in Section \ref{p:inform_prior} -- such
+biases could be dealt with in our approach by using an appropriate informative prior, both types of bias are difficult to quantify as the true party shares in
+the electorate are only known on election days.
+Moreover, a direct comparison of the last pre-election polls with the final
+election outcome would not be necessarily appropriate as a relevant proportion
+of voters tends to make their decision only shortly before or even on election
+day. Analyzing the 2018 Bavarian state election, \citet{usbw_2018} conducted a
+telephone survey in the two weeks before election, i.e., the time period
+of study for most pre-election polls. In this survey approximately $19\%$ of
+respondents stated to be undecided ($\sim 20\%$ non-respondents).
+Accordingly, comparing election results with polls before the election would
+result in an adequate estimate of the error of \emph{for-casts}, but not automatically of the error of \emph{now-casts} on which we focus.\\
 
-The assumed Multinomial distribution of voter counts can become inadequate based on
-the exact survey design of polling agencies, which comprises specific sampling designs and post-sampling weightings.
+The assumption of a Multinomial distribution of voter counts \eqref{eq:multinom}
+can become inadequate based on the exact survey design of polling agencies,
+which comprises specific sampling designs and post-sampling weightings.
 This might lead to a higher or lower variance than achieved with the assumed Multinomial distribution and the sample size stated by the polling agency.
-Within our framework, this could be dealt with by adjusting the effective sample size.
-However, as polling agencies usually do not publish the unadjusted results, their survey design and weighting schemes, a proper quantification is again unfeasible.
-Polling agencies instead tend to publish sampling errors that underlie the
-reported party shares \citep[see e.g.][]{fgw_2019}.
-Since the sampling errors reported by major German polling agencies are rather similar to the uncertainty
-induced by our corresponding Multinomial distribution, 
-we do not adjust the sample size of the individual polling agencies in our approach,
-but use the values reported by them.
+Within our framework, this could be dealt with by adjusting the effective sample size. However, as polling agencies usually do not publish the unadjusted results,
+their survey design and weighting schemes, a proper quantification is again
+difficult. Polling agencies instead tend to publish sampling errors that
+underlie the reported party shares \citep[see e.g.][]{fgw_2019}.
+Since the sampling errors reported by major German polling agencies are
+similar to the uncertainty induced by our corresponding Multinomial distribution,
+\todo{How similar? How do you calculate?} we do not adjust the sample size of
+the individual polling agencies in our approach, taking the reported shares
+at face value instead.
 
- 
+
 \section{Application} \label{sec:application}
 An earlier iteration of our method entered media reporting before the German
 federal elections 2013 and 2017 \citep[cf.][]{wahlistik_2013, gelitz_2017}.
