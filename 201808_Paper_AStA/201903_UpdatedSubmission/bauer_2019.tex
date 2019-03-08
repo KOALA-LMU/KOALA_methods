@@ -52,7 +52,6 @@
 \newcommand{\T}{\mathrm{\scriptscriptstyle T}}
 \newcommand{\red}[1]{\textcolor{red}{#1}}
 
-\usepackage{todonotes}
 
 
 \begin{document}
@@ -460,9 +459,8 @@ then simulate one observation from each resulting posterior.
 
 
 \subsection{Potential sources of bias}\label{ssec:bias}
-Our method makes several assumptions and deviations from these assumptions
-can introduce different biases into the now-cast. In particular,
-biases can result from
+Multiple sources of bias exist that can negatively affect the results.
+In particular, these result from
 (a) the assumption that the underlying opinion polls estimate the
 true party shares without systematic bias, and
 (b) the assumption of a Multinomial distribution for the reported voter
@@ -498,9 +496,9 @@ difficult. Polling agencies instead tend to publish sampling errors that
 underlie the reported party shares \citep[see e.g.][]{fgw_2019}.
 Since the sampling errors reported by major German polling agencies are
 similar to the uncertainty induced by our corresponding Multinomial distribution,
-\todo{How similar? How do you calculate?} we do not adjust the sample size of
-the individual polling agencies in our approach, taking the reported shares
-at face value instead.
+we do not adjust the sample size of
+the individual polling agencies in our approach, 
+but use the sample sizes reported by them.
 
 
 \section{Application} \label{sec:application}
