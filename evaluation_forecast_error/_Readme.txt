@@ -1,0 +1,1 @@
+The table in this folder documents the comparison of selected events (and their corresponding POEs) with the final election outcomes for different elections. The POEs are based on pooled samples with 10,000 simulations.
