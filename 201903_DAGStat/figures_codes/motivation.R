@@ -57,10 +57,7 @@ dat_list <- lapply(seq_len(nrow(surveys)), function(i) {
 dat <- dplyr::bind_rows(dat_list)
 
 # posterior distribution for latest pre-election poll
-dat_short <- dat %>% filter(date == "2013-09-20")
-colnames(dat_short)[4:ncol(dat_short)] <- paste0("coal_share",1:(ncol(dat_short)-3))
-coalishin::plot_seatDist_density(dat_short, institute = "forsa",
-                                 coal = "cdu|fdp", parl_seats = 598)
+# This plot was copied from the AStA paper folder
 
 # ridgeline plot
 coalishin::plot_cp_ridgeline(dat, "forsa", "cdu|fdp") +
