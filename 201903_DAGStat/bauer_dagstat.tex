@@ -1,4 +1,4 @@
-\documentclass[10pt,xcolor=dvipsnames,t,headinclude,headsepline=1.5cm]{beamer}
+\documentclass[10pt,xcolor=dvipsnames,t,headinclude,headsepline=1.5cm,usepdftitle=false]{beamer}
 
 \input{_documenthead}
 
@@ -93,38 +93,66 @@
 
 \frame{\ft{\large{\blue{\ding{202}}} Motivation}
 \begin{center}
-\includegraphics[width=0.5\textwidth]{figures/motivation_forsa_130109}
+\includegraphics[width=0.5\textwidth]{figures/motivation_forsa_130920}
 \end{center}
-\bigskip \bigskip
-\textbf{Goal} \\[0.1cm]
-Revamping established coverage on election polls
-}
+\bigskip
+\textbf{Questions of interest}
+\begin{itemize}
+  \item Which parties will pass the $5\%$ hurdle and enter the parliament?
+  \item Which parties will form the governing coalition?
+  \item Which party will have the third largest share of votes?
+\end{itemize}}
 
 \addtocounter{framenumber}{-1}
 \frame{\ft{\large{\blue{\ding{202}}} Motivation}
+\textbf{Reported voter shares} \\[0.37cm]
 \begin{center}
-\includegraphics[width=0.5\textwidth]{figures/motivation_forsa_130109}
+{\footnotesize
+\begin{tabular}{cccccccc}
+\toprule[0.09 em]
+Union & SPD & Greens & FDP & The Left & Pirates & AfD & Others \\
+\midrule
+40\% & 26\% & 10\% & 5\% & 9\% & 2\% & 4\% & 5\% \\
+\bottomrule[0.09 em]
+\end{tabular}
+}
 \end{center}
-\bigskip \bigskip
-When covering the election, media outlets (TV and print) mostly focus on questions like
-
-    Which parties will pass the 5\% threshold and enter the ``Bundestag'' (German parliament)?
-
-and
-
-    Which parties will form the governing coalition (currently Union -- SPD, so called grand coalition)?
-
-For the 2017 election also of special interest
-
-    Which party will have the 3rd largest share of votes?
+\medskip
+\textbf{Redistributed voter shares} {\footnotesize (based on $5\%$ hurdle)} \\[0.37cm]
+\begin{center}
+{\footnotesize
+\begin{tabular}{cccccccc}
+\toprule[0.09 em]
+Union & SPD & Greens & FDP & The Left & Pirates & AfD & Others \\
+\midrule
+44.44\% & 28.89\% & 11.11\% & 5.56\% & 10.00\% & - & - & - \\
+\bottomrule[0.09 em]
+\end{tabular}
+}
+\end{center}
+\bigskip
+\pause
+\begin{itemize}
+  \item Union-FDP have a joint seat share of exactly $50\%$
+  \item Stating that Union-FDP would thus miss a joint majority would neglect sample uncertainty \\ \ 
+  \item[$\Rightarrow$] We calculate event probabilities that fully reflect sample uncertainty
+\end{itemize}
 }
 
 \frame{\ft{\large{\blue{\ding{202}}} Motivation}
-\textbf{What we aim for} \\[0.1cm]
-...
-\\[0.4cm]
-\textbf{What we} \redbf{do not} \textbf{aim for} \\[0.1cm]
-...
+\vspace{30px}
+\bluebf{We aim to do} \textbf{now-casting}
+\begin{itemize}
+  \item We incorporate the uncertainty as reported by the polling agencies
+  \item Potential house biases or an industry bias are not accounted for
+\end{itemize}
+\bigskip \bigskip
+\pause
+\bluebf{We} \redbf{do not} \bluebf{aim to do} \redbf{for-casting}
+\begin{itemize}
+  \item Our approach simply communicates sample uncertainty in a novel way
+  \item Also, a relevant share of voters is still undecided shortly before election day (Küchenhoff et al., 2018)
+\end{itemize}
 }
 
 % ----- Methods
@@ -134,15 +162,63 @@ For the 2017 election also of special interest
 }
 
 \frame{\ft{\large{\blue{\ding{203}}} Methods}
-content
+\textbf{Estimating probabilities of events (POEs)} \\[0.1cm]
+Given one opinion poll with sample size $n$:
+$$
+\boldsymbol{X} = (X_1,\ldots, X_P)^T \sim Multinomial(n, \theta_1,\ldots, \theta_P),
+$$
+with voter counts $X_j$ and the true percentage of voters $\theta_j$ per party $j$ \\
+{\footnotesize (assuming a simple random sample, ignoring a possible bias)}
+\\[0.5cm]
+\pause
+Using an \bluebf{uninformative Dirichlet prior}
+% for the true party shares
+(Gelman et al., 2013)
+$$
+\begin{aligned}
+\boldsymbol{\theta} &= (\theta_1,\ldots,\theta_P)^T \sim Dirichlet(\alpha_1,\ldots,\alpha_P), \\
+\text{with} &\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \alpha_1 = \ldots = \alpha_P = \frac{1}{2},
+\end{aligned}
+$$
+\ \\[0.1cm]
+the resulting posterior distribution of $\boldsymbol{\theta} | \boldsymbol{x}$ is again Dirichlet:
+$$
+\boldsymbol{\theta}|\mathbf{x} \sim Dirichlet(x_1 + 1/2,\ldots, x_P + 1/2).
+$$
 }
 
 \frame{\ft{\large{\blue{\ding{203}}} Methods}
-\begin{center}
-\includegraphics[width=0.5\textwidth]{figures/motivation_forsa_130109_bw}
-\end{center}
+\textbf{Estimating probabilities of events (POEs)} \\[0.5cm]
+Given the \bluebf{posterior distribution of voter shares} we can use \\ 
+\textbf{Monte Carlo simulations} to estimate POEs: \\[0.1cm]
+\begin{enumerate}
+  \item Simulate $10\,000$ election outcomes from the posterior
+  \item If necessary: Redistribute voter shares to get obtained seats in parliament
+  \item POE $=$ Percentage of simulations where event of interest occurred
+\end{enumerate}
 \bigskip \bigskip
-text
+\pause
+\bluebf{Example} \\[0.1cm]
+Given the Forsa poll, the coalition of Union-FDP obtained a majority of seats in
+$2\,633$ of $10\,000$ simulations \\[0.2cm]
+$\Rightarrow \text{POE} \approx 26\%$
+}
+
+\frame{\ft{\large{\blue{\ding{203}}} Methods}
+\textbf{Voter shares}
+\\[1.0cm]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{figures/motivation_forsa_130920_bw}
+\end{center}
+}
+
+\frame{\ft{\large{\blue{\ding{203}}} Methods}
+\textbf{Posterior distribution} of joint CDU-FDP seat share
+\\[1.5cm]
+\begin{center}
+\includegraphics[width=0.6\textwidth]{figures/forsa_posterior}
+\end{center}
+$\Rightarrow \text{POE} \approx 26\%$
 }
 
 \frame{\ft{\large{\blue{\ding{203}}} Methods}
@@ -158,7 +234,35 @@ Plan: \\
 }
 
 \frame{\ft{\large{\blue{\ding{203}}} Methods}
-content
+\textbf{Pooling} \\[0.1cm]
+We aggregate multiple polls to reduce sample uncertainty. \\
+In case of multiple random samples:
+\\[0.2cm]
+$$
+\left( \sum\limits_i X_{i1},\ldots, \sum\limits_i X_{iP} \right)^T
+ \sim Multinomial \left( \sum\limits_i n_i,\theta_1,\ldots,\theta_P\right).
+$$
+\ \\[0.3cm]
+We account for correlations between polling agencies by using an \\
+\bluebf{effective sample size} (Hanley et al., 2003).
+\\[0.7cm]
+\pause
+$\Rightarrow$ \bluebf{Example:} Pooling two polls with $1\,500$ and $2\,000$ respondents \\
+\textcolor{white}{$\Rightarrow$ \bf Example:} {\footnotesize (where the strongest party obtained $40\%$)}, \\
+\textcolor{white}{$\Rightarrow$ \bf Example:} we get a conservative effective sample size of $n_{\text{eff}} = 2\,341$.
+}
+
+\frame{\ft{\large{\blue{\ding{203}}} Methods}
+\textbf{Pooling in practice} \\[0.1cm]
+\begin{itemize}
+  \item We only pool surveys published in the last $14$ days
+  \item We only include one survey per polling agency
+\end{itemize}
+\bigskip \bigskip
+\pause
+\textbf{Correction of rounding errors} \\[0.1cm]
+Party shares are only published with a certain accuracy. \\
+We add \bluebf{uniformly distributed random noise} to avoid potential biases.
 }
 
 % ----- Technical implementation
@@ -213,6 +317,7 @@ content
 \bluebf{Another topic} \\[0.07cm]
 {\footnotesize
 \textbf{Doe J, Mustermann M (2019)} \textcolor{darkgray}{This is the paper title. Journal, 19(2--3), 1--19} \\[0.04cm]
+Hanley et al., 2003
 }
 }
 

@@ -19,40 +19,23 @@ gg_survey(survey, annotate_bars = FALSE) +
         plot.title = element_text(hjust = 0.5)) +
   ggsave("../figures/motivation_forsa_130920.pdf", height = 5, width = 7)
 
-
-
-# first 2013 poll of FORSA ------------------------------------------------
-survey <- scrape_wahlrecht("http://www.wahlrecht.de/umfragen/forsa/2013.htm") %>%
-  collapse_parties() %>% filter(date == "2013-01-09") %>%
-  unnest()
-
-gg_survey(survey, annotate_bars = FALSE) +
-  ylab("Voter share in %") +
-  ggtitle("Forsa opinion poll, 09.01.2013") +
-  theme_bw(base_size = 19) +
-  theme(legend.position = "none",
-        axis.title.x = element_blank(),
-        plot.title = element_text(hjust = 0.5)) +
-  ggsave("../figures/motivation_forsa_130109.pdf", height = 5, width = 7)
-
 # focus on Union and FDP
 bw_cols <- coalitions::party_colors_de
 bw_cols[!(names(bw_cols) %in% c("cdu","fdp"))] <- "gray80"
-bw_cols <- bw_cols[names(bw_cols) != "afd"]
 gg_survey(survey, annotate_bars = FALSE, colors = bw_cols) +
   ylab("Voter share in %") +
-  ggtitle("Forsa opinion poll, 09.01.2013") +
+  ggtitle("Forsa opinion poll, 20.09.2013") +
   theme_bw(base_size = 19) +
   theme(legend.position = "none",
         axis.title.x = element_blank(),
         plot.title = element_text(hjust = 0.5)) +
-  ggsave("../figures/motivation_forsa_130109_bw.pdf", height = 5, width = 7)
+  ggsave("../figures/motivation_forsa_130920_bw.pdf", height = 5, width = 7)
 
 
 
 # Ridgeline plot ----------------------------------------------------------
 surveys <- scrape_wahlrecht("http://www.wahlrecht.de/umfragen/forsa/2013.htm") %>%
-  collapse_parties() %>% filter(date > "2013-01-01")
+  collapse_parties() %>% filter(date >= "2013-01-01")
 
 dat_list <- lapply(seq_len(nrow(surveys)), function(i) {
   print(paste0("Do calculations for survey ",i," of ",nrow(surveys)))
@@ -73,6 +56,13 @@ dat_list <- lapply(seq_len(nrow(surveys)), function(i) {
 })
 dat <- dplyr::bind_rows(dat_list)
 
+# posterior distribution for latest pre-election poll
+dat_short <- dat %>% filter(date == "2013-09-20")
+colnames(dat_short)[4:ncol(dat_short)] <- paste0("coal_share",1:(ncol(dat_short)-3))
+coalishin::plot_seatDist_density(dat_short, institute = "forsa",
+                                 coal = "cdu|fdp", parl_seats = 598)
+
+# ridgeline plot
 coalishin::plot_cp_ridgeline(dat, "forsa", "cdu|fdp") +
   # transition_time(date) +
   transition_manual(date, cumulative = TRUE) +
