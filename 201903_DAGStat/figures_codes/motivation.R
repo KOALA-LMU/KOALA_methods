@@ -37,6 +37,7 @@ gg_survey(survey, annotate_bars = FALSE, colors = bw_cols) +
 surveys <- scrape_wahlrecht("http://www.wahlrecht.de/umfragen/forsa/2013.htm") %>%
   collapse_parties() %>% filter(date >= "2013-01-01")
 
+set.seed(2018)
 dat_list <- lapply(seq_len(nrow(surveys)), function(i) {
   print(paste0("Do calculations for survey ",i," of ",nrow(surveys)))
   survey <- surveys %>% slice(i) %>% unnest()
@@ -59,10 +60,24 @@ dat <- dplyr::bind_rows(dat_list)
 # posterior distribution for latest pre-election poll
 # This plot was copied from the AStA paper folder
 
-# ridgeline plot
-coalishin::plot_cp_ridgeline(dat, "forsa", "cdu|fdp") +
+# animated ridgeline plot
+rev_date <- coalishin:::c_trans("reverse", "time")
+gg <- coalishin::plot_cp_ridgeline(dat, "forsa", "cdu|fdp") +
+  xlab("Share of parliament seats") +
+  scale_y_continuous(trans = rev_date,
+                     minor_breaks = NULL,
+                     breaks = as.POSIXct(paste0("2013-0",c(1:9,9),c(rep("-01",9),"-22"))),
+                     labels = c("Jan 2013","","","Apr 2013","","","Jul 2013","","","Election day")) +
+  scale_fill_manual(values = c("#7294C9","grey90"),
+                    labels = c("yes","no"),
+                    guide = guide_legend(title = "Seat majority", reverse = TRUE)) +
+  theme(legend.position = "right") +
+  theme_bw(base_size = 24) +
   # transition_time(date) +
-  transition_manual(date, cumulative = TRUE) +
-  # transition_states(date, transition_length = 5, state_length = 1) +
-  # enter_fade() + exit_fade() +
-  anim_save("ridgeline_forsa.gif")
+  transition_manual(date, cumulative = TRUE)
+  # transition_states(date, transition_length = 5, state_length = 1)
+  # enter_fade() + exit_fade()
+# anim_save("../figures/ridgeline_forsa.mp4", animation = gg, width = 800, height = 600,
+#           renderer = ffmpeg_renderer(options = list(vf = "setpts=7*PTS",
+#                                                     crf = "10")))
+anim_save("../figures/ridgeline_forsa.gif", animation = gg, width = 800, height = 500)

@@ -6,6 +6,39 @@
 % Special packages
 \usepackage{animate} % for including .gifs
 \usepackage{colortbl} % for coloring \hline's in tabulars
+\usepackage[overlay]{textpos} % free positioning of (background) images
+\usepackage{graphbox} % vertically align images in a line
+\usepackage{animate} % include gifs
+% Color links
+\hypersetup{
+  colorlinks=true,
+  urlcolor=RoyalBlue,
+  linkcolor=RoyalBlue
+}
+% Code chunks
+\usepackage{listings}
+\lstset{ 
+  language=R,                     % the language of the code
+  basicstyle=\scriptsize\ttfamily, % the size of the fonts that are used for the code
+  numbers=none,                   % where to put the line-numbers (z.B. 'numbers=left')
+  numberstyle=\footnotesize\color{Blue},  % the style that is used for the line-numbers
+  stepnumber=1,                   % the step between two line-numbers. If it's 1, each line will be numbered
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{gray!3},  % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  frame=single,                   % adds a frame around the code (z.B. 'frame=single')
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+  xleftmargin=0cm,
+  tabsize=2,                      % sets default tabsize to 2 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  keywordstyle=\color{Black},      % keyword style (z.B. 'RoyalBlue')
+  commentstyle=\color{Green},   % comment style
+  stringstyle=\color{Green}      % string literal style
+}
 % Footer
 \setbeamertemplate{footline}{\colorbox{MidnightBlue}{\textcolor{white}{\quad Alexander Bauer \hspace{10.3cm}\insertframenumber \ / \inserttotalframenumber \hspace{2cm}}}
 \beamertemplatenavigationsymbolsempty
@@ -167,9 +200,9 @@ Given one opinion poll with sample size $n$:
 $$
 \boldsymbol{X} = (X_1,\ldots, X_P)^T \sim Multinomial(n, \theta_1,\ldots, \theta_P),
 $$
-with voter counts $X_j$ and the true percentage of voters $\theta_j$ per party $j$ \\
-{\footnotesize (assuming a simple random sample, ignoring a possible bias)}
-\\[0.5cm]
+with voter counts $X_j$ and the true percentage of voters $\theta_j$ per party $j$
+%\\ {\footnotesize (assuming a simple random sample, ignoring a possible bias)}
+\\[0.8cm]
 \pause
 Using an \bluebf{uninformative Dirichlet prior}
 % for the true party shares
@@ -181,7 +214,7 @@ $$
 \end{aligned}
 $$
 \ \\[0.1cm]
-the resulting posterior distribution of $\boldsymbol{\theta} | \boldsymbol{x}$ is again Dirichlet:
+a \textbf{Dirichlet posterior distribution} results for $\boldsymbol{\theta} | \boldsymbol{x}$:
 $$
 \boldsymbol{\theta}|\mathbf{x} \sim Dirichlet(x_1 + 1/2,\ldots, x_P + 1/2).
 $$
@@ -194,7 +227,7 @@ Given the \bluebf{posterior distribution of voter shares} we can use \\
 \begin{enumerate}
   \item Simulate $10\,000$ election outcomes from the posterior
   \item If necessary: Redistribute voter shares to get obtained seats in parliament
-  \item POE $=$ Percentage of simulations where event of interest occurred
+  \item POE $= \frac{\#\text{event}}{\text{number of simulations}}$
 \end{enumerate}
 \bigskip \bigskip
 \pause
@@ -222,30 +255,47 @@ $\Rightarrow \text{POE} \approx 26\%$
 }
 
 \frame{\ft{\large{\blue{\ding{203}}} Methods}
+\textbf{Visualization using ridgeline plots} (Wilke, 2017)
+\\[1.1cm]
 \begin{center}
-\includegraphics[width=0.7\textwidth]{figures/screenshot}
+\animategraphics[height=150px]{10}{figures/gif/frame-}{0}{37}
 \end{center}
-Plan: \\
-1. Als Motivationsbeispiel die frueheste gepoolte Umfrage im 2013er Ridgeline Plot nehmen \\
-2. Erstmal nur Ridgeline zeigen und Zeitverlauf animieren \\
-3. Bei erster richtiger Bimodalitaet Animation anhalten und kurz daneben Union- und FDP-Stimmanteil-Zeitverlauf einblenden \\
-4. Animation fertig laufen lassen (Union und FDP dabei wieder ausgeblendet) \\
-5. Am Ende links den redistributed joint voter share und die POE-W'keiten einblenden
+\vspace{-15px}
+{\footnotesize \textcolor{black!40}{I'm a .gif, click me (in Adobe Acrobat)!}}
+}
+
+\addtocounter{framenumber}{-1}
+\frame{\ft{\large{\blue{\ding{203}}} Methods}
+\textbf{Visualization using ridgeline plots} (Wilke, 2017)
+\\[1.1cm]
+\begin{center}
+\includegraphics[height=150px]{figures/gif/frame-37}
+\end{center}
+\vspace{-15px}
+{\footnotesize \textcolor{black!40}{I'm a .gif, click me (in Adobe Acrobat)!}}
+}
+
+\frame{\ft{\large{\blue{\ding{203}}} Methods}
+\textbf{Visualization using ridgeline plots} (Wilke, 2017)
+\\[1.1cm]
+\begin{center}
+\includegraphics[width=1\textwidth]{figures/cdufdp_2013_joint}
+\end{center}
 }
 
 \frame{\ft{\large{\blue{\ding{203}}} Methods}
 \textbf{Pooling} \\[0.1cm]
 We aggregate multiple polls to reduce sample uncertainty. \\
 In case of multiple random samples:
-\\[0.2cm]
+\\[0.3cm]
 $$
 \left( \sum\limits_i X_{i1},\ldots, \sum\limits_i X_{iP} \right)^T
  \sim Multinomial \left( \sum\limits_i n_i,\theta_1,\ldots,\theta_P\right).
 $$
-\ \\[0.3cm]
+\ \\[0.6cm]
 We account for correlations between polling agencies by using an \\
 \bluebf{effective sample size} (Hanley et al., 2003).
-\\[0.7cm]
+\\[0.8cm]
 \pause
 $\Rightarrow$ \bluebf{Example:} Pooling two polls with $1\,500$ and $2\,000$ respondents \\
 \textcolor{white}{$\Rightarrow$ \bf Example:} {\footnotesize (where the strongest party obtained $40\%$)}, \\
@@ -271,61 +321,133 @@ We add \bluebf{uniformly distributed random noise} to avoid potential biases.
 \tableofcontents[currentsection, subsectionstyle=show/show/hide]
 }
 
-\frame{\ft{\large{\blue{\ding{203}}} Technical implementation}
-\textbf{R package \texttt{coalitions}} \\[0.1cm]
-\includegraphics[width=0.1\textwidth]{figures/coalitions_hex}
+\begin{frame}[fragile]
+\ft{\large{\blue{\ding{203}}} Technical implementation}
+\ft{\large{\blue{\ding{203}}} Technical implementation}
+\begin{textblock*}{1.25cm}(0.89\textwidth,0px)
+\includegraphics[width=1\textwidth]{figures/coalitions_hex}
+\end{textblock*}
+\vspace{10px}
+\textbf{R package \texttt{coalitions}}
+\\[1cm]
+\textbf{Functionality}
+\begin{itemize}
+  \item Scrapes \href{https://www.wahlrecht.de/}{wahlrecht.de} for (new) polls
+  \item Calculate pooled sample
+  \item Calculate and sample from posterior distribution
+  \item Redistribute votes below 5\% threshold \\[0.1cm]
+and calculate parliament seats 
+{\footnotesize (e.g. based on method by \href{http://www.wahlrecht.de/verfahren/rangmasszahlen.html}{Sainte-Lague-Scheppers})}
+  \item Calculate coalition probabilities
+\end{itemize}
+\bigskip
+More on \href{https://github.com/adibender/coalitions/}{github.com/adibender/coalitions}
+\end{frame}
+
+\begin{frame}[fragile]
+\ft{\large{\blue{\ding{203}}} Technical implementation}
+\begin{textblock*}{1.25cm}(0.89\textwidth,0px)
+\includegraphics[width=1\textwidth]{figures/coalitions_hex}
+\end{textblock*}
+\vspace{10px}
+\textbf{R package \texttt{coalitions}}
+\\[0.7cm]
+\begin{lstlisting}
+> library(coalitions)
+> library(tidyverse)
+
+> surveys <- get_surveys()
+> surveys
+
+# A tibble: 7 x 2
+  pollster   surveys
+  <chr>      <list>
+1 allensbach <tibble [42 x 5]>
+2 emnid      <tibble [226 x 5]>
+3 forsa      <tibble [236 x 5]>
 ...
-Code example:
-% \begin{lstlisting}
-% 2+2
-% \end{lstlisting}
-More on GitHub
-}
+
+> survey <- surveys %>% unnest() %>% slice(1)
+> survey %>% get_probabilities(list(c("cdu","fdp")), nsim = 10000) %>%
+  unnest()
+# A tibble: 1 x 4
+  pollster   date       coalition probability
+  <chr>      <date>     <chr>           <dbl>
+1 allensbach 2019-02-19 cdu_fdp             0
+\end{lstlisting}
+\end{frame}
 
 \frame{\ft{\large{\blue{\ding{203}}} Technical implementation}
+\begin{textblock*}{3cm}(0.78\textwidth,0px)
+\includegraphics[align=c,width=0.4\textwidth]{figures/shiny}
+\ \ 
+\includegraphics[align=c,width=0.28\textwidth]{figures/twitter}
+\end{textblock*}
+\vspace{10px}
 \textbf{Web-Interface}
+\\[1cm]
+\textbf{Communicating the results}
+\begin{enumerate}
+  \item Website \href{https://koala.stat.uni-muenchen.de}{\texttt{koala.stat.uni-muenchen.de}} \\[0.1cm]
+$\Rightarrow$ Automatic updates scraping data from wahlrecht.de
+  \item Twitter \href{https://twitter.com/KOALA_LMU}{@KOALA\_LMU} \\[0.1cm]
+$\Rightarrow$ Automatic tweets of new results
+  \item Blog \href{https://koala-blog.netlify.com/portfolio/}{koala-blog.netlify.com}
+\end{enumerate}
+\bigskip
+\pause
+\textbf{Technical implementation in R}
 \begin{itemize}
-  \item koala.stat.uni-muenchen.de
-  \item Blog
-  \item @koala\_lmu \includegraphics[height=3ex]{figures/twitter_dark}
-  \item based on Shiny
-  \item automatic update scraping data from \texttt{wahlrecht.de}
+  \item User interface was built with the \href{http://shiny.rstudio.com/}{shiny} package
+  \item Server is based on \href{https://www.rstudio.com/products/shiny/shiny-server/}{Shiny Server Open Source}
+  \item Tweets are sent with the \href{https://github.com/geoffjentry/twitteR}{twitteR} package
 \end{itemize}
 }
 
 
 
 % ----- Conclusion
-\section{Results \& Outlook}
+\section{Conclusion}
 \frame{\ft{Outline}
 \tableofcontents[currentsection, subsectionstyle=show/show/hide]
 }
 
-\frame{\ft{\large{\blue{\ding{206}}} Results}
-content
+\frame{\ft{\large{\blue{\ding{206}}} Conclusion}
+\vspace{5px}
+\begin{center}
+\includegraphics[width=0.3\textwidth]{figures/koala}
+\end{center}
+\bigskip \medskip
+\textbf{The KOALA approach}
+\begin{itemize}
+  \item New paradigm for opinion poll coverage
+  \item Bayesian approach to now-cast POEs
+  \item Sample uncertainty is reduced by pooling multiple polls
+  \item Communication to the general public
+  \item[]
+  \item \bluebf{Keep in mind:} We do not make predictions
+\end{itemize}
 }
 
 
 % Materials
 \addtocounter{framenumber}{-1}
 \frame{\ft{References}
-\bluebf{Topic} \\[0.07cm]
+\bluebf{KOALA} \\[0.07cm]
 {\footnotesize
-\textbf{Doe J, Mustermann M (2019)} \textcolor{darkgray}{This is the paper title. Journal, 19(2--3), 1--19} \\[0.04cm]
-\textbf{Doe J, Mustermann M (2019)} \textcolor{darkgray}{This is the paper title. Journal, 19(2--3), 1--19} \\[0.04cm]
-} \ \\[0.75cm]
-\bluebf{Another topic} \\[0.07cm]
+\textbf{Bauer, A., Bender, A., Klima, A., and Küchenhoff, H. (2018)} \textcolor{darkgray}{KOALA: A new paradigm for election coverage. \textit{arXiv.org}. URL \texttt{http://arxiv.org/abs/1807.09665}.} \\[0.04cm]
+\textbf{Bender, A., and Bauer, A. (2018)} \textcolor{darkgray}{coalitions: Coalition probabilities in multi-party democracies. \textit{The Journal of Open Source Software}. doi: 10.21105/joss.00606. \\ URL \texttt{http://joss.theoj.org/papers/10.21105/joss.00606}.}
+} \ \\[0.5cm]
+\bluebf{Methods} \\[0.07cm]
 {\footnotesize
-\textbf{Doe J, Mustermann M (2019)} \textcolor{darkgray}{This is the paper title. Journal, 19(2--3), 1--19} \\[0.04cm]
-Hanley et al., 2003
-}
-}
-
-\addtocounter{framenumber}{-1}
-\frame{\ft{References}
-\bluebf{One more topic} \\[0.07cm]
+\textbf{Gelman, A. et al. (2013)} \textcolor{darkgray}{\textit{Bayesian data analysis}, volume 3. CRC press Boca Raton, FL.} \\[0.04cm]
+\textbf{Hanley, J. A. et al. (2003)} \textcolor{darkgray}{Statistical analysis of correlated data using generalized estimating equations: an orientation. \textit{American journal of epidemiology}, 157(4), 364--375.} \\[0.04cm]
+\textbf{Küchenhoff, H. et al. (2018)} \textcolor{darkgray}{\textit{Universitätsstudie zur Bayernwahl USBW 18 (München -- Passau -- Regensburg). Erste Ergebnisse -- Oktober 2018.} \\ URL \texttt{https://www.stablab.stat.uni-muenchen.de/lehre/pdfs/usbw18.pdf}.}
+} \ \\[0.5cm]
+\bluebf{Further software} \\[0.07cm]
 {\footnotesize
-\textbf{Doe J, Mustermann M (2019)} \textcolor{darkgray}{This is the paper title. Journal, 19(2--3), 1--19} \\[0.04cm]
+\textbf{Chang, W. et al. (2017)} \textcolor{darkgray}{\textit{shiny: Web Application Framework for R}. \\ URL \texttt{https://CRAN.R-project.org/package=shiny}. R package version 1.0.5.} \\[0.04cm]
+\textbf{Wilke, C. O. (2017)} \textcolor{darkgray}{\textit{ggridges: Ridgeline Plots in 'ggplot2'}. \\ URL \texttt{https://CRAN.R-project.org/package=ggridges}. R package version 0.4.1.} \\[0.04cm]
 }
 }
 
