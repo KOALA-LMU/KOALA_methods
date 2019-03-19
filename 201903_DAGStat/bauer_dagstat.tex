@@ -134,32 +134,41 @@
 \begin{itemize}
   \item Which parties will pass the $5\%$ hurdle and enter the parliament?
   \item Which parties will form the governing coalition?
-  \item Which party will have the third largest share of votes?
+%  \item Which party will have the third largest share of votes?
 \end{itemize}}
 
 \addtocounter{framenumber}{-1}
 \frame{\ft{\large{\blue{\ding{202}}} Motivation}
-\textbf{Reported voter shares} \\[0.37cm]
+\textbf{Reported voter shares} {\footnotesize (Forsa, last pre-election poll 2013)} \\[0.37cm]
 \begin{center}
 {\footnotesize
 \begin{tabular}{cccccccc}
 \toprule[0.09 em]
-Union & SPD & Greens & FDP & The Left & Pirates & AfD & Others \\
+Union & \textcolor{black!40}{SPD} & \textcolor{black!40}{Greens} & FDP &
+\textcolor{black!40}{The Left} & \textcolor{black!40}{Pirates} & 
+\textcolor{black!40}{AfD} & \textcolor{black!40}{Others} \\
 \midrule
-40\% & 26\% & 10\% & 5\% & 9\% & 2\% & 4\% & 5\% \\
+40\% & \textcolor{black!40}{26\%} & \textcolor{black!40}{10\%} & 5\% &
+\textcolor{black!40}{9\%} & \textcolor{black!40}{2\%} & 
+\textcolor{black!40}{4\%} & \textcolor{black!40}{5\%} \\
 \bottomrule[0.09 em]
 \end{tabular}
 }
 \end{center}
 \medskip
+\pause
 \textbf{Redistributed voter shares} {\footnotesize (based on $5\%$ hurdle)} \\[0.37cm]
 \begin{center}
 {\footnotesize
 \begin{tabular}{cccccccc}
 \toprule[0.09 em]
-Union & SPD & Greens & FDP & The Left & Pirates & AfD & Others \\
+Union & \textcolor{black!40}{SPD} & \textcolor{black!40}{Greens} & FDP &
+\textcolor{black!40}{The Left} & \textcolor{black!40}{Pirates} & 
+\textcolor{black!40}{AfD} & \textcolor{black!40}{Others} \\
 \midrule
-44.44\% & 28.89\% & 11.11\% & 5.56\% & 10.00\% & - & - & - \\
+44.44\% & \textcolor{black!40}{28.89\%} & \textcolor{black!40}{11.11\%} & 5.56\% &
+\textcolor{black!40}{10.00\%} & \textcolor{black!40}{-} & 
+\textcolor{black!40}{-} & \textcolor{black!40}{-} \\
 \bottomrule[0.09 em]
 \end{tabular}
 }
@@ -168,19 +177,22 @@ Union & SPD & Greens & FDP & The Left & Pirates & AfD & Others \\
 \pause
 \begin{itemize}
   \item Union-FDP have a joint seat share of exactly $50\%$
-  \item Stating that Union-FDP would thus miss a joint majority would neglect sample uncertainty \\ \ 
-  \item[$\Rightarrow$] We calculate event probabilities that fully reflect sample uncertainty
+  \pause
+  \item Stating that Union-FDP would thus miss a joint majority would neglect sample uncertainty
 \end{itemize}
 }
 
 \frame{\ft{\large{\blue{\ding{202}}} Motivation}
 \vspace{30px}
-\bluebf{We aim to do} \textbf{now-casting}
-\begin{itemize}
-  \item We incorporate the uncertainty as reported by the polling agencies
-  \item Potential house biases or an industry bias are not accounted for
-\end{itemize}
-\bigskip \bigskip
+\bluebf{We aim to do} \textbf{now-casting} \\[0.1cm]
+We communicate sample uncertainty in a more natural way
+by calculating \\ \textbf{event probabilities} that fully reflect sample uncertainty.
+\\[1.5cm]
+%\begin{itemize}
+%  \item We incorporate the uncertainty as reported by the polling agencies
+%  \item Potential house biases or an industry bias are not accounted for
+%\end{itemize}
+%\bigskip \bigskip
 \pause
 \bluebf{We} \redbf{do not} \bluebf{aim to do} \redbf{for-casting}
 \begin{itemize}
@@ -201,23 +213,24 @@ Given one opinion poll with sample size $n$:
 $$
 \boldsymbol{X} = (X_1,\ldots, X_P)^T \sim Multinomial(n, \theta_1,\ldots, \theta_P),
 $$
-with voter counts $X_j$ and the true percentage of voters $\theta_j$ per party $j$
+with voter counts $X_j$ and the true percentage of voters $\theta_j$ per party $j$.
 %\\ {\footnotesize (assuming a simple random sample, ignoring a possible bias)}
 \\[0.8cm]
 \pause
-Using an \textbf{uninformative Dirichlet prior}
+A \textbf{Dirichlet posterior distribution} results for $\boldsymbol{\theta} | \boldsymbol{x}$:
+$$
+\boldsymbol{\theta}|\mathbf{x} \sim Dirichlet(x_1 + 1/2,\ldots, x_P + 1/2),
+$$
+\pause
+\ \\
+based on an \textbf{uninformative Dirichlet prior}
 % for the true party shares
 (Gelman et al., 2013)
 $$
 \begin{aligned}
 \boldsymbol{\theta} &= (\theta_1,\ldots,\theta_P)^T \sim Dirichlet(\alpha_1,\ldots,\alpha_P), \\
-\text{with} &\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \alpha_1 = \ldots = \alpha_P = \frac{1}{2},
+\text{with} &\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \alpha_1 = \ldots = \alpha_P = \frac{1}{2}.
 \end{aligned}
-$$
-\ \\[0.1cm]
-a \textbf{Dirichlet posterior distribution} results for $\boldsymbol{\theta} | \boldsymbol{x}$:
-$$
-\boldsymbol{\theta}|\mathbf{x} \sim Dirichlet(x_1 + 1/2,\ldots, x_P + 1/2).
 $$
 }
 
@@ -319,7 +332,7 @@ We account for correlations between polling agencies by using an \\
 \pause
 \textbf{Example} \\[0.1cm]
 Pooling two polls with \bluebf{$1\,500$} and \bluebf{$2\,000$} respondents
-we get a conservative effective sample size of \bluebf{$n_{\text{eff}} = 2\,341$}
+we get an effective \\ sample size of \bluebf{$n_{\text{eff}} = 2\,341$}
 {\footnotesize (based on a strongest party share of $40\%$)}.
 }
 
@@ -361,48 +374,48 @@ We account for correlations between polling agencies by using an \\
 \begin{itemize}
   \item Scrape \href{https://www.wahlrecht.de/}{wahlrecht.de} for (new) polls
   \item Calculate pooled sample
-  \item Calculate and sample from posterior distribution
+  \item Sample from posterior distribution
   \item Redistribute votes below 5\% threshold \\[0.1cm]
 and calculate parliament seats 
-{\footnotesize (e.g. based on method by \href{http://www.wahlrecht.de/verfahren/rangmasszahlen.html}{Sainte-Lague-Scheppers})}
+{\footnotesize (e.g. based on method by \href{http://www.wahlrecht.de/verfahren/rangmasszahlen.html}{Sainte-Lagu\"e-Schepers})}
   \item Calculate coalition probabilities
 \end{itemize}
 \bigskip
 More on \href{https://github.com/adibender/coalitions/}{github.com/adibender/coalitions}
 \end{frame}
 
-\begin{frame}[fragile]
-\ft{\large{\blue{\ding{204}}} Technical implementation}
-\begin{textblock*}{1.25cm}(0.89\textwidth,0px)
-\includegraphics[width=1\textwidth]{figures/coalitions_hex}
-\end{textblock*}
-\vspace{10px}
-\textbf{R package \texttt{coalitions}}
-\\[0.7cm]
-\begin{lstlisting}
-> library(coalitions)
-> library(tidyverse)
-
-> surveys <- get_surveys()
-> surveys
-
-# A tibble: 7 x 2
-  pollster   surveys
-  <chr>      <list>
-1 allensbach <tibble [42 x 5]>
-2 emnid      <tibble [226 x 5]>
-3 forsa      <tibble [236 x 5]>
-...
-
-> survey <- surveys %>% unnest() %>% slice(1)
-> survey %>% get_probabilities(list(c("cdu","fdp")), nsim = 10000) %>%
-    unnest()
-# A tibble: 1 x 4
-  pollster   date       coalition probability
-  <chr>      <date>     <chr>           <dbl>
-1 allensbach 2019-02-19 cdu_fdp             0
-\end{lstlisting}
-\end{frame}
+%\begin{frame}[fragile]
+%\ft{\large{\blue{\ding{204}}} Technical implementation}
+%\begin{textblock*}{1.25cm}(0.89\textwidth,0px)
+%\includegraphics[width=1\textwidth]{figures/coalitions_hex}
+%\end{textblock*}
+%\vspace{10px}
+%\textbf{R package \texttt{coalitions}}
+%\\[0.7cm]
+%\begin{lstlisting}
+%> library(coalitions)
+%> library(tidyverse)
+%
+%> surveys <- get_surveys()
+%> surveys
+%
+%# A tibble: 7 x 2
+%  pollster   surveys
+%  <chr>      <list>
+%1 allensbach <tibble [42 x 5]>
+%2 emnid      <tibble [226 x 5]>
+%3 forsa      <tibble [236 x 5]>
+%...
+%
+%> survey <- surveys %>% unnest() %>% slice(1)
+%> survey %>% get_probabilities(list(c("cdu","fdp")), nsim = 10000) %>%
+%    unnest()
+%# A tibble: 1 x 4
+%  pollster   date       coalition probability
+%  <chr>      <date>     <chr>           <dbl>
+%1 allensbach 2019-02-19 cdu_fdp             0
+%\end{lstlisting}
+%\end{frame}
 
 \frame{\ft{\large{\blue{\ding{204}}} Technical implementation}
 \begin{textblock*}{3cm}(0.78\textwidth,0px)
