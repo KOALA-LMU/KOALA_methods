@@ -5,11 +5,72 @@ theme_set(theme_bw())
 library(gganimate)
 
 
-# 2013 last FORSA pre-election poll ---------------------------------------
+# 2013 FORSA pre-election polls -------------------------------------------
+
+### first 2013 poll
+survey <- scrape_wahlrecht("http://www.wahlrecht.de/umfragen/forsa/2013.htm") %>%
+  collapse_parties() %>% filter(date == "2013-01-09") %>%
+  unnest()
+# focus on Union and FDP
+bw_cols <- coalitions::party_colors_de
+bw_cols[!(names(bw_cols) %in% c("cdu","fdp"))] <- "gray80"
+bw_cols <- bw_cols[names(bw_cols) != "afd"]
+gg_survey(survey, annotate_bars = FALSE, colors = bw_cols) +
+  ylab("Voter share in %") +
+  ggtitle("Forsa, 09.01.2013") +
+  theme_bw(base_size = 28) +
+  ylim(c(0,43)) +
+  theme(legend.position = "none",
+        axis.title = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        plot.title = element_text(hjust = 0.5)) +
+  ggsave("../figures/motivation_forsa_130109_bw.pdf", height = 5, width = 6)
+
+### second 2013 poll
+survey <- scrape_wahlrecht("http://www.wahlrecht.de/umfragen/forsa/2013.htm") %>%
+  collapse_parties() %>% filter(date == "2013-01-16") %>%
+  unnest()
+# focus on Union and FDP
+bw_cols <- coalitions::party_colors_de
+bw_cols[!(names(bw_cols) %in% c("cdu","fdp"))] <- "gray80"
+bw_cols <- bw_cols[names(bw_cols) != "afd"]
+gg_survey(survey, annotate_bars = FALSE, colors = bw_cols) +
+  ylab("Voter share in %") +
+  ggtitle("Forsa, 16.01.2013") +
+  theme_bw(base_size = 28) +
+  ylim(c(0,43)) +
+  theme(legend.position = "none",
+        axis.title = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        plot.title = element_text(hjust = 0.5)) +
+  ggsave("../figures/motivation_forsa_130116_bw.pdf", height = 5, width = 6)
+
+### first poll in 2013 where there's a bimodal posterior distribution
+survey <- scrape_wahlrecht("http://www.wahlrecht.de/umfragen/forsa/2013.htm") %>%
+  collapse_parties() %>% filter(date == "2013-03-26") %>%
+  unnest()
+# focus on Union and FDP
+bw_cols <- coalitions::party_colors_de
+bw_cols[!(names(bw_cols) %in% c("cdu","fdp"))] <- "gray80"
+bw_cols <- bw_cols[names(bw_cols) != "afd"]
+gg_survey(survey, annotate_bars = FALSE, colors = bw_cols) +
+  ylab("Voter share in %") +
+  ggtitle("Forsa, 26.03.2013") +
+  theme_bw(base_size = 28) +
+  ylim(c(0,43)) +
+  theme(legend.position = "none",
+        axis.title = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        plot.title = element_text(hjust = 0.5)) +
+  ggsave("../figures/motivation_forsa_130326_bw.pdf", height = 5, width = 6)
+
+### last pre-election poll
 survey <- scrape_wahlrecht("http://www.wahlrecht.de/umfragen/forsa/2013.htm") %>%
   collapse_parties() %>% filter(date == "2013-09-20") %>%
   unnest()
-
 gg_survey(survey, annotate_bars = FALSE) +
   ylab("Voter share in %") +
   ggtitle("Forsa opinion poll, 20.09.2013") +
@@ -18,7 +79,6 @@ gg_survey(survey, annotate_bars = FALSE) +
         axis.title.x = element_blank(),
         plot.title = element_text(hjust = 0.5)) +
   ggsave("../figures/motivation_forsa_130920.pdf", height = 5, width = 7)
-
 # focus on Union and FDP
 bw_cols <- coalitions::party_colors_de
 bw_cols[!(names(bw_cols) %in% c("cdu","fdp"))] <- "gray80"
@@ -30,6 +90,7 @@ gg_survey(survey, annotate_bars = FALSE, colors = bw_cols) +
         axis.title.x = element_blank(),
         plot.title = element_text(hjust = 0.5)) +
   ggsave("../figures/motivation_forsa_130920_bw.pdf", height = 5, width = 7)
+
 
 
 
